@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "uPjFI3X2bcm2NFRBu5ktsMlkw5Cz+kpJ2g8gvHR9i3Kc+JLw53ZKr8bNwZcm7UBbMfl2vEyvtPxGlM2+XOV2Ng==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\Application\\Service.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Kevin\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
+    "C:\\Users\\Kevin\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.2\\fluentvalidation.dependencyinjectionextensions.11.5.2.nupkg.sha512",
+    "C:\\Users\\Kevin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.1.0\\microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

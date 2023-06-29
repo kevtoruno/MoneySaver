@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="DraggableBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ClientsForms\FrmClientList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ClientsForms\FrmClientNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\PeriodsForms\FrmPeriodNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\PeriodsForms\FrmPeriodsList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="InitialMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmAhorroList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

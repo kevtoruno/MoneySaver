@@ -1,0 +1,35 @@
+﻿using Service.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UI
+{
+    public class DraggableBaseForm : Form
+    {
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        public extern static void ReleaseCapture();
+
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        public extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        protected void HandleResult<T>(Result<T> result, string entitiyName)
+        {
+            if (result.ResourceCreated)
+            {
+                var dialogResult = MessageBox.Show(entitiyName + " agregado exitosamente", "" ,MessageBoxButtons.OK);
+
+                if (dialogResult == DialogResult.OK)
+                    this.Close();
+                        
+            }
+            else if (result.IsSucess == false)
+            {
+                MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}
