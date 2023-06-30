@@ -19,9 +19,9 @@ namespace Service.Features.Client
             _moneySaverRepo = moneySaverRepo;
         }
 
-        public List<ClientToListDto> GetClientsList(string firstName, string lastNames) 
+        public List<ClientToListDto> GetClientsList(string INSS) 
         {
-            var clientToListDto = _moneySaverRepo.GetClientsList(firstName, lastNames);
+            var clientToListDto = _moneySaverRepo.GetClientsList(INSS);
 
             return clientToListDto;
         }

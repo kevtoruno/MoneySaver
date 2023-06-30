@@ -46,7 +46,7 @@ namespace UI.Forms.SavingAccountForms
         private void LoadCBClientsData()
         {
             var clientToList = new ClientToList(_moneySaverRepository);
-            var clientsList = clientToList.GetClientsList("", "");
+            var clientsList = clientToList.GetClientsList("");
 
             BindingSource bindingSource = CreateBindingSource(clientsList);
 

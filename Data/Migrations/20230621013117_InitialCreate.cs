@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Data.Persistence;
 #nullable disable
 
 namespace Data.Migrations
@@ -397,7 +396,7 @@ namespace Data.Migrations
                 table: "SubPeriods",
                 column: "PeriodID");
 
-            MigrationBuilderExtensions.ConfigForSqlite(migrationBuilder);
+            //MigrationBuilderExtensions.ConfigForSqlite(migrationBuilder);
         }
 
         /// <inheritdoc />

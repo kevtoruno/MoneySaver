@@ -1,4 +1,4 @@
-﻿using Data.Persistence;
+﻿using SqliteMigrations.Persistence;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,17 +17,24 @@ namespace Data
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            /*services.AddDbContext<MoneySaverContext>(x =>
-            {
-                x.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            }, ServiceLifetime.Transient);*/
 
-            services.AddDbContext<MoneySaverContext>(x =>
+            bool useSQLServer = true;
+
+            var assembly = Assembly.GetExecutingAssembly().GetName().Name;
+            
+            services.AddDbContext<MoneySaverContext>(options =>
             {
-                x.UseSqlite(configuration.GetConnectionString("SqliteDefaultConnection"));
+                if (useSQLServer == true)
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), 
+                        x => { x.MigrationsAssembly(assembly) ; });
+                }
+                else
+                {
+                    options.UseSqlite(configuration.GetConnectionString("SqliteDefaultConnection"),
+                        x => { x.MigrationsAssembly("SqliteMigrations"); });
+                }
             }, ServiceLifetime.Transient);
-
-            var x = configuration.GetConnectionString("DefaultConnection");
 
             services.AddTransient<IMoneySaverRepository, MoneySaveRepository>();
 

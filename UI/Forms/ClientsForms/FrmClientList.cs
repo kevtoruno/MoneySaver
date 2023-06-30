@@ -39,7 +39,7 @@ namespace UI.Forms
         {
             var clientToList = new ClientToList(_moneySaverRepository);
 
-            var clients = clientToList.GetClientsList(this.txtFirstName.Text, this.txtLastNames.Text);
+            var clients = clientToList.GetClientsList(this.txtINSS.Text);
 
             BindingSource bindingSource = CreateBindingSource(clients);
 
@@ -61,6 +61,16 @@ namespace UI.Forms
         private void btnSearch_Click(object sender, EventArgs e)
         {
             LoadGridData();
+        }
+
+        private void txtINSS_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void txtINSS_Click(object sender, EventArgs e)
+        {
+            this.txtINSS.SelectionStart = this.txtINSS.Text.Length;
         }
     }
 }

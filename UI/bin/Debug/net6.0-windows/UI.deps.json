@@ -1144,7 +1144,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.7",
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.7",
           "Microsoft.Extensions.Configuration": "7.0.0",
-          "Service": "1.0.0"
+          "Service": "1.0.0",
+          "SqliteMigrations": "1.0.0"
         },
         "runtime": {
           "Data.dll": {}
@@ -1163,6 +1164,14 @@
         },
         "runtime": {
           "Service.dll": {}
+        }
+      },
+      "SqliteMigrations/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Sqlite": "7.0.7"
+        },
+        "runtime": {
+          "SqliteMigrations.dll": {}
         }
       }
     }
@@ -1863,6 +1872,11 @@
       "sha512": ""
     },
     "Service/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SqliteMigrations/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

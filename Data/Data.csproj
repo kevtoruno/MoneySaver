@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Service.csproj" />
+	<ProjectReference Include="..\SqliteMigrations\SqliteMigrations.csproj" />
   </ItemGroup>
 
 </Project>

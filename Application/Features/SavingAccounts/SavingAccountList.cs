@@ -17,9 +17,9 @@ namespace Service.Features.SavingAccounts
             _moneySaverRepo = moneySaverRepo;
         }
 
-        public List<SavingAccountToListDto> GetSavingAccountsList() 
+        public List<SavingAccountToListDto> GetSavingAccountsList(string INSS) 
         {
-            var savingAccountToListDto = _moneySaverRepo.GetSavingAccountsList();
+            var savingAccountToListDto = _moneySaverRepo.GetSavingAccountsList(INSS);
 
             return savingAccountToListDto;
         }

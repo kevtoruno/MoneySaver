@@ -1449,6 +1449,19 @@
         "runtime": {
           "bin/placeholder/Service.dll": {}
         }
+      },
+      "SqliteMigrations/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Sqlite": "7.0.7"
+        },
+        "compile": {
+          "bin/placeholder/SqliteMigrations.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SqliteMigrations.dll": {}
+        }
       }
     }
   },
@@ -4034,6 +4047,11 @@
       "type": "project",
       "path": "../Application/Service.csproj",
       "msbuildProject": "../Application/Service.csproj"
+    },
+    "SqliteMigrations/1.0.0": {
+      "type": "project",
+      "path": "../SqliteMigrations/SqliteMigrations.csproj",
+      "msbuildProject": "../SqliteMigrations/SqliteMigrations.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4045,7 +4063,8 @@
       "Microsoft.EntityFrameworkCore.Sqlite >= 7.0.7",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.7",
       "Microsoft.Extensions.Configuration >= 7.0.0",
-      "Service >= 1.0.0"
+      "Service >= 1.0.0",
+      "SqliteMigrations >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -4077,6 +4096,9 @@
           "projectReferences": {
             "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\Application\\Service.csproj": {
               "projectPath": "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\Application\\Service.csproj"
+            },
+            "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\SqliteMigrations\\SqliteMigrations.csproj": {
+              "projectPath": "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\SqliteMigrations\\SqliteMigrations.csproj"
             }
           }
         }

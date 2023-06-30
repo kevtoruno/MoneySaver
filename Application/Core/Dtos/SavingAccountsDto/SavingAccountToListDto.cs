@@ -12,6 +12,7 @@ namespace Service.Core.Dtos
     {
         public int SavingAccountID { get; set; }
         public int ClientID { get; set; }
+        public string INSS { get; set; }
         public string ClientFullName { get; set; } = "";
         public string Amount { get; set; }
         public string AmountForInterests { get; set; }

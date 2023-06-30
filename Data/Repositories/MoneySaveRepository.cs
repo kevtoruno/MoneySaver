@@ -2,7 +2,7 @@
 using Service.Core.Interfaces;
 using AutoMapper;
 using Data.DataModel;
-using Data.Persistence;
+using SqliteMigrations.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,12 @@ namespace Data.Repositories
 
         public void CreateClient(ClientToCreateDto clientToCreateDto)
         {
+            var defaultCompany = _context.Companies.FirstOrDefault();
+
             var clientToCreate = _mapper.Map<ClientsDataModel>(clientToCreateDto);
+
+            if (defaultCompany != null)
+                clientToCreate.CompanyID = defaultCompany.CompanyID;
 
             _context.Add(clientToCreate);
             _context.SaveChanges();
@@ -43,20 +48,23 @@ namespace Data.Repositories
             return _context.Clients.Any(a => a.Identification == identification);
         }
 
-        public List<ClientToListDto> GetClientsList(string firstName, string LastName)
+        public List<ClientToListDto> GetClientsList(string INSS)
         {
-            return _context.Clients
-                .Where(c => EF.Functions.Like(c.FirstName, "%"+firstName +"%") && EF.Functions.Like(c.LastNames, "%"+LastName +"%"))
-                .Select(c => 
-                new ClientToListDto 
+            var query = _context.Clients
+                .Select(c =>
+                new ClientToListDto
                 {
                     FullName = $"{c.LastNames} {c.FirstName} {c.SecondName}",
                     Age = c.Age,
                     Identification = c.Identification,
                     INSS = c.INSS,
                     ClientID = c.ClientID
-                })
-                .ToList();
+                });
+
+            if (INSS.Length > 0)
+                query = query.Where(a => a.INSS == INSS);
+
+            return query.ToList();
         }
 
         public bool DoPeriodForTheYearExists(int year)
@@ -120,9 +128,14 @@ namespace Data.Repositories
             _context.SaveChanges();
         }
 
-        public List<SavingAccountToListDto> GetSavingAccountsList() 
+        public List<SavingAccountToListDto> GetSavingAccountsList(string INSS) 
         {
-            var savingAccountsFromDB = _context.SavingAccounts.Include(sa => sa.Client).ToList();
+            var query = _context.SavingAccounts.Include(sa => sa.Client).OrderBy(sa => sa.IsActive).AsQueryable();
+
+            if (INSS.Length > 0)
+                query = query.Where(q => q.Client.INSS == INSS);
+
+            var savingAccountsFromDB = query.ToList();
 
             var savingAccounts = new List<SavingAccountToListDto>();
 
@@ -135,6 +148,7 @@ namespace Data.Repositories
                 savingAccounts.Add(new SavingAccountToListDto
                 {
                     Amount = String.Format("{0:#,##0.00}", sa.Amount),
+                    INSS = sa.Client.INSS,
                     AmountForInterests = String.Format("{0:#,##0.00}", sa.AmountForInterests),
                     IsActive = sa.IsActive,
                     SavingAccountID = sa.SavingAccountID,

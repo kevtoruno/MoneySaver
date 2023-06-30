@@ -1,7 +1,7 @@
 using System.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Service.Core.Interfaces;
-using Data.Persistence;
+using SqliteMigrations.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Data.Repositories;
@@ -32,7 +32,10 @@ namespace UI
 
             ServiceProvider = host.Services;
             var context = ServiceProvider.GetRequiredService<MoneySaverContext>();
+
             context.Database.Migrate();
+
+            SeedCompany(context);
 
             Application.Run(new InitialMenu());
         }
@@ -50,6 +53,16 @@ namespace UI
                     services.AddTransient<FrmPeriodsList>();
                     services.AddTransient<FrmSavingAccountList>();
                 });
+        }
+
+        private static void SeedCompany(MoneySaverContext context) 
+        {
+            if (context.Companies.Any() == false)
+            {
+                context.Companies.Add(new Data.DataModel.CompaniesDataModel 
+                { CompanyName = "DefaultComp", CurrentAmount = 0, FloatingAmount = 0 });
+                context.SaveChanges();
+            }
         }
 
  

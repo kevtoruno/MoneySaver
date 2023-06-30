@@ -34,7 +34,7 @@ namespace UI.Forms
         {
             var savingAccountsListService = new SavingAccountList(_moneySaverRepository);
 
-            var savingAccountData = savingAccountsListService.GetSavingAccountsList();
+            var savingAccountData = savingAccountsListService.GetSavingAccountsList(this.txtINSS.Text);
 
             var bindingSource = CreateBindingSource(savingAccountData);
 
@@ -43,6 +43,16 @@ namespace UI.Forms
         }
 
         private void FrmSavingAccountList_Load(object sender, EventArgs e)
+        {
+            LoadGridData();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
         {
             LoadGridData();
         }

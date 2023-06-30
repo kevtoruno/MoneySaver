@@ -246,7 +246,7 @@
             txtAge.Mask = "000";
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(52, 31);
-            txtAge.TabIndex = 15;
+            txtAge.TabIndex = 5;
             // 
             // FrmClientNew
             // 

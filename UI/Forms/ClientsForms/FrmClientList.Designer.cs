@@ -32,18 +32,18 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             lblClientTitle = new Label();
-            btnSearch = new Button();
-            txtFirstName = new TextBox();
-            txtLastNames = new TextBox();
             gridClientList = new DataGridView();
-            ClientID = new DataGridViewTextBoxColumn();
-            FullName = new DataGridViewTextBoxColumn();
-            Identification = new DataGridViewTextBoxColumn();
-            Age = new DataGridViewTextBoxColumn();
-            INSS = new DataGridViewTextBoxColumn();
             btnNewClient = new Button();
             btnView = new Button();
             btnDelete = new Button();
+            txtINSS = new MaskedTextBox();
+            label4 = new Label();
+            btnSearch = new Button();
+            ClientID = new DataGridViewTextBoxColumn();
+            INSS = new DataGridViewTextBoxColumn();
+            FullName = new DataGridViewTextBoxColumn();
+            Identification = new DataGridViewTextBoxColumn();
+            Age = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)gridClientList).BeginInit();
             SuspendLayout();
             // 
@@ -58,45 +58,6 @@
             lblClientTitle.Size = new Size(158, 29);
             lblClientTitle.TabIndex = 1;
             lblClientTitle.Text = "Trabajadores";
-            // 
-            // btnSearch
-            // 
-            btnSearch.Anchor = AnchorStyles.Top;
-            btnSearch.BackColor = Color.SteelBlue;
-            btnSearch.Cursor = Cursors.Hand;
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnSearch.ForeColor = SystemColors.Control;
-            btnSearch.Location = new Point(557, 167);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(170, 50);
-            btnSearch.TabIndex = 3;
-            btnSearch.Text = "Buscar";
-            btnSearch.UseVisualStyleBackColor = false;
-            btnSearch.Click += btnSearch_Click;
-            // 
-            // txtFirstName
-            // 
-            txtFirstName.Anchor = AnchorStyles.Top;
-            txtFirstName.BorderStyle = BorderStyle.FixedSingle;
-            txtFirstName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtFirstName.Location = new Point(535, 80);
-            txtFirstName.Name = "txtFirstName";
-            txtFirstName.PlaceholderText = "Primer nombre";
-            txtFirstName.Size = new Size(211, 31);
-            txtFirstName.TabIndex = 1;
-            // 
-            // txtLastNames
-            // 
-            txtLastNames.Anchor = AnchorStyles.Top;
-            txtLastNames.BorderStyle = BorderStyle.FixedSingle;
-            txtLastNames.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtLastNames.Location = new Point(535, 130);
-            txtLastNames.Name = "txtLastNames";
-            txtLastNames.PlaceholderText = "Apellidos";
-            txtLastNames.Size = new Size(211, 31);
-            txtLastNames.TabIndex = 2;
             // 
             // gridClientList
             // 
@@ -115,7 +76,7 @@
             gridClientList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridClientList.ColumnHeadersHeight = 30;
             gridClientList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridClientList.Columns.AddRange(new DataGridViewColumn[] { ClientID, FullName, Identification, Age, INSS });
+            gridClientList.Columns.AddRange(new DataGridViewColumn[] { ClientID, INSS, FullName, Identification, Age });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -145,6 +106,97 @@
             gridClientList.TabIndex = 4;
             gridClientList.RowStateChanged += gridClientList_RowStateChanged;
             // 
+            // btnNewClient
+            // 
+            btnNewClient.BackColor = Color.SteelBlue;
+            btnNewClient.Cursor = Cursors.Hand;
+            btnNewClient.FlatAppearance.BorderSize = 0;
+            btnNewClient.FlatStyle = FlatStyle.Flat;
+            btnNewClient.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnNewClient.ForeColor = SystemColors.Control;
+            btnNewClient.Location = new Point(12, 17);
+            btnNewClient.Name = "btnNewClient";
+            btnNewClient.Size = new Size(170, 50);
+            btnNewClient.TabIndex = 5;
+            btnNewClient.Text = "Nuevo trabajador";
+            btnNewClient.UseVisualStyleBackColor = false;
+            btnNewClient.Click += btnNewClient_Click;
+            // 
+            // btnView
+            // 
+            btnView.BackColor = Color.SteelBlue;
+            btnView.Cursor = Cursors.Hand;
+            btnView.Enabled = false;
+            btnView.FlatAppearance.BorderSize = 0;
+            btnView.FlatStyle = FlatStyle.Flat;
+            btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnView.ForeColor = SystemColors.Control;
+            btnView.Location = new Point(12, 280);
+            btnView.Name = "btnView";
+            btnView.Size = new Size(87, 50);
+            btnView.TabIndex = 6;
+            btnView.Text = "Ver";
+            btnView.UseVisualStyleBackColor = false;
+            btnView.Click += btnView_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.BackColor = Color.SteelBlue;
+            btnDelete.Cursor = Cursors.Hand;
+            btnDelete.Enabled = false;
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnDelete.ForeColor = SystemColors.Control;
+            btnDelete.Location = new Point(119, 280);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(111, 50);
+            btnDelete.TabIndex = 7;
+            btnDelete.Text = "Eliminar";
+            btnDelete.UseVisualStyleBackColor = false;
+            // 
+            // txtINSS
+            // 
+            txtINSS.Anchor = AnchorStyles.Top;
+            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtINSS.Location = new Point(576, 118);
+            txtINSS.Mask = "9999999999";
+            txtINSS.Name = "txtINSS";
+            txtINSS.Size = new Size(125, 31);
+            txtINSS.TabIndex = 8;
+            txtINSS.ValidatingType = typeof(int);
+            txtINSS.MaskInputRejected += txtINSS_MaskInputRejected;
+            txtINSS.Click += txtINSS_Click;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Top;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = SystemColors.Control;
+            label4.Location = new Point(598, 90);
+            label4.Name = "label4";
+            label4.Size = new Size(79, 25);
+            label4.TabIndex = 14;
+            label4.Text = "No INSS";
+            // 
+            // btnSearch
+            // 
+            btnSearch.Anchor = AnchorStyles.Top;
+            btnSearch.BackColor = Color.SteelBlue;
+            btnSearch.Cursor = Cursors.Hand;
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnSearch.ForeColor = SystemColors.Control;
+            btnSearch.Location = new Point(565, 155);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(150, 50);
+            btnSearch.TabIndex = 17;
+            btnSearch.Text = "Buscar";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
             // ClientID
             // 
             ClientID.DataPropertyName = "ClientID";
@@ -153,6 +205,15 @@
             ClientID.Name = "ClientID";
             ClientID.Visible = false;
             ClientID.Width = 125;
+            // 
+            // INSS
+            // 
+            INSS.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            INSS.DataPropertyName = "INSS";
+            INSS.HeaderText = "INSS";
+            INSS.MinimumWidth = 6;
+            INSS.Name = "INSS";
+            INSS.ReadOnly = true;
             // 
             // FullName
             // 
@@ -181,77 +242,19 @@
             Age.Name = "Age";
             Age.ReadOnly = true;
             // 
-            // INSS
-            // 
-            INSS.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            INSS.DataPropertyName = "INSS";
-            INSS.HeaderText = "INSS";
-            INSS.MinimumWidth = 6;
-            INSS.Name = "INSS";
-            INSS.ReadOnly = true;
-            // 
-            // btnNewClient
-            // 
-            btnNewClient.BackColor = Color.SteelBlue;
-            btnNewClient.Cursor = Cursors.Hand;
-            btnNewClient.FlatAppearance.BorderSize = 0;
-            btnNewClient.FlatStyle = FlatStyle.Flat;
-            btnNewClient.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnNewClient.ForeColor = SystemColors.Control;
-            btnNewClient.Location = new Point(12, 17);
-            btnNewClient.Name = "btnNewClient";
-            btnNewClient.Size = new Size(170, 50);
-            btnNewClient.TabIndex = 5;
-            btnNewClient.Text = "Nuevo trabajador";
-            btnNewClient.UseVisualStyleBackColor = false;
-            btnNewClient.Click += btnNewClient_Click;
-            // 
-            // btnView
-            // 
-            btnView.BackColor = Color.SteelBlue;
-            btnView.Cursor = Cursors.Hand;
-            btnView.Enabled = false;
-            btnView.FlatAppearance.BorderSize = 0;
-            btnView.FlatStyle = FlatStyle.Flat;
-            btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnView.ForeColor = SystemColors.Control;
-            btnView.Location = new Point(22, 272);
-            btnView.Name = "btnView";
-            btnView.Size = new Size(87, 50);
-            btnView.TabIndex = 6;
-            btnView.Text = "Ver";
-            btnView.UseVisualStyleBackColor = false;
-            btnView.Click += btnView_Click;
-            // 
-            // btnDelete
-            // 
-            btnDelete.BackColor = Color.SteelBlue;
-            btnDelete.Cursor = Cursors.Hand;
-            btnDelete.Enabled = false;
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnDelete.ForeColor = SystemColors.Control;
-            btnDelete.Location = new Point(129, 272);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(111, 50);
-            btnDelete.TabIndex = 7;
-            btnDelete.Text = "Eliminar";
-            btnDelete.UseVisualStyleBackColor = false;
-            // 
             // FrmClientList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1300, 650);
+            Controls.Add(btnSearch);
+            Controls.Add(label4);
+            Controls.Add(txtINSS);
             Controls.Add(btnDelete);
             Controls.Add(btnView);
             Controls.Add(btnNewClient);
             Controls.Add(gridClientList);
-            Controls.Add(txtLastNames);
-            Controls.Add(btnSearch);
-            Controls.Add(txtFirstName);
             Controls.Add(lblClientTitle);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FrmClientList";
@@ -266,16 +269,19 @@
 
         private Label lblClientTitle;
         private Button btnSearch;
-        private TextBox txtFirstName;
-        private TextBox txtLastNames;
         private DataGridView gridClientList;
         private Button btnNewClient;
+        private Button btnView;
+        private Button btnDelete;
+        private MaskedTextBox txtINSS;
+        private Label label4;
+        private TextBox textBox1;
+        private Button button1;
+        private TextBox textBox2;
         private DataGridViewTextBoxColumn ClientID;
+        private DataGridViewTextBoxColumn INSS;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Identification;
         private DataGridViewTextBoxColumn Age;
-        private DataGridViewTextBoxColumn INSS;
-        private Button btnView;
-        private Button btnDelete;
     }
 }
