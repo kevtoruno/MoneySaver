@@ -18,17 +18,19 @@ namespace Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Data.DataModel.ClientsDataModel", b =>
                 {
                     b.Property<int>("ClientID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -63,16 +65,17 @@ namespace Data.Migrations
 
                     b.HasIndex("CompanyID");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.CompaniesDataModel", b =>
                 {
                     b.Property<int>("CompanyID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
@@ -86,16 +89,17 @@ namespace Data.Migrations
 
                     b.HasKey("CompanyID");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.InterestRangesDataModel", b =>
                 {
                     b.Property<int>("InterestRangeID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InterestRangeID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
@@ -113,16 +117,17 @@ namespace Data.Migrations
 
                     b.HasIndex("CompanyID");
 
-                    b.ToTable("InterestRanges");
+                    b.ToTable("InterestRanges", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.Loan.LoanInstallmentsDataModel", b =>
                 {
                     b.Property<int>("LoanInstallmentID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanInstallmentID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -151,16 +156,17 @@ namespace Data.Migrations
 
                     b.HasIndex("SubPeriodID");
 
-                    b.ToTable("LoanInstallments");
+                    b.ToTable("LoanInstallments", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.Loan.LoanPaymentHistoryDataModel", b =>
                 {
                     b.Property<int>("LoanHistoryID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanHistoryID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -186,16 +192,17 @@ namespace Data.Migrations
 
                     b.HasIndex("SubPeriodID");
 
-                    b.ToTable("LoanPaymentHistory");
+                    b.ToTable("LoanPaymentHistory", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.LoanInterestsDataModel", b =>
                 {
                     b.Property<int>("LoanInterestID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanInterestID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
@@ -210,16 +217,17 @@ namespace Data.Migrations
 
                     b.HasIndex("CompanyID");
 
-                    b.ToTable("LoanInterests");
+                    b.ToTable("LoanInterests", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.LoansDataModel", b =>
                 {
                     b.Property<int>("LoanID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -270,16 +278,17 @@ namespace Data.Migrations
 
                     b.HasIndex("LoanInterestID");
 
-                    b.ToTable("Loans");
+                    b.ToTable("Loans", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.PeriodsDataModel", b =>
                 {
                     b.Property<int>("PeriodID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PeriodID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
@@ -297,16 +306,17 @@ namespace Data.Migrations
 
                     b.HasIndex("CompanyID");
 
-                    b.ToTable("Periods");
+                    b.ToTable("Periods", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.SavingAccountDepositsDataModel", b =>
                 {
                     b.Property<int>("SavingAccountDepositID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SavingAccountDepositID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -326,16 +336,17 @@ namespace Data.Migrations
 
                     b.HasIndex("SubPeriodID");
 
-                    b.ToTable("SavingAccountDeposits");
+                    b.ToTable("SavingAccountDeposits", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.SavingAccountWidthdrawalsDataModel", b =>
                 {
                     b.Property<int>("SavingAccountWithdrawalID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SavingAccountWithdrawalID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -355,16 +366,17 @@ namespace Data.Migrations
 
                     b.HasIndex("SubPeriodID");
 
-                    b.ToTable("SavingAccountWidthdrawals");
+                    b.ToTable("SavingAccountWidthdrawals", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.SavingAccountsDataModel", b =>
                 {
                     b.Property<int>("SavingAccountID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SavingAccountID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -391,16 +403,17 @@ namespace Data.Migrations
 
                     b.HasIndex("ClientID");
 
-                    b.ToTable("SavingAccounts");
+                    b.ToTable("SavingAccounts", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.SubPeriodsDataModel", b =>
                 {
                     b.Property<int>("SubPeriodID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubPeriodID"));
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -418,7 +431,7 @@ namespace Data.Migrations
 
                     b.HasIndex("PeriodID");
 
-                    b.ToTable("SubPeriods");
+                    b.ToTable("SubPeriods", (string)null);
                 });
 
             modelBuilder.Entity("Data.DataModel.ClientsDataModel", b =>

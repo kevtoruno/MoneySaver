@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="DraggableBaseForm.cs">
+    <Compile Update="BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\ClientsForms\FrmClientList.cs">
@@ -16,10 +16,13 @@
     <Compile Update="Forms\PeriodsForms\FrmPeriodsList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="InitialMenu.cs">
+    <Compile Update="Forms\SavingAccountForms\FrmSavingAccountNew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FrmAhorroList.cs">
+    <Compile Update="Forms\SavingAccountForms\FrmSavingAccountList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="InitialMenu.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

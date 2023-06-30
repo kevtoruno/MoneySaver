@@ -15,11 +15,11 @@ using System.Windows.Forms;
 
 namespace UI.Forms.PeriodsForms
 {
-    public partial class FrmPeriodNew : DraggableBaseForm
+    public partial class FrmPeriodNew : BaseForm
     {
         private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly FrmPeriodsList _frmPeriodsList;
-        private PeriodToCreateDto periodToCreateDto = new PeriodToCreateDto();
+        private PeriodToCreateDto periodToCreateDto;
         private PeriodsCreator _periodCreator;
         public FrmPeriodNew(IMoneySaverRepository moneySaverRepository, FrmPeriodsList frmPeriodsList)
         {
@@ -28,6 +28,7 @@ namespace UI.Forms.PeriodsForms
             _frmPeriodsList = frmPeriodsList;
             this.txtYear.Text = DateTime.Now.Year.ToString();
             _periodCreator = new PeriodsCreator(_moneySaverRepository);
+            periodToCreateDto = new PeriodToCreateDto();
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -52,16 +53,45 @@ namespace UI.Forms.PeriodsForms
             if (isPeriodValidResult.Value == false)
                 return;
 
-            var startDate = new DateTime(year, 1, 1);
-            var endDate = new DateTime(year, 12, 31);
+            periodToCreateDto = _periodCreator.GeneratePeriodToCreateDto(year);
+            periodToCreateDto.CompanyID = Program.CompanyID;
 
-            dtPeriodStartDate.Value = startDate;
-            dtPeriodEndDate.Value = endDate;
+            dtPeriodStartDate.Value = periodToCreateDto.StartDate;
+            dtPeriodEndDate.Value = periodToCreateDto.EndDate;
 
-            periodToCreateDto.EndDate = endDate;
-            periodToCreateDto.StartDate = startDate;
-            periodToCreateDto.EndDate = endDate;
-            periodToCreateDto.Year = year;
+            SetPreviewGrid();
+
+            this.btnCreate.Visible = true;
+        }
+
+        private void SetPreviewGrid()
+        {
+            var subPeriodsForPeriod = periodToCreateDto.SubPeriods;
+
+            BindingSource bindingSource = new BindingSource();
+
+            foreach (var subPeriod in subPeriodsForPeriod)
+            {
+                bindingSource.Add(subPeriod);
+            }
+
+            this.gridPreview.AutoGenerateColumns = false;
+            this.gridPreview.DataSource = bindingSource;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            var result = _periodCreator.CreatePeriods(periodToCreateDto);
+
+            if (result.ResourceCreated)
+                _frmPeriodsList.LoadGridData();
+
+            HandleResult(result, "Período");
         }
     }
 }

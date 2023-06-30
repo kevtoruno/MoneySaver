@@ -6,7 +6,7 @@ namespace Data.DataModel
     {
         [Key]
         public int ClientID { get; set; }
-        public int CompanyID { get; set; }
+        public int? CompanyID { get; set; }
         public CompaniesDataModel Company { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }

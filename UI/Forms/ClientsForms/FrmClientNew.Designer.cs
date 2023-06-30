@@ -37,7 +37,7 @@
             lblClientTitle = new Label();
             txtSecondName = new TextBox();
             txtINSS = new TextBox();
-            button1 = new Button();
+            btnCancel = new Button();
             txtIdentification = new MaskedTextBox();
             lblIdentification = new Label();
             label1 = new Label();
@@ -92,7 +92,7 @@
             btnCreate.FlatAppearance.BorderColor = Color.ForestGreen;
             btnCreate.FlatAppearance.BorderSize = 0;
             btnCreate.FlatStyle = FlatStyle.Flat;
-            btnCreate.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnCreate.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCreate.ForeColor = Color.White;
             btnCreate.Location = new Point(63, 374);
             btnCreate.Margin = new Padding(0);
@@ -145,23 +145,24 @@
             txtINSS.Size = new Size(150, 31);
             txtINSS.TabIndex = 4;
             // 
-            // button1
+            // btnCancel
             // 
-            button1.Anchor = AnchorStyles.Top;
-            button1.BackColor = Color.Crimson;
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderColor = Color.ForestGreen;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(443, 374);
-            button1.Margin = new Padding(0);
-            button1.Name = "button1";
-            button1.Size = new Size(170, 50);
-            button1.TabIndex = 8;
-            button1.Text = "Cancelar";
-            button1.UseVisualStyleBackColor = false;
+            btnCancel.Anchor = AnchorStyles.Top;
+            btnCancel.BackColor = Color.Crimson;
+            btnCancel.Cursor = Cursors.Hand;
+            btnCancel.FlatAppearance.BorderColor = Color.ForestGreen;
+            btnCancel.FlatAppearance.BorderSize = 0;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCancel.ForeColor = Color.White;
+            btnCancel.Location = new Point(443, 374);
+            btnCancel.Margin = new Padding(0);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(170, 50);
+            btnCancel.TabIndex = 8;
+            btnCancel.Text = "Cancelar";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // txtIdentification
             // 
@@ -261,7 +262,7 @@
             Controls.Add(label1);
             Controls.Add(lblIdentification);
             Controls.Add(txtIdentification);
-            Controls.Add(button1);
+            Controls.Add(btnCancel);
             Controls.Add(txtINSS);
             Controls.Add(txtSecondName);
             Controls.Add(txtLastName);
@@ -292,7 +293,7 @@
         private Label lblClientTitle;
         private TextBox txtSecondName;
         private TextBox txtINSS;
-        private Button button1;
+        private Button btnCancel;
         private MaskedTextBox txtIdentification;
         private Label lblIdentification;
         private Label label1;

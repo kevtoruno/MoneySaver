@@ -37,18 +37,20 @@
             lblPeriodTitle = new Label();
             lblYear = new Label();
             txtYear = new MaskedTextBox();
-            button1 = new Button();
+            btnCancel = new Button();
             btnCreate = new Button();
             btnPreview = new Button();
-            gridClientList = new DataGridView();
-            dtPeriodStartDate = new DateTimePicker();
-            dtPeriodEndDate = new DateTimePicker();
+            gridPreview = new DataGridView();
             Month = new DataGridViewTextBoxColumn();
             StartDate = new DataGridViewTextBoxColumn();
             EndDate = new DataGridViewTextBoxColumn();
+            dtPeriodStartDate = new DateTimePicker();
+            dtPeriodEndDate = new DateTimePicker();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)btnCerrar).BeginInit();
             BarraTitulo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)gridClientList).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridPreview).BeginInit();
             SuspendLayout();
             // 
             // btnCerrar
@@ -108,24 +110,24 @@
             txtYear.TabIndex = 15;
             txtYear.ValidatingType = typeof(int);
             // 
-            // button1
+            // btnCancel
             // 
-            button1.Anchor = AnchorStyles.Top;
-            button1.BackColor = Color.Crimson;
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderColor = Color.ForestGreen;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(542, 471);
-            button1.Margin = new Padding(0);
-            button1.Name = "button1";
-            button1.Size = new Size(170, 50);
-            button1.TabIndex = 17;
-            button1.Text = "Cancelar";
-            button1.UseVisualStyleBackColor = false;
-            button1.Visible = false;
+            btnCancel.Anchor = AnchorStyles.Top;
+            btnCancel.BackColor = Color.Crimson;
+            btnCancel.Cursor = Cursors.Hand;
+            btnCancel.FlatAppearance.BorderColor = Color.ForestGreen;
+            btnCancel.FlatAppearance.BorderSize = 0;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnCancel.ForeColor = Color.White;
+            btnCancel.Location = new Point(542, 471);
+            btnCancel.Margin = new Padding(0);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(170, 50);
+            btnCancel.TabIndex = 17;
+            btnCancel.Text = "Cancelar";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnCreate
             // 
@@ -145,6 +147,7 @@
             btnCreate.Text = "Guardar";
             btnCreate.UseVisualStyleBackColor = false;
             btnCreate.Visible = false;
+            btnCreate.Click += btnCreate_Click;
             // 
             // btnPreview
             // 
@@ -165,13 +168,13 @@
             btnPreview.UseVisualStyleBackColor = false;
             btnPreview.Click += btnPreview_Click;
             // 
-            // gridClientList
+            // gridPreview
             // 
-            gridClientList.AllowUserToAddRows = false;
-            gridClientList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            gridClientList.BackgroundColor = Color.FromArgb(45, 66, 91);
-            gridClientList.BorderStyle = BorderStyle.None;
-            gridClientList.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            gridPreview.AllowUserToAddRows = false;
+            gridPreview.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            gridPreview.BackgroundColor = Color.FromArgb(45, 66, 91);
+            gridPreview.BorderStyle = BorderStyle.None;
+            gridPreview.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -179,10 +182,10 @@
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            gridClientList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            gridClientList.ColumnHeadersHeight = 30;
-            gridClientList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridClientList.Columns.AddRange(new DataGridViewColumn[] { Month, StartDate, EndDate });
+            gridPreview.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            gridPreview.ColumnHeadersHeight = 30;
+            gridPreview.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            gridPreview.Columns.AddRange(new DataGridViewColumn[] { Month, StartDate, EndDate });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -190,12 +193,12 @@
             dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
             dataGridViewCellStyle2.SelectionForeColor = Color.White;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            gridClientList.DefaultCellStyle = dataGridViewCellStyle2;
-            gridClientList.EnableHeadersVisualStyles = false;
-            gridClientList.GridColor = Color.SteelBlue;
-            gridClientList.Location = new Point(12, 179);
-            gridClientList.Name = "gridClientList";
-            gridClientList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            gridPreview.DefaultCellStyle = dataGridViewCellStyle2;
+            gridPreview.EnableHeadersVisualStyles = false;
+            gridPreview.GridColor = Color.SteelBlue;
+            gridPreview.Location = new Point(12, 179);
+            gridPreview.Name = "gridPreview";
+            gridPreview.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -203,38 +206,18 @@
             dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
             dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            gridClientList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            gridClientList.RowHeadersVisible = false;
-            gridClientList.RowHeadersWidth = 51;
-            gridClientList.RowTemplate.Height = 29;
-            gridClientList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridClientList.Size = new Size(741, 206);
-            gridClientList.TabIndex = 19;
-            // 
-            // dtPeriodStartDate
-            // 
-            dtPeriodStartDate.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dtPeriodStartDate.Enabled = false;
-            dtPeriodStartDate.Format = DateTimePickerFormat.Short;
-            dtPeriodStartDate.Location = new Point(456, 135);
-            dtPeriodStartDate.Name = "dtPeriodStartDate";
-            dtPeriodStartDate.Size = new Size(134, 27);
-            dtPeriodStartDate.TabIndex = 20;
-            // 
-            // dtPeriodEndDate
-            // 
-            dtPeriodEndDate.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dtPeriodEndDate.Enabled = false;
-            dtPeriodEndDate.Format = DateTimePickerFormat.Short;
-            dtPeriodEndDate.Location = new Point(621, 135);
-            dtPeriodEndDate.Name = "dtPeriodEndDate";
-            dtPeriodEndDate.Size = new Size(132, 27);
-            dtPeriodEndDate.TabIndex = 21;
+            gridPreview.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            gridPreview.RowHeadersVisible = false;
+            gridPreview.RowHeadersWidth = 51;
+            gridPreview.RowTemplate.Height = 29;
+            gridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridPreview.Size = new Size(741, 206);
+            gridPreview.TabIndex = 19;
             // 
             // Month
             // 
             Month.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Month.DataPropertyName = "Month";
+            Month.DataPropertyName = "MonthName";
             Month.HeaderText = "Mes";
             Month.MinimumWidth = 6;
             Month.Name = "Month";
@@ -258,17 +241,61 @@
             EndDate.Name = "EndDate";
             EndDate.ReadOnly = true;
             // 
+            // dtPeriodStartDate
+            // 
+            dtPeriodStartDate.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dtPeriodStartDate.Enabled = false;
+            dtPeriodStartDate.Format = DateTimePickerFormat.Short;
+            dtPeriodStartDate.Location = new Point(415, 135);
+            dtPeriodStartDate.Name = "dtPeriodStartDate";
+            dtPeriodStartDate.Size = new Size(134, 27);
+            dtPeriodStartDate.TabIndex = 20;
+            // 
+            // dtPeriodEndDate
+            // 
+            dtPeriodEndDate.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dtPeriodEndDate.Enabled = false;
+            dtPeriodEndDate.Format = DateTimePickerFormat.Short;
+            dtPeriodEndDate.Location = new Point(621, 135);
+            dtPeriodEndDate.Name = "dtPeriodEndDate";
+            dtPeriodEndDate.Size = new Size(132, 27);
+            dtPeriodEndDate.TabIndex = 21;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.Control;
+            label1.Location = new Point(347, 137);
+            label1.Name = "label1";
+            label1.Size = new Size(62, 25);
+            label1.TabIndex = 22;
+            label1.Text = "Desde";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.ForeColor = SystemColors.Control;
+            label2.Location = new Point(561, 137);
+            label2.Name = "label2";
+            label2.Size = new Size(54, 25);
+            label2.TabIndex = 23;
+            label2.Text = "hasta";
+            // 
             // FrmPeriodNew
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(781, 552);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(dtPeriodEndDate);
             Controls.Add(dtPeriodStartDate);
-            Controls.Add(gridClientList);
+            Controls.Add(gridPreview);
             Controls.Add(btnPreview);
-            Controls.Add(button1);
+            Controls.Add(btnCancel);
             Controls.Add(btnCreate);
             Controls.Add(txtYear);
             Controls.Add(lblYear);
@@ -280,7 +307,7 @@
             Text = "FrmPeriodNew";
             ((System.ComponentModel.ISupportInitialize)btnCerrar).EndInit();
             BarraTitulo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)gridClientList).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridPreview).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -292,14 +319,16 @@
         private Label lblPeriodTitle;
         private Label lblYear;
         private MaskedTextBox txtYear;
-        private Button button1;
+        private Button btnCancel;
         private Button btnCreate;
         private Button btnPreview;
-        private DataGridView gridClientList;
+        private DataGridView gridPreview;
         private DateTimePicker dtPeriodStartDate;
         private DateTimePicker dtPeriodEndDate;
         private DataGridViewTextBoxColumn Month;
         private DataGridViewTextBoxColumn StartDate;
         private DataGridViewTextBoxColumn EndDate;
+        private Label label1;
+        private Label label2;
     }
 }

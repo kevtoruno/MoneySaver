@@ -74,6 +74,7 @@
             btnSearch.TabIndex = 3;
             btnSearch.Text = "Buscar";
             btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
             // 
             // txtFirstName
             // 

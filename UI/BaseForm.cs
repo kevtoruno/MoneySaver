@@ -1,4 +1,5 @@
 ﻿using Service.Core;
+using Service.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace UI
 {
-    public class DraggableBaseForm : Form
+    public class BaseForm : Form
     {
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         public extern static void ReleaseCapture();
@@ -20,7 +21,7 @@ namespace UI
         {
             if (result.ResourceCreated)
             {
-                var dialogResult = MessageBox.Show(entitiyName + " agregado exitosamente", "" ,MessageBoxButtons.OK);
+                var dialogResult = MessageBox.Show(entitiyName + " agregado exitosamente", "Operación exitosa" ,MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (dialogResult == DialogResult.OK)
                     this.Close();
@@ -30,6 +31,18 @@ namespace UI
             {
                 MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        protected BindingSource CreateBindingSource<T>(List<T> data)
+        {
+            BindingSource bindingSource = new BindingSource();
+
+            foreach (var item in data)
+            {
+                bindingSource.Add(item);
+            }
+
+            return  bindingSource;
         }
     }
 }

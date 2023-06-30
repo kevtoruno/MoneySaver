@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Service.Core.Interfaces;
 using System.Runtime.InteropServices;
 using UI.Forms;
@@ -5,14 +6,11 @@ using UI.Forms.PeriodsForms;
 
 namespace UI
 {
-    public partial class InitialMenu : DraggableBaseForm
+    public partial class InitialMenu : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
-
-        public InitialMenu(IMoneySaverRepository moneySaverRepository)
+        public InitialMenu()
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -66,12 +64,12 @@ namespace UI
 
         private void btnClients_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmClientList(_moneySaverRepository));
+            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmClientList>());
         }
 
         private void btnControlAhorro_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new FrmAhorroList());
+        {     
+            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmSavingAccountList>());
         }
 
         private void btnAdmin_Click(object sender, EventArgs e)
@@ -85,7 +83,7 @@ namespace UI
 
         private void btnMainPeriods_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmPeriodsList(_moneySaverRepository));
+            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmPeriodsList>());
         }
     }
 }

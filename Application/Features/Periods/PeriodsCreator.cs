@@ -1,4 +1,6 @@
-﻿using Service.Core;
+﻿using Domain.Entities;
+using Service.Core;
+using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,12 @@ namespace Service.Features.Periods
             _moneySaverRepo = moneySaverRepo;
         }
 
+        public Result<bool> CreatePeriods(PeriodToCreateDto periodToCreateDto) 
+        {
+            _moneySaverRepo.CreatePeriod(periodToCreateDto);
+
+            return Result<bool>.Created(true, "El período ha sido creado exitosamente.");
+        }
 
         public Result<bool> CheckIfPeriodExists(int year) 
         {
@@ -35,6 +43,28 @@ namespace Service.Features.Periods
                 isPeriodValid = Result<bool>.NoAction(true);
 
             return isPeriodValid;
+        }
+
+        public PeriodToCreateDto GeneratePeriodToCreateDto(int year) 
+        {
+            PeriodToCreateDto periodToCreateDto = new PeriodToCreateDto();
+            
+            var periodDomain = new PeriodDomain(year);
+            periodDomain.SetSubPeriods();
+
+            periodToCreateDto.StartDate = periodDomain.StartDate;
+            periodToCreateDto.EndDate = periodDomain.EndDate;
+            periodToCreateDto.Year = periodDomain.Year;
+
+            periodToCreateDto.SubPeriods = periodDomain.SubPeriods.Select(p => 
+            new SubPeriodsToCreateDto 
+            {
+                StartDate = p.StartDate,
+                EndDate = p.EndDate,
+                Month = p.Month,
+            }).ToList();
+
+            return periodToCreateDto;
         }
     }
 }

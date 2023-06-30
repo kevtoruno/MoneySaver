@@ -11,7 +11,7 @@ namespace Data.DataModel
     {
         [Key]
         public int PeriodID { get; set; }
-        public int CompanyID { get; set; }
+        public int? CompanyID { get; set; }
         public CompaniesDataModel Company { get; set; }
         public int Year { get; set; }
         public DateTime StartDate { get; set; }

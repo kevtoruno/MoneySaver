@@ -14,6 +14,9 @@ namespace Data.Mapping
         public AutoMapperProfiles()
         {
             CreateMap<ClientToCreateDto, ClientsDataModel>();  
+            CreateMap<PeriodToCreateDto, PeriodsDataModel>();
+            CreateMap<SubPeriodsToCreateDto, SubPeriodsDataModel>();
+            CreateMap<SavingAccountToCreate, SavingAccountsDataModel>();
         }
     }
 }

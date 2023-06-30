@@ -14,7 +14,7 @@ using UI.Forms.ClientsForms;
 
 namespace UI.Forms
 {
-    public partial class FrmClientList : Form
+    public partial class FrmClientList : BaseForm
     {
         private readonly IMoneySaverRepository _moneySaverRepository;
 
@@ -41,14 +41,8 @@ namespace UI.Forms
 
             var clients = clientToList.GetClientsList(this.txtFirstName.Text, this.txtLastNames.Text);
 
-            BindingSource bindingSource = new BindingSource();
+            BindingSource bindingSource = CreateBindingSource(clients);
 
-            foreach (var client in clients)
-            {
-                bindingSource.Add(client);
-            }
-
-            //InitializeGridClientList();
             this.gridClientList.AutoGenerateColumns = false;
             this.gridClientList.DataSource = bindingSource;
         }
@@ -62,6 +56,11 @@ namespace UI.Forms
         private void btnView_Click(object sender, EventArgs e)
         {
             var selectedRow = this.gridClientList.SelectedRows;
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            LoadGridData();
         }
     }
 }

@@ -13,5 +13,12 @@ namespace Service.Core.Dtos
         public int Year { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public List<SubPeriodsToCreateDto> SubPeriods { get; set; }
+
+        public PeriodToCreateDto()
+        {
+            SubPeriods = new List<SubPeriodsToCreateDto>();
+        }
     }
 }

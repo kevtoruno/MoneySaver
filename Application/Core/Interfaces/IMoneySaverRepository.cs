@@ -18,5 +18,14 @@ namespace Service.Core.Interfaces
         List<ClientToListDto> GetClientsList(string firstName, string LastName);
 
         bool DoPeriodForTheYearExists(int year);
+
+        void CreatePeriod(PeriodToCreateDto periodToCreateDto);
+        List<PeriodsToListDto> GetPeriodsList();
+
+        bool CheckIfClientHasActiveSavingAccount(int clientID);
+
+        void CreateSavingAccount(SavingAccountToCreate savingAccountToCreate);
+
+        List<SavingAccountToListDto> GetSavingAccountsList();
     }
 }

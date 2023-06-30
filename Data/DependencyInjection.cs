@@ -17,14 +17,19 @@ namespace Data
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddDbContext<MoneySaverContext>(x =>
+            /*services.AddDbContext<MoneySaverContext>(x =>
             {
                 x.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            }, ServiceLifetime.Transient);*/
+
+            services.AddDbContext<MoneySaverContext>(x =>
+            {
+                x.UseSqlite(configuration.GetConnectionString("SqliteDefaultConnection"));
             }, ServiceLifetime.Transient);
 
             var x = configuration.GetConnectionString("DefaultConnection");
 
-            services.AddScoped<IMoneySaverRepository, MoneySaveRepository>();
+            services.AddTransient<IMoneySaverRepository, MoneySaveRepository>();
 
             return services;
         }

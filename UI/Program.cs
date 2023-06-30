@@ -10,11 +10,13 @@ using UI.Forms.ClientsForms;
 using Data;
 using Service;
 using UI.Forms.PeriodsForms;
+using UI.Forms;
 
 namespace UI
 {
     internal static class Program
     {
+        public static int CompanyID { get { return 1; } }
         public static IConfiguration Configuration;
         /// <summary>
         ///  The main entry point for the application.
@@ -29,8 +31,10 @@ namespace UI
             var host = CreateHostBuilder().Build();
 
             ServiceProvider = host.Services;
+            var context = ServiceProvider.GetRequiredService<MoneySaverContext>();
+            context.Database.Migrate();
 
-            Application.Run(ServiceProvider.GetRequiredService<InitialMenu>());
+            Application.Run(new InitialMenu());
         }
 
         public static IServiceProvider ServiceProvider { get; private set; }
@@ -42,9 +46,9 @@ namespace UI
                 .ConfigureServices((context, services) => {
                     services.AddInfrastructure(context.Configuration);
                     services.AddServiceLayer();
-                    services.AddTransient<InitialMenu>();
-                    services.AddTransient<FrmClientNew>();
-                    services.AddTransient<FrmPeriodNew>();
+                    services.AddTransient<FrmClientList>();
+                    services.AddTransient<FrmPeriodsList>();
+                    services.AddTransient<FrmSavingAccountList>();
                 });
         }
 

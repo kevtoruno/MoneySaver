@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace UI.Forms.ClientsForms
 {
-    public partial class FrmClientNew : DraggableBaseForm
+    public partial class FrmClientNew : BaseForm
     {
         private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly FrmClientList _frmClientList;
@@ -61,6 +61,11 @@ namespace UI.Forms.ClientsForms
                 _frmClientList.LoadGridData();
 
             HandleResult(result, "Trabajador");
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
