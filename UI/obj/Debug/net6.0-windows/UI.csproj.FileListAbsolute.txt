@@ -130,3 +130,4 @@ C:\Users\Kevin\source\Projects\Sistema control de ahorro y préstamo\MONEYSAVER\
 C:\Users\Kevin\source\Projects\Sistema control de ahorro y préstamo\MONEYSAVER\UI\obj\Debug\net6.0-windows\UI.pdb
 C:\Users\Kevin\source\Projects\Sistema control de ahorro y préstamo\MONEYSAVER\UI\obj\Debug\net6.0-windows\UI.genruntimeconfig.cache
 C:\Users\Kevin\source\Projects\Sistema control de ahorro y préstamo\MONEYSAVER\UI\obj\Debug\net6.0-windows\ref\UI.dll
+C:\Users\Kevin\source\Projects\Sistema control de ahorro y préstamo\MONEYSAVER\UI\obj\Debug\net6.0-windows\UI.Forms.SavingAccountForms.FrmSavingAccountDetail.resources

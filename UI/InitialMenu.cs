@@ -48,7 +48,7 @@ namespace UI
 
         }
 
-        private void OpenChildForm(object childFormObject)
+        public void OpenChildForm(object childFormObject)
         {
             if (this.PanelContenedor.Controls.Count > 0)
                 this.PanelContenedor.Controls.RemoveAt(0);
@@ -68,7 +68,7 @@ namespace UI
         }
 
         private void btnControlAhorro_Click(object sender, EventArgs e)
-        {     
+        {
             OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmSavingAccountList>());
         }
 

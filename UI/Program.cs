@@ -16,7 +16,7 @@ namespace UI
 {
     internal static class Program
     {
-        public static int CompanyID { get { return 1; } }
+        public static int CompanyID;
         public static IConfiguration Configuration;
         /// <summary>
         ///  The main entry point for the application.
@@ -37,8 +37,11 @@ namespace UI
 
             SeedCompany(context);
 
-            Application.Run(new InitialMenu());
+            InitialMenu = new InitialMenu();
+            Application.Run(InitialMenu);
         }
+
+        public static InitialMenu InitialMenu { get; set; }
 
         public static IServiceProvider ServiceProvider { get; private set; }
         
@@ -63,8 +66,11 @@ namespace UI
                 { CompanyName = "DefaultComp", CurrentAmount = 0, FloatingAmount = 0 });
                 context.SaveChanges();
             }
-        }
 
- 
+            var defaultCompany = context.Companies.FirstOrDefault();
+
+            if (defaultCompany != null)
+                CompanyID = defaultCompany.CompanyID;
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace UI.Forms.ClientsForms
             clientToCreate.Age = this.txtAge.Text == "" ? 0 : Convert.ToInt32(this.txtAge.Text);
             clientToCreate.SecondName = this.txtSecondName.Text;
             clientToCreate.Identification = this.txtIdentification.Text;
-            clientToCreate.CompanyID = 1;
+            clientToCreate.CompanyID = Program.CompanyID;
 
             var clientCreator = new ClientCreator(_moneySaverRepository);
             var result = clientCreator.CreateNewClient(clientToCreate);

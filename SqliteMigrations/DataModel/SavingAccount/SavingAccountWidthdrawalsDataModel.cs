@@ -17,9 +17,16 @@ namespace Data.DataModel
         public SavingAccountsDataModel SavingAccount { get; set; }
         public int? SubPeriodID { get; set; }
         public SubPeriodsDataModel SubPeriod { get; set; }
+        public WithDrawalType WithDrawalType { get; set; }
 
         [Column(TypeName="money")]
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
+    }
+
+    public enum WithDrawalType 
+    {
+        Interests = 0,
+        CloseAccount = 1,
     }
 }

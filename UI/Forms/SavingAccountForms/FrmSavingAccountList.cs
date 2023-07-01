@@ -1,4 +1,5 @@
-﻿using Service.Core.Interfaces;
+﻿using Service.Core;
+using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,19 @@ namespace UI.Forms
         private void btnSearch_Click(object sender, EventArgs e)
         {
             LoadGridData();
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            if (this.gridSavingAccountsList.CurrentRow.Cells[0].Value == null)
+            {
+                MessageBox.Show("Debe seleccionar una cuenta bancaria.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int selectedSavingAccountID = (int)this.gridSavingAccountsList.CurrentRow.Cells[0].Value;
+
+            Program.InitialMenu.OpenChildForm(new FrmSavingAccountDetail(this._moneySaverRepository, selectedSavingAccountID));
         }
     }
 }

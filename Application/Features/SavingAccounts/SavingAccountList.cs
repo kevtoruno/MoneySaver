@@ -23,5 +23,15 @@ namespace Service.Features.SavingAccounts
 
             return savingAccountToListDto;
         }
+
+        public SavingAccountToDetailDto GetSavingAccountDetail(int savingAccountID) 
+        {
+            var savingAccountDetail = new SavingAccountToDetailDto();
+
+
+
+
+            return savingAccountDetail;
+        }
     }
 }

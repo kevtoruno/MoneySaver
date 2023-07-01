@@ -44,7 +44,7 @@ namespace UI.Forms.PeriodsForms
 
         private void FrmPeriodsList_Load(object sender, EventArgs e)
         {
-             LoadGridData();
+            LoadGridData();
         }
     }
 }

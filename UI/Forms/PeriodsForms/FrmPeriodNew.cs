@@ -68,12 +68,7 @@ namespace UI.Forms.PeriodsForms
         {
             var subPeriodsForPeriod = periodToCreateDto.SubPeriods;
 
-            BindingSource bindingSource = new BindingSource();
-
-            foreach (var subPeriod in subPeriodsForPeriod)
-            {
-                bindingSource.Add(subPeriod);
-            }
+            BindingSource bindingSource = CreateBindingSource(subPeriodsForPeriod);
 
             this.gridPreview.AutoGenerateColumns = false;
             this.gridPreview.DataSource = bindingSource;

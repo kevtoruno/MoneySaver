@@ -19,6 +19,9 @@
     <Compile Update="Forms\PeriodsForms\FrmPeriodsList.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\SavingAccountForms\FrmSavingAccountDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SavingAccountForms\FrmSavingAccountNew.cs">
       <SubType>Form</SubType>
     </Compile>

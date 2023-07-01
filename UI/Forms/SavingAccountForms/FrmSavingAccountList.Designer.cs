@@ -55,7 +55,7 @@
             lblSavingAcountTitle.AutoSize = true;
             lblSavingAcountTitle.Font = new Font("Microsoft Sans Serif", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblSavingAcountTitle.ForeColor = SystemColors.Control;
-            lblSavingAcountTitle.Location = new Point(535, 35);
+            lblSavingAcountTitle.Location = new Point(425, 35);
             lblSavingAcountTitle.Name = "lblSavingAcountTitle";
             lblSavingAcountTitle.Size = new Size(211, 29);
             lblSavingAcountTitle.TabIndex = 0;
@@ -70,7 +70,7 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnSearch.ForeColor = SystemColors.Control;
-            btnSearch.Location = new Point(568, 147);
+            btnSearch.Location = new Point(458, 147);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(150, 50);
             btnSearch.TabIndex = 4;
@@ -86,7 +86,7 @@
             btnNewSavingAccount.FlatStyle = FlatStyle.Flat;
             btnNewSavingAccount.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnNewSavingAccount.ForeColor = SystemColors.Control;
-            btnNewSavingAccount.Location = new Point(12, 12);
+            btnNewSavingAccount.Location = new Point(10, 10);
             btnNewSavingAccount.Name = "btnNewSavingAccount";
             btnNewSavingAccount.Size = new Size(189, 50);
             btnNewSavingAccount.TabIndex = 6;
@@ -137,7 +137,7 @@
             gridSavingAccountsList.RowHeadersWidth = 51;
             gridSavingAccountsList.RowTemplate.Height = 29;
             gridSavingAccountsList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridSavingAccountsList.Size = new Size(1276, 300);
+            gridSavingAccountsList.Size = new Size(1056, 300);
             gridSavingAccountsList.TabIndex = 7;
             // 
             // SavingAccountID
@@ -208,7 +208,7 @@
             // 
             txtINSS.Anchor = AnchorStyles.Top;
             txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtINSS.Location = new Point(581, 110);
+            txtINSS.Location = new Point(471, 110);
             txtINSS.Mask = "9999999999";
             txtINSS.Name = "txtINSS";
             txtINSS.Size = new Size(125, 31);
@@ -221,7 +221,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = SystemColors.Control;
-            label4.Location = new Point(600, 82);
+            label4.Location = new Point(490, 82);
             label4.Name = "label4";
             label4.Size = new Size(79, 25);
             label4.TabIndex = 15;
@@ -231,7 +231,6 @@
             // 
             btnDelete.BackColor = Color.SteelBlue;
             btnDelete.Cursor = Cursors.Hand;
-            btnDelete.Enabled = false;
             btnDelete.FlatAppearance.BorderSize = 0;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -247,7 +246,6 @@
             // 
             btnView.BackColor = Color.SteelBlue;
             btnView.Cursor = Cursors.Hand;
-            btnView.Enabled = false;
             btnView.FlatAppearance.BorderSize = 0;
             btnView.FlatStyle = FlatStyle.Flat;
             btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -258,13 +256,14 @@
             btnView.TabIndex = 16;
             btnView.Text = "Ver";
             btnView.UseVisualStyleBackColor = false;
+            btnView.Click += btnView_Click;
             // 
             // FrmSavingAccountList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
-            ClientSize = new Size(1300, 650);
+            ClientSize = new Size(1080, 650);
             Controls.Add(btnDelete);
             Controls.Add(btnView);
             Controls.Add(label4);

@@ -33,17 +33,17 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             lblClientTitle = new Label();
             gridClientList = new DataGridView();
+            ClientID = new DataGridViewTextBoxColumn();
+            INSS = new DataGridViewTextBoxColumn();
+            FullName = new DataGridViewTextBoxColumn();
+            Identification = new DataGridViewTextBoxColumn();
+            Age = new DataGridViewTextBoxColumn();
             btnNewClient = new Button();
             btnView = new Button();
             btnDelete = new Button();
             txtINSS = new MaskedTextBox();
             label4 = new Label();
             btnSearch = new Button();
-            ClientID = new DataGridViewTextBoxColumn();
-            INSS = new DataGridViewTextBoxColumn();
-            FullName = new DataGridViewTextBoxColumn();
-            Identification = new DataGridViewTextBoxColumn();
-            Age = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)gridClientList).BeginInit();
             SuspendLayout();
             // 
@@ -106,6 +106,51 @@
             gridClientList.TabIndex = 4;
             gridClientList.RowStateChanged += gridClientList_RowStateChanged;
             // 
+            // ClientID
+            // 
+            ClientID.DataPropertyName = "ClientID";
+            ClientID.HeaderText = "ClientID";
+            ClientID.MinimumWidth = 6;
+            ClientID.Name = "ClientID";
+            ClientID.Visible = false;
+            ClientID.Width = 125;
+            // 
+            // INSS
+            // 
+            INSS.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            INSS.DataPropertyName = "INSS";
+            INSS.HeaderText = "INSS";
+            INSS.MinimumWidth = 6;
+            INSS.Name = "INSS";
+            INSS.ReadOnly = true;
+            // 
+            // FullName
+            // 
+            FullName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            FullName.DataPropertyName = "FullName";
+            FullName.HeaderText = "Nombre";
+            FullName.MinimumWidth = 6;
+            FullName.Name = "FullName";
+            FullName.ReadOnly = true;
+            // 
+            // Identification
+            // 
+            Identification.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Identification.DataPropertyName = "Identification";
+            Identification.HeaderText = "Cédula";
+            Identification.MinimumWidth = 6;
+            Identification.Name = "Identification";
+            Identification.ReadOnly = true;
+            // 
+            // Age
+            // 
+            Age.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Age.DataPropertyName = "Age";
+            Age.HeaderText = "Edad";
+            Age.MinimumWidth = 6;
+            Age.Name = "Age";
+            Age.ReadOnly = true;
+            // 
             // btnNewClient
             // 
             btnNewClient.BackColor = Color.SteelBlue;
@@ -114,7 +159,7 @@
             btnNewClient.FlatStyle = FlatStyle.Flat;
             btnNewClient.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnNewClient.ForeColor = SystemColors.Control;
-            btnNewClient.Location = new Point(12, 17);
+            btnNewClient.Location = new Point(10, 10);
             btnNewClient.Name = "btnNewClient";
             btnNewClient.Size = new Size(170, 50);
             btnNewClient.TabIndex = 5;
@@ -196,51 +241,6 @@
             btnSearch.Text = "Buscar";
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
-            // 
-            // ClientID
-            // 
-            ClientID.DataPropertyName = "ClientID";
-            ClientID.HeaderText = "ClientID";
-            ClientID.MinimumWidth = 6;
-            ClientID.Name = "ClientID";
-            ClientID.Visible = false;
-            ClientID.Width = 125;
-            // 
-            // INSS
-            // 
-            INSS.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            INSS.DataPropertyName = "INSS";
-            INSS.HeaderText = "INSS";
-            INSS.MinimumWidth = 6;
-            INSS.Name = "INSS";
-            INSS.ReadOnly = true;
-            // 
-            // FullName
-            // 
-            FullName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            FullName.DataPropertyName = "FullName";
-            FullName.HeaderText = "Nombre";
-            FullName.MinimumWidth = 6;
-            FullName.Name = "FullName";
-            FullName.ReadOnly = true;
-            // 
-            // Identification
-            // 
-            Identification.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Identification.DataPropertyName = "Identification";
-            Identification.HeaderText = "Cédula";
-            Identification.MinimumWidth = 6;
-            Identification.Name = "Identification";
-            Identification.ReadOnly = true;
-            // 
-            // Age
-            // 
-            Age.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Age.DataPropertyName = "Age";
-            Age.HeaderText = "Edad";
-            Age.MinimumWidth = 6;
-            Age.Name = "Age";
-            Age.ReadOnly = true;
             // 
             // FrmClientList
             // 

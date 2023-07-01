@@ -131,7 +131,7 @@
             btnNewPeriod.FlatStyle = FlatStyle.Flat;
             btnNewPeriod.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnNewPeriod.ForeColor = SystemColors.Control;
-            btnNewPeriod.Location = new Point(12, 12);
+            btnNewPeriod.Location = new Point(10, 10);
             btnNewPeriod.Name = "btnNewPeriod";
             btnNewPeriod.Size = new Size(170, 50);
             btnNewPeriod.TabIndex = 6;

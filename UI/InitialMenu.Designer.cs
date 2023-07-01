@@ -73,9 +73,9 @@
             MenuVertical.Controls.Add(panel1);
             MenuVertical.Controls.Add(btnClients);
             MenuVertical.Dock = DockStyle.Left;
-            MenuVertical.Location = new Point(0, 38);
+            MenuVertical.Location = new Point(0, 35);
             MenuVertical.Name = "MenuVertical";
-            MenuVertical.Size = new Size(246, 612);
+            MenuVertical.Size = new Size(220, 615);
             MenuVertical.TabIndex = 1;
             // 
             // SubMenuAdminPanel
@@ -88,14 +88,14 @@
             SubMenuAdminPanel.Controls.Add(btnRangoPrestamos);
             SubMenuAdminPanel.Location = new Point(27, 365);
             SubMenuAdminPanel.Name = "SubMenuAdminPanel";
-            SubMenuAdminPanel.Size = new Size(219, 179);
+            SubMenuAdminPanel.Size = new Size(190, 179);
             SubMenuAdminPanel.TabIndex = 0;
             SubMenuAdminPanel.Visible = false;
             // 
             // panel7
             // 
             panel7.BackColor = Color.FromArgb(13, 93, 142);
-            panel7.Location = new Point(31, 113);
+            panel7.Location = new Point(3, 106);
             panel7.Name = "panel7";
             panel7.Size = new Size(10, 35);
             panel7.TabIndex = 11;
@@ -107,9 +107,9 @@
             btnMainPeriods.FlatStyle = FlatStyle.Flat;
             btnMainPeriods.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             btnMainPeriods.ForeColor = SystemColors.Control;
-            btnMainPeriods.Location = new Point(34, 113);
+            btnMainPeriods.Location = new Point(6, 106);
             btnMainPeriods.Name = "btnMainPeriods";
-            btnMainPeriods.Size = new Size(185, 35);
+            btnMainPeriods.Size = new Size(184, 35);
             btnMainPeriods.TabIndex = 10;
             btnMainPeriods.Text = "Períodos";
             btnMainPeriods.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             // panel6
             // 
             panel6.BackColor = Color.FromArgb(13, 93, 142);
-            panel6.Location = new Point(31, 51);
+            panel6.Location = new Point(3, 44);
             panel6.Name = "panel6";
             panel6.Size = new Size(10, 56);
             panel6.TabIndex = 9;
@@ -130,7 +130,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             button1.ForeColor = SystemColors.Control;
-            button1.Location = new Point(34, 51);
+            button1.Location = new Point(6, 44);
             button1.Name = "button1";
             button1.Size = new Size(185, 56);
             button1.TabIndex = 8;
@@ -140,7 +140,7 @@
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(13, 93, 142);
-            panel5.Location = new Point(31, 10);
+            panel5.Location = new Point(3, 3);
             panel5.Name = "panel5";
             panel5.Size = new Size(10, 35);
             panel5.TabIndex = 7;
@@ -152,7 +152,7 @@
             btnRangoPrestamos.FlatStyle = FlatStyle.Flat;
             btnRangoPrestamos.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             btnRangoPrestamos.ForeColor = SystemColors.Control;
-            btnRangoPrestamos.Location = new Point(34, 10);
+            btnRangoPrestamos.Location = new Point(6, 3);
             btnRangoPrestamos.Name = "btnRangoPrestamos";
             btnRangoPrestamos.Size = new Size(185, 35);
             btnRangoPrestamos.TabIndex = 6;
@@ -176,7 +176,7 @@
             btnAdmin.ForeColor = SystemColors.Control;
             btnAdmin.Location = new Point(11, 315);
             btnAdmin.Name = "btnAdmin";
-            btnAdmin.Size = new Size(234, 44);
+            btnAdmin.Size = new Size(209, 44);
             btnAdmin.TabIndex = 6;
             btnAdmin.Text = "Admin";
             btnAdmin.UseVisualStyleBackColor = true;
@@ -199,7 +199,7 @@
             btnControlPrestamos.ForeColor = SystemColors.Control;
             btnControlPrestamos.Location = new Point(12, 256);
             btnControlPrestamos.Name = "btnControlPrestamos";
-            btnControlPrestamos.Size = new Size(234, 44);
+            btnControlPrestamos.Size = new Size(209, 44);
             btnControlPrestamos.TabIndex = 4;
             btnControlPrestamos.Text = "Préstamos";
             btnControlPrestamos.UseVisualStyleBackColor = true;
@@ -221,7 +221,7 @@
             btnControlAhorro.ForeColor = SystemColors.Control;
             btnControlAhorro.Location = new Point(11, 194);
             btnControlAhorro.Name = "btnControlAhorro";
-            btnControlAhorro.Size = new Size(234, 44);
+            btnControlAhorro.Size = new Size(209, 44);
             btnControlAhorro.TabIndex = 2;
             btnControlAhorro.Text = "Ahorros";
             btnControlAhorro.UseVisualStyleBackColor = true;
@@ -244,7 +244,7 @@
             btnClients.ForeColor = SystemColors.Control;
             btnClients.Location = new Point(11, 131);
             btnClients.Name = "btnClients";
-            btnClients.Size = new Size(234, 44);
+            btnClients.Size = new Size(209, 44);
             btnClients.TabIndex = 0;
             btnClients.Text = "Trabajadores";
             btnClients.UseVisualStyleBackColor = true;
@@ -260,7 +260,7 @@
             BarraTitulo.Dock = DockStyle.Top;
             BarraTitulo.Location = new Point(0, 0);
             BarraTitulo.Name = "BarraTitulo";
-            BarraTitulo.Size = new Size(1300, 38);
+            BarraTitulo.Size = new Size(1300, 35);
             BarraTitulo.TabIndex = 0;
             BarraTitulo.MouseDown += BarraTitulo_MouseDown;
             // 
@@ -321,9 +321,9 @@
             // 
             PanelContenedor.BackColor = Color.FromArgb(49, 66, 82);
             PanelContenedor.Dock = DockStyle.Fill;
-            PanelContenedor.Location = new Point(246, 38);
+            PanelContenedor.Location = new Point(220, 35);
             PanelContenedor.Name = "PanelContenedor";
-            PanelContenedor.Size = new Size(1054, 612);
+            PanelContenedor.Size = new Size(1080, 615);
             PanelContenedor.TabIndex = 2;
             // 
             // InitialMenu
