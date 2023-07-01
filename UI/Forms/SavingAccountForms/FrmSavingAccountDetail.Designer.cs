@@ -41,37 +41,36 @@
             lblCurrentAmount = new Label();
             panel1 = new Panel();
             lblClientFullNameTitle = new Label();
-            label7 = new Label();
+            lblCreatedDateData = new Label();
             lblINSSTitle = new Label();
-            label8 = new Label();
+            lblCreatedDate = new Label();
             lblIdentificationTitle = new Label();
-            label5 = new Label();
+            lblStatusData = new Label();
             lblClientFullNameData = new Label();
-            label6 = new Label();
+            lblStatus = new Label();
             lblINSSData = new Label();
             lblIdentificationData = new Label();
-            label3 = new Label();
-            label4 = new Label();
+            lblAmountForInterestsData = new Label();
+            lblAmountForInterests = new Label();
             btnWithdrawInsterests = new Button();
             btnFinishSavingAccount = new Button();
-            lblTotalSavingData = new Label();
-            lblTotalSavingTitle = new Label();
+            lblTotalAmountData = new Label();
+            lblTotalAmount = new Label();
             lblSavingAccTitle = new Label();
             rightPanel = new Panel();
             btnDeposit = new Button();
             lblWithDrawalGridTitle = new Label();
             lblDepositGridTitle = new Label();
             gridDepositsList = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
             gridWidthdrawalsList = new DataGridView();
             SavingAccountWithdrawalID = new DataGridViewTextBoxColumn();
             SubPeriodName = new DataGridViewTextBoxColumn();
             Amount = new DataGridViewTextBoxColumn();
             CreatedDate = new DataGridViewTextBoxColumn();
+            SavingAccountDepositID = new DataGridViewTextBoxColumn();
+            SubPeriod = new DataGridViewTextBoxColumn();
+            AmountColumn = new DataGridViewTextBoxColumn();
+            CreatedDateColumn = new DataGridViewTextBoxColumn();
             leftPanel.SuspendLayout();
             panel1.SuspendLayout();
             rightPanel.SuspendLayout();
@@ -88,16 +87,16 @@
             leftPanel.Controls.Add(lblCurrentAmountData);
             leftPanel.Controls.Add(lblCurrentAmount);
             leftPanel.Controls.Add(panel1);
-            leftPanel.Controls.Add(label3);
-            leftPanel.Controls.Add(label4);
+            leftPanel.Controls.Add(lblAmountForInterestsData);
+            leftPanel.Controls.Add(lblAmountForInterests);
             leftPanel.Controls.Add(btnWithdrawInsterests);
             leftPanel.Controls.Add(btnFinishSavingAccount);
-            leftPanel.Controls.Add(lblTotalSavingData);
-            leftPanel.Controls.Add(lblTotalSavingTitle);
+            leftPanel.Controls.Add(lblTotalAmountData);
+            leftPanel.Controls.Add(lblTotalAmount);
             leftPanel.Controls.Add(lblSavingAccTitle);
             leftPanel.Location = new Point(0, 0);
             leftPanel.Name = "leftPanel";
-            leftPanel.Size = new Size(500, 615);
+            leftPanel.Size = new Size(520, 615);
             leftPanel.TabIndex = 0;
             // 
             // lblTotalWidthdrawnData
@@ -154,18 +153,18 @@
             panel1.BackColor = Color.FromArgb(49, 66, 90);
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(lblClientFullNameTitle);
-            panel1.Controls.Add(label7);
+            panel1.Controls.Add(lblCreatedDateData);
             panel1.Controls.Add(lblINSSTitle);
-            panel1.Controls.Add(label8);
+            panel1.Controls.Add(lblCreatedDate);
             panel1.Controls.Add(lblIdentificationTitle);
-            panel1.Controls.Add(label5);
+            panel1.Controls.Add(lblStatusData);
             panel1.Controls.Add(lblClientFullNameData);
-            panel1.Controls.Add(label6);
+            panel1.Controls.Add(lblStatus);
             panel1.Controls.Add(lblINSSData);
             panel1.Controls.Add(lblIdentificationData);
             panel1.Location = new Point(0, 90);
             panel1.Name = "panel1";
-            panel1.Size = new Size(500, 223);
+            panel1.Size = new Size(520, 223);
             panel1.TabIndex = 33;
             // 
             // lblClientFullNameTitle
@@ -175,24 +174,24 @@
             lblClientFullNameTitle.BackColor = Color.Transparent;
             lblClientFullNameTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblClientFullNameTitle.ForeColor = Color.White;
-            lblClientFullNameTitle.Location = new Point(96, 9);
+            lblClientFullNameTitle.Location = new Point(65, 13);
             lblClientFullNameTitle.Name = "lblClientFullNameTitle";
             lblClientFullNameTitle.Size = new Size(109, 28);
             lblClientFullNameTitle.TabIndex = 15;
             lblClientFullNameTitle.Text = "Trabajador:";
             // 
-            // label7
+            // lblCreatedDateData
             // 
-            label7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            label7.AutoSize = true;
-            label7.BackColor = Color.Transparent;
-            label7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.ForeColor = Color.White;
-            label7.Location = new Point(224, 170);
-            label7.Name = "label7";
-            label7.Size = new Size(116, 28);
-            label7.TabIndex = 32;
-            label7.Text = "00/00/2000";
+            lblCreatedDateData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            lblCreatedDateData.AutoSize = true;
+            lblCreatedDateData.BackColor = Color.Transparent;
+            lblCreatedDateData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            lblCreatedDateData.ForeColor = Color.White;
+            lblCreatedDateData.Location = new Point(179, 179);
+            lblCreatedDateData.Name = "lblCreatedDateData";
+            lblCreatedDateData.Size = new Size(96, 23);
+            lblCreatedDateData.TabIndex = 32;
+            lblCreatedDateData.Text = "00/00/2000";
             // 
             // lblINSSTitle
             // 
@@ -201,24 +200,24 @@
             lblINSSTitle.BackColor = Color.Transparent;
             lblINSSTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblINSSTitle.ForeColor = Color.White;
-            lblINSSTitle.Location = new Point(115, 49);
+            lblINSSTitle.Location = new Point(84, 53);
             lblINSSTitle.Name = "lblINSSTitle";
             lblINSSTitle.Size = new Size(90, 28);
             lblINSSTitle.TabIndex = 16;
             lblINSSTitle.Text = "No INSS:";
             // 
-            // label8
+            // lblCreatedDate
             // 
-            label8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            label8.AutoSize = true;
-            label8.BackColor = Color.Transparent;
-            label8.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.ForeColor = Color.White;
-            label8.Location = new Point(38, 170);
-            label8.Name = "label8";
-            label8.Size = new Size(167, 28);
-            label8.TabIndex = 31;
-            label8.Text = "Fecha de creación";
+            lblCreatedDate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            lblCreatedDate.AutoSize = true;
+            lblCreatedDate.BackColor = Color.Transparent;
+            lblCreatedDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblCreatedDate.ForeColor = Color.White;
+            lblCreatedDate.Location = new Point(7, 174);
+            lblCreatedDate.Name = "lblCreatedDate";
+            lblCreatedDate.Size = new Size(167, 28);
+            lblCreatedDate.TabIndex = 31;
+            lblCreatedDate.Text = "Fecha de creación";
             // 
             // lblIdentificationTitle
             // 
@@ -227,61 +226,61 @@
             lblIdentificationTitle.BackColor = Color.Transparent;
             lblIdentificationTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblIdentificationTitle.ForeColor = Color.White;
-            lblIdentificationTitle.Location = new Point(129, 89);
+            lblIdentificationTitle.Location = new Point(98, 93);
             lblIdentificationTitle.Name = "lblIdentificationTitle";
             lblIdentificationTitle.Size = new Size(76, 28);
             lblIdentificationTitle.TabIndex = 17;
             lblIdentificationTitle.Text = "Cédula:";
             // 
-            // label5
+            // lblStatusData
             // 
-            label5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            label5.AutoSize = true;
-            label5.BackColor = Color.Transparent;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.ForeColor = Color.White;
-            label5.Location = new Point(224, 127);
-            label5.Name = "label5";
-            label5.Size = new Size(66, 28);
-            label5.TabIndex = 30;
-            label5.Text = "Activa";
+            lblStatusData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            lblStatusData.AutoSize = true;
+            lblStatusData.BackColor = Color.Transparent;
+            lblStatusData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            lblStatusData.ForeColor = Color.White;
+            lblStatusData.Location = new Point(179, 136);
+            lblStatusData.Name = "lblStatusData";
+            lblStatusData.Size = new Size(56, 23);
+            lblStatusData.TabIndex = 30;
+            lblStatusData.Text = "Activa";
             // 
             // lblClientFullNameData
             // 
             lblClientFullNameData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             lblClientFullNameData.AutoSize = true;
             lblClientFullNameData.BackColor = Color.Transparent;
-            lblClientFullNameData.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblClientFullNameData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblClientFullNameData.ForeColor = Color.White;
-            lblClientFullNameData.Location = new Point(224, 9);
+            lblClientFullNameData.Location = new Point(179, 18);
             lblClientFullNameData.Name = "lblClientFullNameData";
-            lblClientFullNameData.Size = new Size(20, 28);
+            lblClientFullNameData.Size = new Size(18, 23);
             lblClientFullNameData.TabIndex = 21;
             lblClientFullNameData.Text = "..";
             // 
-            // label6
+            // lblStatus
             // 
-            label6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            label6.AutoSize = true;
-            label6.BackColor = Color.Transparent;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.ForeColor = Color.White;
-            label6.Location = new Point(129, 127);
-            label6.Name = "label6";
-            label6.Size = new Size(75, 28);
-            label6.TabIndex = 29;
-            label6.Text = "Estado:";
+            lblStatus.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            lblStatus.AutoSize = true;
+            lblStatus.BackColor = Color.Transparent;
+            lblStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblStatus.ForeColor = Color.White;
+            lblStatus.Location = new Point(98, 131);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(75, 28);
+            lblStatus.TabIndex = 29;
+            lblStatus.Text = "Estado:";
             // 
             // lblINSSData
             // 
             lblINSSData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             lblINSSData.AutoSize = true;
             lblINSSData.BackColor = Color.Transparent;
-            lblINSSData.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblINSSData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblINSSData.ForeColor = Color.White;
-            lblINSSData.Location = new Point(224, 49);
+            lblINSSData.Location = new Point(179, 58);
             lblINSSData.Name = "lblINSSData";
-            lblINSSData.Size = new Size(45, 28);
+            lblINSSData.Size = new Size(37, 23);
             lblINSSData.TabIndex = 22;
             lblINSSData.Text = "000";
             // 
@@ -289,37 +288,37 @@
             // 
             lblIdentificationData.AutoSize = true;
             lblIdentificationData.BackColor = Color.Transparent;
-            lblIdentificationData.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblIdentificationData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblIdentificationData.ForeColor = Color.White;
-            lblIdentificationData.Location = new Point(224, 89);
+            lblIdentificationData.Location = new Point(179, 98);
             lblIdentificationData.Name = "lblIdentificationData";
-            lblIdentificationData.Size = new Size(168, 28);
+            lblIdentificationData.Size = new Size(138, 23);
             lblIdentificationData.TabIndex = 23;
             lblIdentificationData.Text = "0000000000000A";
             // 
-            // label3
+            // lblAmountForInterestsData
             // 
-            label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = Color.LawnGreen;
-            label3.Location = new Point(290, 472);
-            label3.Name = "label3";
-            label3.Size = new Size(60, 28);
-            label3.TabIndex = 28;
-            label3.Text = "$$$$";
+            lblAmountForInterestsData.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblAmountForInterestsData.AutoSize = true;
+            lblAmountForInterestsData.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblAmountForInterestsData.ForeColor = Color.LawnGreen;
+            lblAmountForInterestsData.Location = new Point(290, 472);
+            lblAmountForInterestsData.Name = "lblAmountForInterestsData";
+            lblAmountForInterestsData.Size = new Size(60, 28);
+            lblAmountForInterestsData.TabIndex = 28;
+            lblAmountForInterestsData.Text = "$$$$";
             // 
-            // label4
+            // lblAmountForInterests
             // 
-            label4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.ForeColor = Color.White;
-            label4.Location = new Point(10, 472);
-            label4.Name = "label4";
-            label4.Size = new Size(263, 28);
-            label4.TabIndex = 27;
-            label4.Text = "Acumulado para intereses:";
+            lblAmountForInterests.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblAmountForInterests.AutoSize = true;
+            lblAmountForInterests.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblAmountForInterests.ForeColor = Color.White;
+            lblAmountForInterests.Location = new Point(10, 472);
+            lblAmountForInterests.Name = "lblAmountForInterests";
+            lblAmountForInterests.Size = new Size(263, 28);
+            lblAmountForInterests.TabIndex = 27;
+            lblAmountForInterests.Text = "Acumulado para intereses:";
             // 
             // btnWithdrawInsterests
             // 
@@ -357,29 +356,29 @@
             btnFinishSavingAccount.Text = "Cerrar cuenta de ahorro";
             btnFinishSavingAccount.UseVisualStyleBackColor = false;
             // 
-            // lblTotalSavingData
+            // lblTotalAmountData
             // 
-            lblTotalSavingData.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblTotalSavingData.AutoSize = true;
-            lblTotalSavingData.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTotalSavingData.ForeColor = Color.LawnGreen;
-            lblTotalSavingData.Location = new Point(290, 582);
-            lblTotalSavingData.Name = "lblTotalSavingData";
-            lblTotalSavingData.Size = new Size(60, 28);
-            lblTotalSavingData.TabIndex = 20;
-            lblTotalSavingData.Text = "$$$$";
+            lblTotalAmountData.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblTotalAmountData.AutoSize = true;
+            lblTotalAmountData.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTotalAmountData.ForeColor = Color.LawnGreen;
+            lblTotalAmountData.Location = new Point(290, 582);
+            lblTotalAmountData.Name = "lblTotalAmountData";
+            lblTotalAmountData.Size = new Size(60, 28);
+            lblTotalAmountData.TabIndex = 20;
+            lblTotalAmountData.Text = "$$$$";
             // 
-            // lblTotalSavingTitle
+            // lblTotalAmount
             // 
-            lblTotalSavingTitle.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblTotalSavingTitle.AutoSize = true;
-            lblTotalSavingTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTotalSavingTitle.ForeColor = Color.White;
-            lblTotalSavingTitle.Location = new Point(10, 582);
-            lblTotalSavingTitle.Name = "lblTotalSavingTitle";
-            lblTotalSavingTitle.Size = new Size(156, 28);
-            lblTotalSavingTitle.TabIndex = 19;
-            lblTotalSavingTitle.Text = "Total ahorrado:";
+            lblTotalAmount.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblTotalAmount.AutoSize = true;
+            lblTotalAmount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTotalAmount.ForeColor = Color.White;
+            lblTotalAmount.Location = new Point(10, 582);
+            lblTotalAmount.Name = "lblTotalAmount";
+            lblTotalAmount.Size = new Size(156, 28);
+            lblTotalAmount.TabIndex = 19;
+            lblTotalAmount.Text = "Total ahorrado:";
             // 
             // lblSavingAccTitle
             // 
@@ -402,9 +401,9 @@
             rightPanel.Controls.Add(lblDepositGridTitle);
             rightPanel.Controls.Add(gridDepositsList);
             rightPanel.Controls.Add(gridWidthdrawalsList);
-            rightPanel.Location = new Point(500, 0);
+            rightPanel.Location = new Point(520, 0);
             rightPanel.Name = "rightPanel";
-            rightPanel.Size = new Size(580, 615);
+            rightPanel.Size = new Size(560, 615);
             rightPanel.TabIndex = 1;
             // 
             // btnDeposit
@@ -429,7 +428,7 @@
             lblWithDrawalGridTitle.AutoSize = true;
             lblWithDrawalGridTitle.Font = new Font("Microsoft Sans Serif", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblWithDrawalGridTitle.ForeColor = SystemColors.Control;
-            lblWithDrawalGridTitle.Location = new Point(282, 45);
+            lblWithDrawalGridTitle.Location = new Point(216, 46);
             lblWithDrawalGridTitle.Name = "lblWithDrawalGridTitle";
             lblWithDrawalGridTitle.Size = new Size(90, 29);
             lblWithDrawalGridTitle.TabIndex = 25;
@@ -441,7 +440,7 @@
             lblDepositGridTitle.AutoSize = true;
             lblDepositGridTitle.Font = new Font("Microsoft Sans Serif", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblDepositGridTitle.ForeColor = SystemColors.Control;
-            lblDepositGridTitle.Location = new Point(282, 299);
+            lblDepositGridTitle.Location = new Point(216, 293);
             lblDepositGridTitle.Name = "lblDepositGridTitle";
             lblDepositGridTitle.Size = new Size(122, 29);
             lblDepositGridTitle.TabIndex = 24;
@@ -464,7 +463,7 @@
             gridDepositsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridDepositsList.ColumnHeadersHeight = 30;
             gridDepositsList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridDepositsList.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5 });
+            gridDepositsList.Columns.AddRange(new DataGridViewColumn[] { SavingAccountDepositID, SubPeriod, AmountColumn, CreatedDateColumn });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -490,53 +489,8 @@
             gridDepositsList.RowHeadersWidth = 51;
             gridDepositsList.RowTemplate.Height = 29;
             gridDepositsList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridDepositsList.Size = new Size(570, 279);
+            gridDepositsList.Size = new Size(550, 279);
             gridDepositsList.TabIndex = 6;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "ClientID";
-            dataGridViewTextBoxColumn1.HeaderText = "ClientID";
-            dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.Visible = false;
-            dataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn2.DataPropertyName = "INSS";
-            dataGridViewTextBoxColumn2.HeaderText = "INSS";
-            dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn3.DataPropertyName = "FullName";
-            dataGridViewTextBoxColumn3.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn4.DataPropertyName = "Identification";
-            dataGridViewTextBoxColumn4.HeaderText = "Cédula";
-            dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewTextBoxColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn5.DataPropertyName = "Age";
-            dataGridViewTextBoxColumn5.HeaderText = "Edad";
-            dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.ReadOnly = true;
             // 
             // gridWidthdrawalsList
             // 
@@ -581,7 +535,7 @@
             gridWidthdrawalsList.RowHeadersWidth = 51;
             gridWidthdrawalsList.RowTemplate.Height = 29;
             gridWidthdrawalsList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridWidthdrawalsList.Size = new Size(570, 169);
+            gridWidthdrawalsList.Size = new Size(550, 169);
             gridWidthdrawalsList.TabIndex = 5;
             // 
             // SavingAccountWithdrawalID
@@ -620,6 +574,42 @@
             CreatedDate.Name = "CreatedDate";
             CreatedDate.ReadOnly = true;
             // 
+            // SavingAccountDepositID
+            // 
+            SavingAccountDepositID.DataPropertyName = "SavingAccountDepositID";
+            SavingAccountDepositID.HeaderText = "SavingAccountDepositID";
+            SavingAccountDepositID.MinimumWidth = 6;
+            SavingAccountDepositID.Name = "SavingAccountDepositID";
+            SavingAccountDepositID.Visible = false;
+            SavingAccountDepositID.Width = 125;
+            // 
+            // SubPeriod
+            // 
+            SubPeriod.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            SubPeriod.DataPropertyName = "SubPeriodName";
+            SubPeriod.HeaderText = "Sub período";
+            SubPeriod.MinimumWidth = 6;
+            SubPeriod.Name = "SubPeriod";
+            SubPeriod.ReadOnly = true;
+            // 
+            // AmountColumn
+            // 
+            AmountColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            AmountColumn.DataPropertyName = "Amount";
+            AmountColumn.HeaderText = "Cantidad";
+            AmountColumn.MinimumWidth = 6;
+            AmountColumn.Name = "AmountColumn";
+            AmountColumn.ReadOnly = true;
+            // 
+            // CreatedDateColumn
+            // 
+            CreatedDateColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            CreatedDateColumn.DataPropertyName = "CreatedDate";
+            CreatedDateColumn.HeaderText = "Fecha";
+            CreatedDateColumn.MinimumWidth = 6;
+            CreatedDateColumn.Name = "CreatedDateColumn";
+            CreatedDateColumn.ReadOnly = true;
+            // 
             // FrmSavingAccountDetail
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -631,6 +621,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "FrmSavingAccountDetail";
             Text = "FrmSavingAccountDetail";
+            Load += FrmSavingAccountDetail_Load;
             leftPanel.ResumeLayout(false);
             leftPanel.PerformLayout();
             panel1.ResumeLayout(false);
@@ -650,29 +641,24 @@
         private Label lblINSSTitle;
         private Label lblClientFullNameTitle;
         private Label lblSavingAccTitle;
-        private Label lblTotalSavingTitle;
+        private Label lblTotalAmount;
         private Label lblIdentificationData;
         private Label lblINSSData;
         private Label lblClientFullNameData;
-        private Label lblTotalSavingData;
+        private Label lblTotalAmountData;
         private DataGridView gridDepositsList;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridView gridWidthdrawalsList;
         private Label lblWithDrawalGridTitle;
         private Label lblDepositGridTitle;
         private Button btnDeposit;
         private Button btnFinishSavingAccount;
         private Button btnWithdrawInsterests;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private Label label8;
+        private Label lblAmountForInterestsData;
+        private Label lblAmountForInterests;
+        private Label lblStatusData;
+        private Label lblStatus;
+        private Label lblCreatedDateData;
+        private Label lblCreatedDate;
         private Panel panel1;
         private Label lblTotalWidthdrawnData;
         private Label lblTotalWidthdrawn;
@@ -682,5 +668,9 @@
         private DataGridViewTextBoxColumn SubPeriodName;
         private DataGridViewTextBoxColumn Amount;
         private DataGridViewTextBoxColumn CreatedDate;
+        private DataGridViewTextBoxColumn SavingAccountDepositID;
+        private DataGridViewTextBoxColumn SubPeriod;
+        private DataGridViewTextBoxColumn AmountColumn;
+        private DataGridViewTextBoxColumn CreatedDateColumn;
     }
 }

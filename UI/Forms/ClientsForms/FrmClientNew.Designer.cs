@@ -36,7 +36,6 @@
             txtFirstName = new TextBox();
             lblClientTitle = new Label();
             txtSecondName = new TextBox();
-            txtINSS = new TextBox();
             btnCancel = new Button();
             txtIdentification = new MaskedTextBox();
             lblIdentification = new Label();
@@ -46,6 +45,7 @@
             label4 = new Label();
             label5 = new Label();
             txtAge = new MaskedTextBox();
+            txtINSS = new MaskedTextBox();
             BarraTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnCerrar).BeginInit();
             SuspendLayout();
@@ -134,16 +134,6 @@
             txtSecondName.PlaceholderText = "Segundo nombre";
             txtSecondName.Size = new Size(211, 31);
             txtSecondName.TabIndex = 2;
-            // 
-            // txtINSS
-            // 
-            txtINSS.Anchor = AnchorStyles.Top;
-            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtINSS.Location = new Point(411, 155);
-            txtINSS.Name = "txtINSS";
-            txtINSS.PlaceholderText = "INSS";
-            txtINSS.Size = new Size(150, 31);
-            txtINSS.TabIndex = 4;
             // 
             // btnCancel
             // 
@@ -248,12 +238,24 @@
             txtAge.Size = new Size(52, 31);
             txtAge.TabIndex = 5;
             // 
+            // txtINSS
+            // 
+            txtINSS.Anchor = AnchorStyles.Top;
+            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtINSS.Location = new Point(411, 155);
+            txtINSS.Mask = "9999999999";
+            txtINSS.Name = "txtINSS";
+            txtINSS.Size = new Size(125, 31);
+            txtINSS.TabIndex = 15;
+            txtINSS.ValidatingType = typeof(int);
+            // 
             // FrmClientNew
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(692, 488);
+            Controls.Add(txtINSS);
             Controls.Add(txtAge);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -263,7 +265,6 @@
             Controls.Add(lblIdentification);
             Controls.Add(txtIdentification);
             Controls.Add(btnCancel);
-            Controls.Add(txtINSS);
             Controls.Add(txtSecondName);
             Controls.Add(txtLastName);
             Controls.Add(btnCreate);
@@ -292,7 +293,6 @@
         private TextBox txtFirstName;
         private Label lblClientTitle;
         private TextBox txtSecondName;
-        private TextBox txtINSS;
         private Button btnCancel;
         private MaskedTextBox txtIdentification;
         private Label lblIdentification;
@@ -302,5 +302,6 @@
         private Label label4;
         private Label label5;
         private MaskedTextBox txtAge;
+        private MaskedTextBox txtINSS;
     }
 }

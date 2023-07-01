@@ -1843,8 +1843,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.7",
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.7",
           "Microsoft.Extensions.Configuration": "7.0.0",
-          "Service": "1.0.0",
-          "SqliteMigrations": "1.0.0"
+          "Service": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Data.dll": {}
@@ -1882,6 +1881,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Data": "1.0.0",
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.7"
         },
         "compile": {
@@ -1889,6 +1889,20 @@
         },
         "runtime": {
           "bin/placeholder/SqliteMigrations.dll": {}
+        }
+      },
+      "SQLServerMigrations/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Data": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.7"
+        },
+        "compile": {
+          "bin/placeholder/SQLServerMigrations.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SQLServerMigrations.dll": {}
         }
       }
     }
@@ -4961,6 +4975,11 @@
       "type": "project",
       "path": "../SqliteMigrations/SqliteMigrations.csproj",
       "msbuildProject": "../SqliteMigrations/SqliteMigrations.csproj"
+    },
+    "SQLServerMigrations/1.0.0": {
+      "type": "project",
+      "path": "../SQLServerMigrations/SQLServerMigrations.csproj",
+      "msbuildProject": "../SQLServerMigrations/SQLServerMigrations.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4970,7 +4989,9 @@
       "Microsoft.Extensions.DependencyInjection >= 7.0.0",
       "Microsoft.Extensions.Hosting >= 7.0.1",
       "Microsoft.Extensions.Hosting.Abstractions >= 7.0.0",
-      "Service >= 1.0.0"
+      "SQLServerMigrations >= 1.0.0",
+      "Service >= 1.0.0",
+      "SqliteMigrations >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5005,6 +5026,12 @@
             },
             "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\Data\\Data.csproj": {
               "projectPath": "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\Data\\Data.csproj"
+            },
+            "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\SqliteMigrations\\SqliteMigrations.csproj": {
+              "projectPath": "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\SqliteMigrations\\SqliteMigrations.csproj"
+            },
+            "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\SQLServerMigrations\\SQLServerMigrations.csproj": {
+              "projectPath": "C:\\Users\\Kevin\\source\\Projects\\Sistema control de ahorro y préstamo\\MONEYSAVER\\SQLServerMigrations\\SQLServerMigrations.csproj"
             }
           }
         }

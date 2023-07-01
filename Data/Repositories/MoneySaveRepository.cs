@@ -1,8 +1,7 @@
 ﻿using Service.Core.Dtos;
 using Service.Core.Interfaces;
+using Service.Core.DataModel;
 using AutoMapper;
-using Data.DataModel;
-using SqliteMigrations.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Azure.Core;
+using Data.Persistence;
 
 namespace Data.Repositories
 {
@@ -94,8 +94,7 @@ namespace Data.Repositories
             catch (Exception) 
             {
                 tran.Rollback();
-            }
-                
+            }      
         }
 
         public List<PeriodsToListDto> GetPeriodsList()
@@ -161,58 +160,27 @@ namespace Data.Repositories
             return savingAccounts;
         }
 
-        public SavingAccountToDetailDto GetSavingAccountDetail(int savingAccountID) 
+        public SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID)
         {
-            var savingAccountDetail = _context.SavingAccounts
+            return _context.SavingAccounts
                 .Include(sa => sa.Client)
-                .Select(sa => new SavingAccountToDetailDto 
-                {
-                    Amount = String.Format("{0:#,##0.00}", sa.Amount),
-                    IsActive = sa.IsActive,
-                    AmountForInterests = String.Format("{0:#,##0.00}", sa.AmountForInterests),
-                    SavingAccountID=sa.SavingAccountID,
-                    CreatedDate = sa.CreatedDate.ToShortDateString(),
-                    ClientFullName = $"{sa.Client.LastNames} {sa.Client.FirstName} {sa.Client.SecondName}",
-                    INSS = sa.Client.INSS,
-                    Identification = sa.Client.Identification,
-                })
                 .First(a => a.SavingAccountID == savingAccountID);
-
-            savingAccountDetail.WidthdrawalsToList = GetSavingAccountWidthdrawals(savingAccountID);
-
-            return savingAccountDetail;
         }
 
-        private List<SavingAccountWidthdrawalsToListDto> GetSavingAccountWidthdrawals(int savingAccountID) 
+        public List<SavingAccountWidthdrawalsDataModel> GetSavingAccountWidthdrawals(int savingAccountID)
         {
-            var savingAccountWithdrawals = new List<SavingAccountWidthdrawalsToListDto>();
-            
-            var withdrawalsFromDB = _context.SavingAccountWidthdrawals
+            return _context.SavingAccountWidthdrawals
                 .Include(sa => sa.SubPeriod.Period)
                 .Where(sa => sa.SavingAccountID == savingAccountID)
                 .ToList();
+        } 
 
-            withdrawalsFromDB.ForEach(saw =>
-            {
-                var subPeriodName = "";
-
-                if (saw.SubPeriod != null) 
-                {
-                    var date = new DateTime(saw.SubPeriod.Period.Year, saw.SubPeriod.Month, 1);
-
-                    subPeriodName = $"Período de {date.ToString("MMMM")} del {saw.SubPeriod.Period.Year}";
-                }
-
-                savingAccountWithdrawals.Add(new SavingAccountWidthdrawalsToListDto
-                {
-                    Amount = saw.Amount,
-                    SavingAccountWithdrawalID = saw.SavingAccountWithdrawalID,
-                    CreatedDate = saw.CreatedDate,
-                    SubPeriodID = saw.SubPeriodID != null ? saw.SubPeriodID.Value : 0,
-                    SubPeriodName = subPeriodName
-                });
-            });
-            return savingAccountWithdrawals;
+        public List<SavingAccountDepositsDataModel> GetSavingAccountDeposits(int savingAccountID) 
+        {
+            return _context.SavingAccountDeposits
+                .Include(sa => sa.SubPeriod.Period)
+                .Where(sa => sa.SavingAccountID == savingAccountID)
+                .ToList();
         }
     }
 }

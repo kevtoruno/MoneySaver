@@ -1,4 +1,5 @@
-﻿using Service.Core.Dtos;
+﻿using Service.Core.DataModel;
+using Service.Core.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +28,8 @@ namespace Service.Core.Interfaces
         void CreateSavingAccount(SavingAccountToCreate savingAccountToCreate);
 
         List<SavingAccountToListDto> GetSavingAccountsList(string INSS);
+        SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID);
+        List<SavingAccountWidthdrawalsDataModel> GetSavingAccountWidthdrawals(int savingAccountID);
+        List<SavingAccountDepositsDataModel> GetSavingAccountDeposits(int savingAccountID);
     }
 }

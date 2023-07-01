@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Application\Service.csproj", "{A2F3BD5C-70AF-4079-83E3-584DD3237D5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqliteMigrations", "SqliteMigrations\SqliteMigrations.csproj", "{73768FD0-25B6-4BC5-A19E-601162616AEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqliteMigrations", "SqliteMigrations\SqliteMigrations.csproj", "{73768FD0-25B6-4BC5-A19E-601162616AEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{83187562-4ABD-43A6-BBAE-5B59DD8E5666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLServerMigrations", "SQLServerMigrations\SQLServerMigrations.csproj", "{B7E3C632-8408-41A5-959C-78A78DD0E459}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +43,17 @@ Global
 		{73768FD0-25B6-4BC5-A19E-601162616AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73768FD0-25B6-4BC5-A19E-601162616AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73768FD0-25B6-4BC5-A19E-601162616AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7E3C632-8408-41A5-959C-78A78DD0E459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7E3C632-8408-41A5-959C-78A78DD0E459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7E3C632-8408-41A5-959C-78A78DD0E459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7E3C632-8408-41A5-959C-78A78DD0E459}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73768FD0-25B6-4BC5-A19E-601162616AEF} = {83187562-4ABD-43A6-BBAE-5B59DD8E5666}
+		{B7E3C632-8408-41A5-959C-78A78DD0E459} = {83187562-4ABD-43A6-BBAE-5B59DD8E5666}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A74CBC8-5354-4ED8-B961-8E39EA535B66}

@@ -31,6 +31,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Service.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\SqliteMigrations\SqliteMigrations.csproj" />
+    <ProjectReference Include="..\SQLServerMigrations\SQLServerMigrations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,6 @@
 using System.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Service.Core.Interfaces;
-using SqliteMigrations.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Data.Repositories;
@@ -11,6 +10,8 @@ using Data;
 using Service;
 using UI.Forms.PeriodsForms;
 using UI.Forms;
+using Data.Persistence;
+using Service.Core.DataModel;
 
 namespace UI
 {
@@ -62,7 +63,7 @@ namespace UI
         {
             if (context.Companies.Any() == false)
             {
-                context.Companies.Add(new Data.DataModel.CompaniesDataModel 
+                context.Companies.Add(new CompaniesDataModel 
                 { CompanyName = "DefaultComp", CurrentAmount = 0, FloatingAmount = 0 });
                 context.SaveChanges();
             }

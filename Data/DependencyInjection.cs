@@ -1,14 +1,10 @@
-﻿using SqliteMigrations.Persistence;
-using Data.Repositories;
+﻿using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Service.Core.Interfaces;
 using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Data.Persistence;
 
 namespace Data
 {
@@ -27,7 +23,7 @@ namespace Data
                 if (useSQLServer == true)
                 {
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), 
-                        x => { x.MigrationsAssembly(assembly) ; });
+                        x => { x.MigrationsAssembly("SQLServerMigrations") ; });
                 }
                 else
                 {

@@ -1,11 +1,11 @@
 ﻿using Service.Core.Dtos;
 using AutoMapper;
-using Data.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.Core.DataModel;
 
 namespace Data.Mapping
 {
