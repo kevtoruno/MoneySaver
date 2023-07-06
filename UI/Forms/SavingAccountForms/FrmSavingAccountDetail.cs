@@ -1,4 +1,5 @@
-﻿using Service.Core.Dtos;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
 using System;
@@ -17,7 +18,7 @@ namespace UI.Forms.SavingAccountForms
     {
         private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly int _selectedSavingAccountID;
-
+        private SavingAccountToDetailDto SavingAccountToDetailDto;
         public FrmSavingAccountDetail(IMoneySaverRepository moneySaverRepository, int selectedSavingAccountID)
         {
             InitializeComponent();
@@ -30,44 +31,75 @@ namespace UI.Forms.SavingAccountForms
             LoadFormData();
         }
 
-        private void LoadFormData()
+        public void LoadFormData()
         {
             var savingAccountToList = new SavingAccountList(_moneySaverRepository);
 
-            var savingAccountDetail = savingAccountToList.GetSavingAccountDetail(_selectedSavingAccountID);
+            SavingAccountToDetailDto = savingAccountToList.GetSavingAccountDetail(_selectedSavingAccountID);
 
-            SetLabelsData(savingAccountDetail);
+            SetLabelsData();
+            SetGridsData();
         }
 
-        private void SetLabelsData(SavingAccountToDetailDto savingAccountDetail)
+        private void SetLabelsData()
         {
-            this.lblClientFullNameData.Text = savingAccountDetail.ClientFullName;
-            this.lblINSSData.Text = savingAccountDetail.INSS;
-            this.lblIdentificationData.Text = savingAccountDetail.Identification;
-            this.lblCreatedDateData.Text = savingAccountDetail.CreatedDate;
+            this.lblClientFullNameData.Text = SavingAccountToDetailDto.ClientFullName;
+            this.lblINSSData.Text = SavingAccountToDetailDto.INSS;
+            this.lblIdentificationData.Text = SavingAccountToDetailDto.Identification;
+            this.lblCreatedDateData.Text = SavingAccountToDetailDto.CreatedDate;
 
-            if (savingAccountDetail.IsActive)
+            if (SavingAccountToDetailDto.IsActive)
                 this.lblStatusData.Text = "Activo";
             else
                 this.lblStatusData.Text = "Cerrado";
 
-            lblAmountForInterestsData.Text = "C$ " + savingAccountDetail.AmountForInterests;
-            lblCurrentAmountData.Text = "C$ " + savingAccountDetail.Amount;
-            lblTotalWidthdrawnData.Text = "C$ " + savingAccountDetail.TotalWithdrawn;
-            lblTotalAmountData.Text = "C$ " + savingAccountDetail.TotalAmount;
+            lblAmountForInterestsData.Text = "C$ " + SavingAccountToDetailDto.AmountForInterests;
+            lblCurrentAmountData.Text = "C$ " + SavingAccountToDetailDto.Amount;
+            lblTotalWidthdrawnData.Text = "C$ " + SavingAccountToDetailDto.TotalWithdrawn;
+            lblTotalAmountData.Text = "C$ " + SavingAccountToDetailDto.TotalAmount;
         }
 
-        private void SetGridsData(SavingAccountToDetailDto savingAccountDetail) 
+        private void SetGridsData()
         {
-            var gridWithdrawalsData = CreateBindingSource(savingAccountDetail.WidthdrawalsToList);
+            var gridWithdrawalsData = CreateBindingSource(SavingAccountToDetailDto.SavingAccountsHistoryToList);
 
             this.gridWidthdrawalsList.AutoGenerateColumns = false;
             this.gridWidthdrawalsList.DataSource = gridWithdrawalsData;
+        }
 
-            var gridDepositsData = CreateBindingSource(savingAccountDetail.DepositsToList);
 
-            this.gridDepositsList.AutoGenerateColumns = false;
-            this.gridDepositsList.DataSource = gridDepositsData;
+
+        private void btnDeposit_Click(object sender, EventArgs e)
+        {
+            /*var frmSAAccountDeposit = Program.ServiceProvider.GetRequiredService<FrmSavingAccountAddDeposit>();
+            frmSAAccountDeposit._savingAccountID = SavingAccountToDetailDto.SavingAccountID;
+            frmSAAccountDeposit._frmSavingAccountDetail = this;
+
+            frmSAAccountDeposit.ShowDialog();*/
+
+            var frmSavingAccountDeposit = new FrmSavingAccountAddDeposit(this._moneySaverRepository, SavingAccountToDetailDto.SavingAccountID, this);
+
+            frmSavingAccountDeposit.ShowDialog();
+        }
+
+        private void gridWidthdrawalsList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var currentColumn = this.gridWidthdrawalsList.Columns[e.ColumnIndex];
+            if (currentColumn.Name == "AmountDisplay")
+            {
+                var historyType = this.gridWidthdrawalsList.Rows[e.RowIndex].Cells["HistoryType"].Value;
+
+                Color cellColor = Color.Red;
+
+                if ((int)historyType == 0 || (int)historyType == 3)
+                {
+                    cellColor = Color.ForestGreen;
+                }
+
+                e.CellStyle.BackColor = cellColor;
+                e.CellStyle.SelectionBackColor = cellColor;
+            }
+
         }
     }
 }

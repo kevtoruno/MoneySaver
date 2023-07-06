@@ -121,9 +121,9 @@
             lblClientTitle.ForeColor = SystemColors.Control;
             lblClientTitle.Location = new Point(255, 70);
             lblClientTitle.Name = "lblClientTitle";
-            lblClientTitle.Size = new Size(244, 36);
+            lblClientTitle.Size = new Size(205, 36);
             lblClientTitle.TabIndex = 5;
-            lblClientTitle.Text = "Nuevo trabajador";
+            lblClientTitle.Text = "Nuevo afiliado";
             // 
             // txtSecondName
             // 
@@ -246,7 +246,7 @@
             txtINSS.Mask = "9999999999";
             txtINSS.Name = "txtINSS";
             txtINSS.Size = new Size(125, 31);
-            txtINSS.TabIndex = 15;
+            txtINSS.TabIndex = 4;
             txtINSS.ValidatingType = typeof(int);
             // 
             // FrmClientNew

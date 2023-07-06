@@ -23,8 +23,8 @@ namespace UI
             {
                 var dialogResult = MessageBox.Show(entitiyName + " agregado exitosamente", "Operación exitosa" ,MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                if (dialogResult == DialogResult.OK)
-                    this.Close();
+                /*if (dialogResult == DialogResult.OK)
+                    this.Close();*/
                         
             }
             else if (result.IsSucess == false)

@@ -1,5 +1,7 @@
-﻿using Service.Core.DataModel;
+﻿using Domain.Entities;
+using Service.Core.DataModel;
 using Service.Core.Dtos;
+using Service.Core.Dtos.PeriodsDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace Service.Core.Interfaces
 
         void CreatePeriod(PeriodToCreateDto periodToCreateDto);
         List<PeriodsToListDto> GetPeriodsList();
+        List<SubPeriodsToListDto> GetSubPeriodsList(int periodID);
 
         bool CheckIfClientHasActiveSavingAccount(int clientID);
 
@@ -31,5 +34,7 @@ namespace Service.Core.Interfaces
         SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID);
         List<SavingAccountWidthdrawalsDataModel> GetSavingAccountWidthdrawals(int savingAccountID);
         List<SavingAccountDepositsDataModel> GetSavingAccountDeposits(int savingAccountID);
+        bool AddDepositToSavingAccount(SavingAccountDomainAggregate saDomain);
+        bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID);
     }
 }

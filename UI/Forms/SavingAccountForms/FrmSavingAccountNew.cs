@@ -76,7 +76,7 @@ namespace UI.Forms.SavingAccountForms
                     _frmSavingAccountList.LoadGridData();
 
                 HandleResult(result, "Cuenta de ahorro");
-            }   
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.Core.DataModel;
 
 namespace Service.Features.SavingAccounts
 {
@@ -43,23 +44,33 @@ namespace Service.Features.SavingAccounts
             if (savingAccountDetailDto.ClientFullName.Length > 38 ) 
                 savingAccountDetailDto.ClientFullName = savingAccountDetailDto.ClientFullName.Substring(0,37) + "...";
 
-            savingAccountDetailDto.WidthdrawalsToList = GetSavingAccountWidthdrawals(savingAccountID);
-            savingAccountDetailDto.DepositsToList = GetSavingAccountDeposits(savingAccountID);
+            SetSavingAccountDeposits(savingAccountDetailDto);
+            SetSavingAccountWidthdrawals(savingAccountDetailDto);
 
-            var totalWithdrawn = savingAccountDetailDto.WidthdrawalsToList.Sum(a => a.Amount);
+            var totalWithdrawn = savingAccountDetailDto.SavingAccountsHistoryToList
+                .Where(sa => sa.HistoryType == SavingAccountHistoryType.FullWithdrawn || 
+                sa.HistoryType == SavingAccountHistoryType.InterestsWithdrawn)
+                .Sum(a => a.Amount);
+
             savingAccountDetailDto.TotalWithdrawn = String.Format("{0:#,##0.00}", totalWithdrawn);
 
-            var totalAmount = savingAccountDetailDto.DepositsToList.Sum(a => a.Amount);
+            var totalAmount = savingAccountDetailDto.SavingAccountsHistoryToList
+                .Where(sa => sa.HistoryType == SavingAccountHistoryType.Deposit || sa.HistoryType == SavingAccountHistoryType.InterestDeposit)
+                .Sum(a => a.Amount);
+
             savingAccountDetailDto.TotalAmount = String.Format("{0:#,##0.00}", totalAmount);
+
+            savingAccountDetailDto.SavingAccountsHistoryToList = savingAccountDetailDto
+                .SavingAccountsHistoryToList.OrderBy(a => a.CreatedDate).ToList();
+
+            SetTotal(savingAccountDetailDto);
 
             return savingAccountDetailDto;
         }
 
-        private List<SavingAccountDepositsToListDto> GetSavingAccountDeposits(int savingAccountID) 
+        private void SetSavingAccountDeposits(SavingAccountToDetailDto savingAccountDetailDto) 
         {
-            var savingAccountDeposits = new List<SavingAccountDepositsToListDto>();
-
-            var savingAccountDepositsData = _moneySaverRepo.GetSavingAccountDeposits(savingAccountID);
+            var savingAccountDepositsData = _moneySaverRepo.GetSavingAccountDeposits(savingAccountDetailDto.SavingAccountID);
 
             savingAccountDepositsData.ForEach(sad =>
             {
@@ -69,27 +80,33 @@ namespace Service.Features.SavingAccounts
                 {
                     var date = new DateTime(sad.SubPeriod.Period.Year, sad.SubPeriod.Month, 1);
 
-                    subPeriodName = $"Período de {date.ToString("MMMM")} del {sad.SubPeriod.Period.Year}";
+                    subPeriodName = $"{date.ToString("MMMM")} {sad.SubPeriod.Period.Year}";
                 }
 
-                savingAccountDeposits.Add(new SavingAccountDepositsToListDto
+                var saHistoryToListDto = new SavingAccountsHistoryToListDto
                 {
-                    Amount = sad.Amount,
-                    SavingAccountDepositID = sad.SavingAccountDepositID,
+                    SavingAccountHistoryID = sad.SavingAccountDepositID,
                     CreatedDate = sad.CreatedDate,
                     SubPeriodID = sad.SubPeriodID,
-                    SubPeriodName = subPeriodName
-                });
-            });
+                    SubPeriodName = subPeriodName,
+                    Amount = sad.Amount,
+                    HistoryType = SavingAccountHistoryType.Deposit,
+                    HistoryName = "Ahorro"
+                };
 
-            return savingAccountDeposits;
+                if (sad.DepositType == DepositType.Interests)
+                {
+                    saHistoryToListDto.HistoryType = SavingAccountHistoryType.InterestDeposit;
+                    saHistoryToListDto.HistoryName = "Interes";
+                }
+                
+                savingAccountDetailDto.SavingAccountsHistoryToList.Add(saHistoryToListDto);
+            });
         }
 
-        private List<SavingAccountWidthdrawalsToListDto> GetSavingAccountWidthdrawals(int savingAccountID) 
-        {
-            var savingAccountWithdrawals = new List<SavingAccountWidthdrawalsToListDto>();
-            
-            var savingAccountWithdrawalsData = _moneySaverRepo.GetSavingAccountWidthdrawals(savingAccountID);
+        private void SetSavingAccountWidthdrawals(SavingAccountToDetailDto savingAccountDetailDto) 
+        {      
+            var savingAccountWithdrawalsData = _moneySaverRepo.GetSavingAccountWidthdrawals(savingAccountDetailDto.SavingAccountID);
 
             savingAccountWithdrawalsData.ForEach(saw =>
             {
@@ -102,17 +119,54 @@ namespace Service.Features.SavingAccounts
                     subPeriodName = $"Período de {date.ToString("MMMM")} del {saw.SubPeriod.Period.Year}";
                 }
 
-                savingAccountWithdrawals.Add(new SavingAccountWidthdrawalsToListDto
+                var saHistoryToListDto = new SavingAccountsHistoryToListDto
                 {
-                    Amount = saw.Amount,
-                    SavingAccountWithdrawalID = saw.SavingAccountWithdrawalID,
+                    SavingAccountHistoryID = saw.SavingAccountWithdrawalID,
                     CreatedDate = saw.CreatedDate,
                     SubPeriodID = saw.SubPeriodID != null ? saw.SubPeriodID.Value : 0,
-                    SubPeriodName = subPeriodName
-                });
+                    SubPeriodName = subPeriodName,
+                    Amount = saw.Amount,
+                };
+
+                if (saw.WithDrawalType == WithDrawalType.Interests)
+                {
+                    saHistoryToListDto.HistoryType = SavingAccountHistoryType.InterestsWithdrawn;
+                    saHistoryToListDto.HistoryName = "Ret. Intereses";
+                }
+                else
+                {
+                    saHistoryToListDto.HistoryType = SavingAccountHistoryType.FullWithdrawn;
+                    saHistoryToListDto.HistoryName = "Cierre cuenta";
+                }
+
+                savingAccountDetailDto.SavingAccountsHistoryToList.Add(saHistoryToListDto);
             });
 
-            return savingAccountWithdrawals;
+        }
+
+        private void SetTotal(SavingAccountToDetailDto savingAccountDetailDto)
+        {
+            int count = 0;
+            decimal prevTotalAmount = 0;
+
+            savingAccountDetailDto.SavingAccountsHistoryToList.ForEach(s =>
+            {
+                if (count > 0)
+                {
+                    if (s.HistoryType == SavingAccountHistoryType.Deposit || s.HistoryType == SavingAccountHistoryType.InterestDeposit)
+                        s.Total = s.Amount + prevTotalAmount;
+                    else if (s.HistoryType == SavingAccountHistoryType.InterestsWithdrawn)
+                        s.Total = prevTotalAmount - s.Amount;
+                    else if (s.HistoryType == SavingAccountHistoryType.FullWithdrawn)
+                        s.Total = 0;                   
+                }
+                else
+                    s.Total = s.Amount;
+
+                prevTotalAmount = s.Total;
+
+                count++;
+            });
         }
     }
 }

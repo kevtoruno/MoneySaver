@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Azure.Core;
 using Data.Persistence;
+using Service.Core.Dtos.PeriodsDto;
+using Domain.Entities;
 
 namespace Data.Repositories
 {
@@ -112,6 +114,24 @@ namespace Data.Repositories
             return periodsList;
         }
 
+        public List<SubPeriodsToListDto> GetSubPeriodsList(int periodID) 
+        {
+            var periodsList = _context.SubPeriods
+                .Where(sb => sb.PeriodID == periodID)
+                .Select(p => new SubPeriodsToListDto 
+                {
+                    EndDate = p.EndDate,
+                    StartDate = p.StartDate,
+                    SubPeriodName = $"{p.Month}",
+                    Month = p.Month,
+                    PeriodID = p.PeriodID,
+                    SubPeriodID = p.SubPeriodID
+                })
+                .ToList();
+
+            return periodsList;
+        }
+
         public bool CheckIfClientHasActiveSavingAccount(int clientID) 
         {
             bool hasSavingAccount = _context.SavingAccounts.Any(sa => sa.ClientID == clientID && sa.IsActive);
@@ -129,7 +149,8 @@ namespace Data.Repositories
 
         public List<SavingAccountToListDto> GetSavingAccountsList(string INSS) 
         {
-            var query = _context.SavingAccounts.Include(sa => sa.Client).OrderBy(sa => sa.IsActive).AsQueryable();
+            var query = _context.SavingAccounts.AsNoTracking()
+                .Include(sa => sa.Client).OrderBy(sa => sa.IsActive).AsQueryable();
 
             if (INSS.Length > 0)
                 query = query.Where(q => q.Client.INSS == INSS);
@@ -163,8 +184,15 @@ namespace Data.Repositories
         public SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID)
         {
             return _context.SavingAccounts
+                .AsNoTracking()
                 .Include(sa => sa.Client)
                 .First(a => a.SavingAccountID == savingAccountID);
+        }
+
+        public bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID) 
+        {
+            return _context.SavingAccountDeposits
+                .Any(sa => sa.SubPeriodID == subPeriodID && sa.SavingAccountID == savingAccountID);
         }
 
         public List<SavingAccountWidthdrawalsDataModel> GetSavingAccountWidthdrawals(int savingAccountID)
@@ -181,6 +209,39 @@ namespace Data.Repositories
                 .Include(sa => sa.SubPeriod.Period)
                 .Where(sa => sa.SavingAccountID == savingAccountID)
                 .ToList();
+        }
+
+        public bool AddDepositToSavingAccount(SavingAccountDomainAggregate saDomain)
+        {
+            _context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+
+            try
+            {
+                var defaultCompany = _context.Companies.FirstOrDefault() ?? throw new Exception();
+                var savingAccountToUpdate = _mapper.Map<SavingAccountsDataModel>(saDomain);
+
+                _context.SavingAccounts.Update(savingAccountToUpdate);
+   
+                var savingAccountsDepositsDataToCreate = _mapper.Map<List<SavingAccountDepositsDataModel>>(saDomain.Deposits);
+
+                _context.SavingAccountDeposits.AddRange(savingAccountsDepositsDataToCreate);
+
+                defaultCompany.CurrentAmount += savingAccountsDepositsDataToCreate
+                    .Sum(a => a.Amount);
+
+                _context.Companies.Update(defaultCompany);
+                _context.SaveChanges();
+
+                tran.Commit();
+            }
+            catch (Exception) 
+            {
+                tran.Rollback();
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -16,9 +16,16 @@ namespace Service.Core.DataModel
         public SavingAccountsDataModel SavingAccount { get; set; }
         public int SubPeriodID { get; set; }
         public SubPeriodsDataModel SubPeriod { get; set; }
+        public DepositType DepositType { get; set; }
 
         [Column(TypeName="money")]
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
+    }
+
+    public enum DepositType 
+    {
+        Saving = 0,
+        Interests = 1,
     }
 }

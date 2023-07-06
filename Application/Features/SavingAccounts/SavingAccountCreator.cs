@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.SavingAccount;
 using Service.Core;
 using Service.Core.Dtos;
 using Service.Core.Interfaces;
@@ -26,7 +27,7 @@ namespace Service.Features.Periods
             if (savingAccountExists) 
                 return Result<bool>.Failure("Este trabajador ya tiene una cuenta de ahorro activa");
 
-            var savingAccountDomain = new SavingAccountDomain();
+            var savingAccountDomain = new SavingAccountDomainCreator();
             savingAccountDomain.CreateNewSavingAccountForClient(ClientID);
 
             var savingAccountToCreate = new SavingAccountToCreate

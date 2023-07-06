@@ -20,6 +20,7 @@ namespace UI
 
         private void btnMaximizar_Click(object sender, EventArgs e)
         {
+            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             this.WindowState = FormWindowState.Maximized;
             this.btnMaximizar.Visible = false;
             this.btnRestaurar.Visible = true;

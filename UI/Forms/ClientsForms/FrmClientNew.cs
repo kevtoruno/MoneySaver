@@ -60,7 +60,7 @@ namespace UI.Forms.ClientsForms
             if (result.ResourceCreated)
                 _frmClientList.LoadGridData();
 
-            HandleResult(result, "Trabajador");
+            HandleResult(result, "Afiliado");
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

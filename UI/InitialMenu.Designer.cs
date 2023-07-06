@@ -246,7 +246,7 @@
             btnClients.Name = "btnClients";
             btnClients.Size = new Size(209, 44);
             btnClients.TabIndex = 0;
-            btnClients.Text = "Trabajadores";
+            btnClients.Text = "Afiliados";
             btnClients.UseVisualStyleBackColor = true;
             btnClients.Click += btnClients_Click;
             // 

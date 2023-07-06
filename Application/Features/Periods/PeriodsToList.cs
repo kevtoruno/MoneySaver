@@ -1,4 +1,5 @@
 ﻿using Service.Core.Dtos;
+using Service.Core.Dtos.PeriodsDto;
 using Service.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,28 @@ namespace Service.Features.Periods
 
         public List<PeriodsToListDto> GetPeriodsList() 
         {
-            var clientToListDto = _moneySaverRepo.GetPeriodsList();
+            var periodsToListDto = _moneySaverRepo.GetPeriodsList();
 
-            return clientToListDto;
+            return periodsToListDto;
+        }
+
+        public List<SubPeriodsToListDto> GetSubPeriodsList(int periodID) 
+        {
+            var subPeriodsToListDto = _moneySaverRepo.GetSubPeriodsList(periodID);
+
+            SetSubPeriodName(subPeriodsToListDto);
+
+            return subPeriodsToListDto;   
+        }
+
+        private void SetSubPeriodName(List<SubPeriodsToListDto> subPeriodsToListDto)
+        {
+            subPeriodsToListDto.ForEach(subPeriod => 
+            {
+                DateTime dummyDate = new DateTime(1996, subPeriod.Month, 18);
+                 
+                subPeriod.SubPeriodName = dummyDate.ToString("MMMM");
+            });
         }
     }
 }

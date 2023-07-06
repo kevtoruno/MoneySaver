@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Core.DataModel;
+using Domain.Entities;
 
 namespace Data.Mapping
 {
@@ -17,6 +18,8 @@ namespace Data.Mapping
             CreateMap<PeriodToCreateDto, PeriodsDataModel>();
             CreateMap<SubPeriodsToCreateDto, SubPeriodsDataModel>();
             CreateMap<SavingAccountToCreate, SavingAccountsDataModel>();
+            CreateMap<SavingAccountDomainAggregate,  SavingAccountsDataModel>();
+            CreateMap<SavingAccountDepositDomain,  SavingAccountDepositsDataModel>();
         }
     }
 }

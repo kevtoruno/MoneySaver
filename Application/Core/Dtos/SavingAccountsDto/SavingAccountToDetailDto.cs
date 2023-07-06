@@ -19,32 +19,32 @@ namespace Service.Core.Dtos
         public string TotalWithdrawn { get; set; }
         public string TotalAmount { get; set; }
 
-        public List<SavingAccountWidthdrawalsToListDto> WidthdrawalsToList { get; set; }
-        public List<SavingAccountDepositsToListDto> DepositsToList { get; set; }
+        public List<SavingAccountsHistoryToListDto> SavingAccountsHistoryToList { get; set; }
         public SavingAccountToDetailDto()
         {
-            WidthdrawalsToList = new List<SavingAccountWidthdrawalsToListDto>();
-            DepositsToList = new List<SavingAccountDepositsToListDto>();
+            SavingAccountsHistoryToList = new List<SavingAccountsHistoryToListDto>();
         }
     }
 
-    public class SavingAccountWidthdrawalsToListDto
+    public class SavingAccountsHistoryToListDto 
     {
-        public int SavingAccountWithdrawalID { get; set; }
+        public int SavingAccountHistoryID { get; set; }
         public int SubPeriodID { get; set; }
         public string SubPeriodName { get; set; }
-
         public decimal Amount { get; set; }
+        public string AmountDisplay { get { return "C$ " + String.Format("{0:#,##0.00}", Amount); } }
+        public SavingAccountHistoryType HistoryType { get; set; }
+        public string HistoryName { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string TotalDisplay { get { return "C$ " + String.Format("{0:#,##0.00}", Total); } }
+        public decimal Total { get; set; }
     }
 
-    public class SavingAccountDepositsToListDto
+    public enum SavingAccountHistoryType 
     {
-        public int SavingAccountDepositID { get; set; }
-        public int SubPeriodID { get; set; }
-        public string SubPeriodName { get; set; }
-
-        public decimal Amount { get; set; }
-        public DateTime CreatedDate { get; set; }
+        Deposit = 0,
+        InterestsWithdrawn = 1,
+        FullWithdrawn = 2,
+        InterestDeposit = 3
     }
 }

@@ -69,11 +69,11 @@
             lblSavingAccTitle.AutoSize = true;
             lblSavingAccTitle.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point);
             lblSavingAccTitle.ForeColor = SystemColors.Control;
-            lblSavingAccTitle.Location = new Point(157, 64);
+            lblSavingAccTitle.Location = new Point(179, 64);
             lblSavingAccTitle.Name = "lblSavingAccTitle";
-            lblSavingAccTitle.Size = new Size(334, 36);
+            lblSavingAccTitle.Size = new Size(322, 36);
             lblSavingAccTitle.TabIndex = 6;
-            lblSavingAccTitle.Text = "Nueva cuenta de ahorro";
+            lblSavingAccTitle.Text = "Nuevo fondo de ahorro";
             // 
             // cbClients
             // 
@@ -95,9 +95,9 @@
             label3.ForeColor = SystemColors.Control;
             label3.Location = new Point(238, 136);
             label3.Name = "label3";
-            label3.Size = new Size(200, 25);
+            label3.Size = new Size(175, 25);
             label3.TabIndex = 13;
-            label3.Text = "Selecciona al Trabajador";
+            label3.Text = "Selecciona al afiliado";
             // 
             // btnCreate
             // 
@@ -112,9 +112,9 @@
             btnCreate.Location = new Point(246, 259);
             btnCreate.Margin = new Padding(0);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(192, 62);
+            btnCreate.Size = new Size(203, 66);
             btnCreate.TabIndex = 14;
-            btnCreate.Text = "Crear cuenta de ahorro";
+            btnCreate.Text = "Crear fondo de ahorro";
             btnCreate.UseVisualStyleBackColor = false;
             btnCreate.Click += btnCreate_Click;
             // 

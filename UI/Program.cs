@@ -12,6 +12,7 @@ using UI.Forms.PeriodsForms;
 using UI.Forms;
 using Data.Persistence;
 using Service.Core.DataModel;
+using UI.Forms.SavingAccountForms;
 
 namespace UI
 {
@@ -36,7 +37,7 @@ namespace UI
 
             context.Database.Migrate();
 
-            SeedCompany(context);
+            SeedDefaultCompany(context);
 
             InitialMenu = new InitialMenu();
             Application.Run(InitialMenu);
@@ -56,15 +57,16 @@ namespace UI
                     services.AddTransient<FrmClientList>();
                     services.AddTransient<FrmPeriodsList>();
                     services.AddTransient<FrmSavingAccountList>();
+                    //services.AddTransient<FrmSavingAccountAddDeposit>();
                 });
         }
 
-        private static void SeedCompany(MoneySaverContext context) 
+        private static void SeedDefaultCompany(MoneySaverContext context) 
         {
             if (context.Companies.Any() == false)
             {
                 context.Companies.Add(new CompaniesDataModel 
-                { CompanyName = "DefaultComp", CurrentAmount = 0, FloatingAmount = 0 });
+                { CompanyName = "SITRA", CurrentAmount = 0, FloatingAmount = 0 });
                 context.SaveChanges();
             }
 

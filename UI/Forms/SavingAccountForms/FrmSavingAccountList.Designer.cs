@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             lblSavingAcountTitle = new Label();
             btnSearch = new Button();
             btnNewSavingAccount = new Button();
@@ -57,9 +57,9 @@
             lblSavingAcountTitle.ForeColor = SystemColors.Control;
             lblSavingAcountTitle.Location = new Point(425, 35);
             lblSavingAcountTitle.Name = "lblSavingAcountTitle";
-            lblSavingAcountTitle.Size = new Size(211, 29);
+            lblSavingAcountTitle.Size = new Size(205, 29);
             lblSavingAcountTitle.TabIndex = 0;
-            lblSavingAcountTitle.Text = "Cuentas de ahorro";
+            lblSavingAcountTitle.Text = "Fondos de ahorro";
             // 
             // btnSearch
             // 
@@ -90,7 +90,7 @@
             btnNewSavingAccount.Name = "btnNewSavingAccount";
             btnNewSavingAccount.Size = new Size(189, 50);
             btnNewSavingAccount.TabIndex = 6;
-            btnNewSavingAccount.Text = "Nueva cuenta ahorro";
+            btnNewSavingAccount.Text = "Nueva fondo ahorro";
             btnNewSavingAccount.UseVisualStyleBackColor = false;
             btnNewSavingAccount.Click += btnNewSavingAccount_Click;
             // 
@@ -101,38 +101,38 @@
             gridSavingAccountsList.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridSavingAccountsList.BorderStyle = BorderStyle.None;
             gridSavingAccountsList.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            gridSavingAccountsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            gridSavingAccountsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             gridSavingAccountsList.ColumnHeadersHeight = 30;
             gridSavingAccountsList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridSavingAccountsList.Columns.AddRange(new DataGridViewColumn[] { SavingAccountID, INSS, ClientFullName, Amount, AmountForInterests, IsActive, CreatedDate });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle2.SelectionForeColor = Color.White;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            gridSavingAccountsList.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle5.SelectionForeColor = Color.White;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            gridSavingAccountsList.DefaultCellStyle = dataGridViewCellStyle5;
             gridSavingAccountsList.EnableHeadersVisualStyles = false;
             gridSavingAccountsList.GridColor = Color.SteelBlue;
             gridSavingAccountsList.Location = new Point(12, 338);
             gridSavingAccountsList.Name = "gridSavingAccountsList";
             gridSavingAccountsList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            gridSavingAccountsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            gridSavingAccountsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             gridSavingAccountsList.RowHeadersVisible = false;
             gridSavingAccountsList.RowHeadersWidth = 51;
             gridSavingAccountsList.RowTemplate.Height = 29;
@@ -180,7 +180,7 @@
             // 
             AmountForInterests.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             AmountForInterests.DataPropertyName = "AmountForInterests";
-            AmountForInterests.HeaderText = "Cantidad para intereses";
+            AmountForInterests.HeaderText = "Intereses acumulados";
             AmountForInterests.MinimumWidth = 6;
             AmountForInterests.Name = "AmountForInterests";
             AmountForInterests.ReadOnly = true;
