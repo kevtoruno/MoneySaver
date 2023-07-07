@@ -27,7 +27,7 @@ namespace Service.Core.Interfaces
         List<SubPeriodsToListDto> GetSubPeriodsList(int periodID);
 
         bool CheckIfClientHasActiveSavingAccount(int clientID);
-
+        int GetClientIDByINSSNo(string INSSNo);
         void CreateSavingAccount(SavingAccountToCreate savingAccountToCreate);
 
         List<SavingAccountToListDto> GetSavingAccountsList(string INSS);
@@ -36,5 +36,9 @@ namespace Service.Core.Interfaces
         List<SavingAccountDepositsDataModel> GetSavingAccountDeposits(int savingAccountID);
         bool AddDepositToSavingAccount(SavingAccountDomainAggregate saDomain);
         bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID);
+        bool CheckIfInterestWithdrawExistsForSubPeriod(int subPeriodID, int savingAccountID);
+        SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID);
+        bool WithdrawInterestsSavingAccount(SavingAccountDomainAggregate saDomain);
+        string GetFullNameByINSS(string INSS);
     }
 }

@@ -20,12 +20,17 @@ namespace Service.Features.Periods
             _moneySaverRepo = moneySaverRepo;
         }
 
-        public Result<bool> CreateSavingAccount(int ClientID) 
+        public Result<bool> CreateSavingAccount(string INSSno) 
         {
-            var savingAccountExists = _moneySaverRepo.CheckIfClientHasActiveSavingAccount(ClientID);
+            int ClientID = _moneySaverRepo.GetClientIDByINSSNo(INSSno);
+
+            if (ClientID == 0) 
+                return Result<bool>.Failure($"No existe un trabajador asociado al número de INSS {INSSno}"); 
+
+            bool savingAccountExists = _moneySaverRepo.CheckIfClientHasActiveSavingAccount(ClientID);
 
             if (savingAccountExists) 
-                return Result<bool>.Failure("Este trabajador ya tiene una cuenta de ahorro activa");
+                return Result<bool>.Failure("Este trabajador ya tiene un fondo de ahorro activo");
 
             var savingAccountDomain = new SavingAccountDomainCreator();
             savingAccountDomain.CreateNewSavingAccountForClient(ClientID);
@@ -42,7 +47,14 @@ namespace Service.Features.Periods
 
             _moneySaverRepo.CreateSavingAccount(savingAccountToCreate);
 
-            return Result<bool>.Created(true, "La cuenta de ahorro ha sido creada exitosamente.");
+            return Result<bool>.Created(true, "El fondo de ahorro ha sido creada exitosamente.");
+        }
+
+        public string GetFullNameByINSS(string INSSNo)
+        {
+            var fullName = _moneySaverRepo.GetFullNameByINSS(INSSNo);
+
+            return fullName;
         }
     }
 }

@@ -45,32 +45,34 @@ namespace UI.Forms.SavingAccountForms
 
         private void LoadCBClientsData()
         {
-            var clientToList = new ClientToList(_moneySaverRepository);
-            var clientsList = clientToList.GetClientsList("");
 
-            BindingSource bindingSource = CreateBindingSource(clientsList);
-
-            this.cbClients.ValueMember = "ClientID";
-            this.cbClients.DisplayMember = "FullName";
-            this.cbClients.DataSource = bindingSource;
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            int clientID = this.cbClients.SelectedValue.ToString() != "" ? Convert.ToInt32(this.cbClients.SelectedValue) : 0;
+            string INSSno = this.txtINSS.Text;
 
-            if (clientID == 0)
+            if (INSSno == "" || INSSno.Length <= 5)
             {
-                MessageBox.Show("Debe seleccionar un trabajador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe ingresar un número de INSS valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var mbOption = MessageBox.Show("¿Está seguro que desea crear una nueva cuenta de ahorro para este trabajador?", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            var savingAccountCreator = new SavingAccountCreator(_moneySaverRepository);
+
+            string nombreTrabajador = savingAccountCreator.GetFullNameByINSS(INSSno);
+
+            if (nombreTrabajador == "")
+            {
+                MessageBox.Show($"No existe un afiliado asociado al no INSS {INSSno}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var mbOption = MessageBox.Show($"¿Está seguro que desea crear un nuevo fondo de ahorro para {nombreTrabajador}?", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
             if (mbOption == DialogResult.Yes)
             {
-                var savingAccountCreator = new SavingAccountCreator(_moneySaverRepository);
-                var result = savingAccountCreator.CreateSavingAccount(clientID);
+                var result = savingAccountCreator.CreateSavingAccount(INSSno);
 
                 if (result.ResourceCreated)
                     _frmSavingAccountList.LoadGridData();

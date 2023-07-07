@@ -67,8 +67,6 @@ namespace UI.Forms.SavingAccountForms
             this.gridWidthdrawalsList.DataSource = gridWithdrawalsData;
         }
 
-
-
         private void btnDeposit_Click(object sender, EventArgs e)
         {
             /*var frmSAAccountDeposit = Program.ServiceProvider.GetRequiredService<FrmSavingAccountAddDeposit>();
@@ -100,6 +98,13 @@ namespace UI.Forms.SavingAccountForms
                 e.CellStyle.SelectionBackColor = cellColor;
             }
 
+        }
+
+        private void btnWithdrawInsterest_Click(object sender, EventArgs e)
+        {
+            var frmSavingAccountWithdrawInterests = new FrmSavingAccountWithdrawInterests(this._moneySaverRepository, SavingAccountToDetailDto.SavingAccountID, this);
+
+            frmSavingAccountWithdrawInterests.ShowDialog();
         }
     }
 }

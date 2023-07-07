@@ -21,6 +21,11 @@ namespace Service.Features.Periods
 
         public Result<bool> CreatePeriods(PeriodToCreateDto periodToCreateDto) 
         {
+            var periodExists = CheckIfPeriodExists(periodToCreateDto.Year);
+
+            if (periodExists.IsSucess == false)
+                return periodExists;
+
             _moneySaverRepo.CreatePeriod(periodToCreateDto);
 
             return Result<bool>.Created(true, "El período ha sido creado exitosamente.");

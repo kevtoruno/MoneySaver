@@ -145,7 +145,7 @@
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCreate.ForeColor = Color.White;
-            btnCreate.Location = new Point(166, 435);
+            btnCreate.Location = new Point(168, 411);
             btnCreate.Margin = new Padding(0);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(192, 62);
@@ -226,7 +226,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
-            ClientSize = new Size(534, 560);
+            ClientSize = new Size(534, 501);
             Controls.Add(txtInterestsAmount);
             Controls.Add(lblInterestsAmount);
             Controls.Add(txtAmount);

@@ -20,6 +20,8 @@ namespace Data.Mapping
             CreateMap<SavingAccountToCreate, SavingAccountsDataModel>();
             CreateMap<SavingAccountDomainAggregate,  SavingAccountsDataModel>();
             CreateMap<SavingAccountDepositDomain,  SavingAccountDepositsDataModel>();
+            CreateMap<SavingAccountWithdrawsDomain, SavingAccountWidthdrawalsDataModel>();
+            CreateMap<SavingAccountsDataModel, SavingAccountDomainAggregate>();
         }
     }
 }

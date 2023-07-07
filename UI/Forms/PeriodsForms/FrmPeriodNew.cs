@@ -84,7 +84,10 @@ namespace UI.Forms.PeriodsForms
             var result = _periodCreator.CreatePeriods(periodToCreateDto);
 
             if (result.ResourceCreated)
+            {
                 _frmPeriodsList.LoadGridData();
+                this.btnCreate.Visible = false;
+            }
 
             HandleResult(result, "Período");
         }

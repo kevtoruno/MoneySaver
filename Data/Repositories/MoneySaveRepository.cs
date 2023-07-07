@@ -132,6 +132,33 @@ namespace Data.Repositories
             return periodsList;
         }
 
+        public string GetFullNameByINSS(string INSS)
+        {
+            string fullName = "";
+            var client = _context.Clients.FirstOrDefault(a => a.INSS == INSS);
+
+            if (client != null)
+            {
+                string secondName = client.SecondName != "" ? " " + client.SecondName : "";
+
+                fullName = client.LastNames + " " + client.FirstName + secondName ;
+            }
+
+            return fullName;
+        }
+
+        public int GetClientIDByINSSNo(string INSSNo) 
+        {
+            int ClientID = 0;
+
+            var client = _context.Clients.FirstOrDefault(a => a.INSS == INSSNo);
+
+            if (client != null)
+                ClientID = client.ClientID;
+
+            return ClientID;
+        }
+
         public bool CheckIfClientHasActiveSavingAccount(int clientID) 
         {
             bool hasSavingAccount = _context.SavingAccounts.Any(sa => sa.ClientID == clientID && sa.IsActive);
@@ -189,6 +216,18 @@ namespace Data.Repositories
                 .First(a => a.SavingAccountID == savingAccountID);
         }
 
+        public SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID)
+        {
+            var savingAccountData =  _context.SavingAccounts
+                .AsNoTracking()
+                .Include(sa => sa.Client)
+                .First(a => a.SavingAccountID == savingAccountID);
+
+            var savingAccountDomain = _mapper.Map<SavingAccountDomainAggregate>(savingAccountData);
+
+            return savingAccountDomain;
+        }
+
         public bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID) 
         {
             return _context.SavingAccountDeposits
@@ -242,6 +281,45 @@ namespace Data.Repositories
             }
 
             return true;
+        }
+
+        public bool WithdrawInterestsSavingAccount(SavingAccountDomainAggregate saDomain)
+        {
+            _context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+
+            try
+            {
+                var defaultCompany = _context.Companies.FirstOrDefault() ?? throw new Exception();
+                var savingAccountToUpdate = _mapper.Map<SavingAccountsDataModel>(saDomain);
+
+                _context.SavingAccounts.Update(savingAccountToUpdate);
+   
+                var savingAccountsWithdrawsDataToCreate = _mapper.Map<List<SavingAccountWidthdrawalsDataModel>>(saDomain.Withdraws);
+
+                _context.SavingAccountWidthdrawals.AddRange(savingAccountsWithdrawsDataToCreate);
+
+                defaultCompany.CurrentAmount -= savingAccountsWithdrawsDataToCreate
+                    .Sum(a => a.Amount);
+
+                _context.Companies.Update(defaultCompany);
+                _context.SaveChanges();
+
+                tran.Commit();
+            }
+            catch (Exception) 
+            {
+                tran.Rollback();
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool CheckIfInterestWithdrawExistsForSubPeriod(int subPeriodID, int savingAccountID)
+        {
+            return _context.SavingAccountWidthdrawals.Any(saw => saw.SubPeriodID == subPeriodID && 
+            saw.SavingAccountID == savingAccountID && saw.WithDrawalType == WithDrawalType.Interests);
         }
     }
 }

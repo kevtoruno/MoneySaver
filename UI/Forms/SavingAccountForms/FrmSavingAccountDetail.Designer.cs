@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             lblTotalWidthdrawnData = new Label();
             lblTotalWidthdrawn = new Label();
             lblCurrentAmountData = new Label();
@@ -50,7 +50,7 @@
             lblIdentificationData = new Label();
             lblTotalAmount = new Label();
             lblAmountForInterestsData = new Label();
-            btnWithdrawInsterests = new Button();
+            btnWithdrawInsterest = new Button();
             btnFinishSavingAccount = new Button();
             lblSavingAccTitle = new Label();
             btnDeposit = new Button();
@@ -320,23 +320,24 @@
             lblAmountForInterestsData.TabIndex = 28;
             lblAmountForInterestsData.Text = "$$$$";
             // 
-            // btnWithdrawInsterests
+            // btnWithdrawInsterest
             // 
-            btnWithdrawInsterests.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnWithdrawInsterests.BackColor = Color.FromArgb(51, 178, 73);
-            btnWithdrawInsterests.Cursor = Cursors.Hand;
-            btnWithdrawInsterests.FlatAppearance.BorderColor = Color.ForestGreen;
-            btnWithdrawInsterests.FlatAppearance.BorderSize = 0;
-            btnWithdrawInsterests.FlatStyle = FlatStyle.Flat;
-            btnWithdrawInsterests.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnWithdrawInsterests.ForeColor = Color.White;
-            btnWithdrawInsterests.Location = new Point(703, 270);
-            btnWithdrawInsterests.Margin = new Padding(0);
-            btnWithdrawInsterests.Name = "btnWithdrawInsterests";
-            btnWithdrawInsterests.Size = new Size(170, 50);
-            btnWithdrawInsterests.TabIndex = 26;
-            btnWithdrawInsterests.Text = "Retirar intereses";
-            btnWithdrawInsterests.UseVisualStyleBackColor = false;
+            btnWithdrawInsterest.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnWithdrawInsterest.BackColor = Color.FromArgb(51, 178, 73);
+            btnWithdrawInsterest.Cursor = Cursors.Hand;
+            btnWithdrawInsterest.FlatAppearance.BorderColor = Color.ForestGreen;
+            btnWithdrawInsterest.FlatAppearance.BorderSize = 0;
+            btnWithdrawInsterest.FlatStyle = FlatStyle.Flat;
+            btnWithdrawInsterest.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnWithdrawInsterest.ForeColor = Color.White;
+            btnWithdrawInsterest.Location = new Point(703, 270);
+            btnWithdrawInsterest.Margin = new Padding(0);
+            btnWithdrawInsterest.Name = "btnWithdrawInsterest";
+            btnWithdrawInsterest.Size = new Size(170, 50);
+            btnWithdrawInsterest.TabIndex = 26;
+            btnWithdrawInsterest.Text = "Retirar intereses";
+            btnWithdrawInsterest.UseVisualStyleBackColor = false;
+            btnWithdrawInsterest.Click += btnWithdrawInsterest_Click;
             // 
             // btnFinishSavingAccount
             // 
@@ -391,38 +392,38 @@
             gridWidthdrawalsList.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridWidthdrawalsList.BorderStyle = BorderStyle.None;
             gridWidthdrawalsList.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            gridWidthdrawalsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            gridWidthdrawalsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             gridWidthdrawalsList.ColumnHeadersHeight = 30;
             gridWidthdrawalsList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridWidthdrawalsList.Columns.AddRange(new DataGridViewColumn[] { SavingAccountHistorylID, SubPeriodName, HistoryType, HistoryName, AmountDisplay, CreatedDate, TotalDisplay });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle2.SelectionForeColor = Color.White;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            gridWidthdrawalsList.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = Color.White;
+            dataGridViewCellStyle8.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle8.SelectionForeColor = Color.White;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            gridWidthdrawalsList.DefaultCellStyle = dataGridViewCellStyle8;
             gridWidthdrawalsList.EnableHeadersVisualStyles = false;
             gridWidthdrawalsList.GridColor = Color.SteelBlue;
             gridWidthdrawalsList.Location = new Point(0, 326);
             gridWidthdrawalsList.Name = "gridWidthdrawalsList";
             gridWidthdrawalsList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            gridWidthdrawalsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = Color.White;
+            dataGridViewCellStyle9.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            gridWidthdrawalsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             gridWidthdrawalsList.RowHeadersVisible = false;
             gridWidthdrawalsList.RowHeadersWidth = 51;
             gridWidthdrawalsList.RowTemplate.Height = 29;
@@ -501,7 +502,7 @@
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 615);
             Controls.Add(btnDeposit);
-            Controls.Add(btnWithdrawInsterests);
+            Controls.Add(btnWithdrawInsterest);
             Controls.Add(btnFinishSavingAccount);
             Controls.Add(gridWidthdrawalsList);
             Controls.Add(panel1);
@@ -531,7 +532,7 @@
         private Label lblDepositGridTitle;
         private Button btnDeposit;
         private Button btnFinishSavingAccount;
-        private Button btnWithdrawInsterests;
+        private Button btnWithdrawInsterest;
         private Label lblAmountForInterestsData;
         private Label lblAmountForInterests;
         private Label lblStatusData;

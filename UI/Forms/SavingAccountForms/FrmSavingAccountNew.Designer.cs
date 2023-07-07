@@ -32,9 +32,9 @@
             btnCerrar = new PictureBox();
             BarraTitulo = new Panel();
             lblSavingAccTitle = new Label();
-            cbClients = new ComboBox();
-            label3 = new Label();
             btnCreate = new Button();
+            label4 = new Label();
+            txtINSS = new MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)btnCerrar).BeginInit();
             BarraTitulo.SuspendLayout();
             SuspendLayout();
@@ -75,30 +75,6 @@
             lblSavingAccTitle.TabIndex = 6;
             lblSavingAccTitle.Text = "Nuevo fondo de ahorro";
             // 
-            // cbClients
-            // 
-            cbClients.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbClients.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cbClients.DisplayMember = "FullName";
-            cbClients.FlatStyle = FlatStyle.Flat;
-            cbClients.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            cbClients.FormattingEnabled = true;
-            cbClients.Location = new Point(140, 176);
-            cbClients.Name = "cbClients";
-            cbClients.Size = new Size(401, 33);
-            cbClients.TabIndex = 7;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.ForeColor = SystemColors.Control;
-            label3.Location = new Point(238, 136);
-            label3.Name = "label3";
-            label3.Size = new Size(175, 25);
-            label3.TabIndex = 13;
-            label3.Text = "Selecciona al afiliado";
-            // 
             // btnCreate
             // 
             btnCreate.Anchor = AnchorStyles.Top;
@@ -109,7 +85,7 @@
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCreate.ForeColor = Color.White;
-            btnCreate.Location = new Point(246, 259);
+            btnCreate.Location = new Point(251, 300);
             btnCreate.Margin = new Padding(0);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(203, 66);
@@ -118,15 +94,38 @@
             btnCreate.UseVisualStyleBackColor = false;
             btnCreate.Click += btnCreate_Click;
             // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Top;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = SystemColors.Control;
+            label4.Location = new Point(43, 134);
+            label4.Name = "label4";
+            label4.Size = new Size(142, 25);
+            label4.TabIndex = 17;
+            label4.Text = "No INSS afiliado";
+            // 
+            // txtINSS
+            // 
+            txtINSS.Anchor = AnchorStyles.Top;
+            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtINSS.Location = new Point(43, 162);
+            txtINSS.Mask = "9999999999";
+            txtINSS.Name = "txtINSS";
+            txtINSS.Size = new Size(125, 31);
+            txtINSS.TabIndex = 16;
+            txtINSS.ValidatingType = typeof(int);
+            // 
             // FrmSavingAccountNew
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(692, 389);
+            Controls.Add(label4);
+            Controls.Add(txtINSS);
             Controls.Add(btnCreate);
-            Controls.Add(label3);
-            Controls.Add(cbClients);
             Controls.Add(lblSavingAccTitle);
             Controls.Add(BarraTitulo);
             FormBorderStyle = FormBorderStyle.None;
@@ -147,8 +146,8 @@
         private PictureBox btnCerrar;
         private Panel BarraTitulo;
         private Label lblSavingAccTitle;
-        private ComboBox cbClients;
-        private Label label3;
         private Button btnCreate;
+        private Label label4;
+        private MaskedTextBox txtINSS;
     }
 }

@@ -19,6 +19,7 @@ namespace Domain.Entities
         public DateTime ClosedDate { get; set; }
         public int CreatedBy { get; set; }
         public List<SavingAccountDepositDomain> Deposits { get; set; }
+        public List<SavingAccountWithdrawsDomain> Withdraws { get; set; }
 
         public SavingAccountDomainAggregate(int savingAccountID, decimal amount, decimal amountForInterests, 
             bool isActive, int clientID, DateTime createdDate)
@@ -28,6 +29,7 @@ namespace Domain.Entities
             AmountForInterests = amountForInterests;
             IsActive = isActive;
             Deposits = new List<SavingAccountDepositDomain>();
+            Withdraws = new List<SavingAccountWithdrawsDomain>();
             ClientID = clientID;
             CreatedDate = createdDate;
         }
@@ -35,8 +37,30 @@ namespace Domain.Entities
         public SavingAccountDomainAggregate()
         {
             Deposits = new List<SavingAccountDepositDomain>();
+            Withdraws = new List<SavingAccountWithdrawsDomain>();
         }
         
+        public void WithdrawInterests(DateTime withdrawDate, int subPeriodID)
+        {
+            if (this.AmountForInterests <= 0)
+                return;
+
+            if (withdrawDate.Month == 6 || withdrawDate.Month == 12)
+            {
+                Withdraws.Add(new SavingAccountWithdrawsDomain
+                {
+                    Amount = this.AmountForInterests,
+                    SavingAccountID = this.SavingAccountID,
+                    CreatedDate = withdrawDate,
+                    SubPeriodID = subPeriodID,
+                    WithdrawType = 0 //Interests
+                });
+     
+                this.Amount -= AmountForInterests;
+                this.AmountForInterests = 0;
+            }
+        }
+
         public void AddDeposit(decimal depositAmount, DateTime depositDate, 
             int subPeriodID, decimal interestsAmount) 
         {
@@ -54,10 +78,10 @@ namespace Domain.Entities
                 DepositType = 0 //Saving
             });
 
-            AddInterestDepositIfApplies(interestsAmount, depositDate, subPeriodID);
+            AddInterestIfMonthJuneOrDecember(interestsAmount, depositDate, subPeriodID);
         }
 
-        private void AddInterestDepositIfApplies(decimal interestsAmount, DateTime depositDate, 
+        private void AddInterestIfMonthJuneOrDecember(decimal interestsAmount, DateTime depositDate, 
             int subPeriodID) 
         {
             if (depositDate.Month == 6 || depositDate.Month == 12)
@@ -84,5 +108,14 @@ namespace Domain.Entities
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
         public int DepositType { get; set; }
+    }
+
+    public class SavingAccountWithdrawsDomain
+    { 
+        public int SavingAccountID { get; set; }
+        public int SubPeriodID { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int WithdrawType { get; set; } //Interests 0, Close account 1
     }
 }

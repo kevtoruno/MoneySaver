@@ -40,7 +40,6 @@ namespace UI.Forms.SavingAccountForms
         private void FrmSavingAccountAddDeposit_Load(object sender, EventArgs e)
         {
             LoadPeriodsComboBox();
-
         }
 
         private void LoadPeriodsComboBox()
@@ -137,12 +136,16 @@ namespace UI.Forms.SavingAccountForms
 
             var savingAccountDepositsToAdd = new SavingAccountDepositsAdd(_moneySaverRepository);
 
-            var amount = Convert.ToDecimal(this.txtAmount.Value);
+            var saDepositToCreate = new SADepositToCreateDto
+            {
+                SavingAccountID = _savingAccountID,
+                SubPeriodID = subbPeriodID,
+                Amount = Convert.ToDecimal(this.txtAmount.Value),
+                InterestsAmount = Convert.ToDecimal(this.txtInterestsAmount.Value),
+                CreatedDate = this.dtDateCreated.Value
+            };
 
-            decimal interestsAmount = Convert.ToDecimal(this.txtInterestsAmount.Value);
-
-            var result = savingAccountDepositsToAdd.AddDepositToSavingAccount(_savingAccountID, subbPeriodID, amount, 
-                this.dtDateCreated.Value, interestsAmount);
+            var result = savingAccountDepositsToAdd.AddDepositToSavingAccount(saDepositToCreate);
 
             if (result.ResourceCreated)
                 _frmSavingAccountDetail.LoadFormData();

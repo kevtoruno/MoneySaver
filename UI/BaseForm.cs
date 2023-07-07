@@ -17,11 +17,14 @@ namespace UI
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         public extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        protected void HandleResult<T>(Result<T> result, string entitiyName)
+        protected void HandleResult<T>(Result<T> result, string entitiyName, string message = "")
         {
             if (result.ResourceCreated)
             {
-                var dialogResult = MessageBox.Show(entitiyName + " agregado exitosamente", "Operación exitosa" ,MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (message == "")
+                    message = entitiyName + " agregado exitosamente";
+
+                var dialogResult = MessageBox.Show(message, "Operación exitosa",MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 /*if (dialogResult == DialogResult.OK)
                     this.Close();*/
