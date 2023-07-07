@@ -13,6 +13,9 @@
     <Compile Update="Forms\ClientsForms\FrmClientNew.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\LoanForms\FrmLoansList.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\PeriodsForms\FrmPeriodNew.cs">
       <SubType>Form</SubType>
     </Compile>

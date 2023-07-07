@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             lblClientTitle = new Label();
             gridClientList = new DataGridView();
             ClientID = new DataGridViewTextBoxColumn();
@@ -51,11 +51,11 @@
             // 
             lblClientTitle.Anchor = AnchorStyles.Top;
             lblClientTitle.AutoSize = true;
-            lblClientTitle.Font = new Font("Microsoft Sans Serif", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
+            lblClientTitle.Font = new Font("Microsoft YaHei UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
             lblClientTitle.ForeColor = SystemColors.Control;
-            lblClientTitle.Location = new Point(586, 31);
+            lblClientTitle.Location = new Point(460, 14);
             lblClientTitle.Name = "lblClientTitle";
-            lblClientTitle.Size = new Size(105, 29);
+            lblClientTitle.Size = new Size(140, 37);
             lblClientTitle.TabIndex = 1;
             lblClientTitle.Text = "Afiliados";
             // 
@@ -66,43 +66,43 @@
             gridClientList.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridClientList.BorderStyle = BorderStyle.None;
             gridClientList.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = SystemColors.HotTrack;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            gridClientList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            gridClientList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridClientList.ColumnHeadersHeight = 30;
             gridClientList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridClientList.Columns.AddRange(new DataGridViewColumn[] { ClientID, INSS, FullName, Identification, Age });
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle8.SelectionForeColor = Color.White;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            gridClientList.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            gridClientList.DefaultCellStyle = dataGridViewCellStyle2;
             gridClientList.EnableHeadersVisualStyles = false;
             gridClientList.GridColor = Color.SteelBlue;
-            gridClientList.Location = new Point(12, 338);
+            gridClientList.Location = new Point(9, 292);
             gridClientList.Name = "gridClientList";
             gridClientList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle9.ForeColor = Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            gridClientList.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            gridClientList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             gridClientList.RowHeadersVisible = false;
             gridClientList.RowHeadersWidth = 51;
             gridClientList.RowTemplate.Height = 29;
             gridClientList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridClientList.Size = new Size(1276, 300);
+            gridClientList.Size = new Size(1070, 346);
             gridClientList.TabIndex = 4;
             gridClientList.RowStateChanged += gridClientList_RowStateChanged;
             // 
@@ -176,7 +176,7 @@
             btnView.FlatStyle = FlatStyle.Flat;
             btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnView.ForeColor = SystemColors.Control;
-            btnView.Location = new Point(12, 280);
+            btnView.Location = new Point(9, 236);
             btnView.Name = "btnView";
             btnView.Size = new Size(87, 50);
             btnView.TabIndex = 6;
@@ -193,7 +193,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnDelete.ForeColor = SystemColors.Control;
-            btnDelete.Location = new Point(119, 280);
+            btnDelete.Location = new Point(116, 236);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(111, 50);
             btnDelete.TabIndex = 7;
@@ -204,7 +204,7 @@
             // 
             txtINSS.Anchor = AnchorStyles.Top;
             txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtINSS.Location = new Point(576, 118);
+            txtINSS.Location = new Point(471, 110);
             txtINSS.Mask = "9999999999";
             txtINSS.Name = "txtINSS";
             txtINSS.Size = new Size(125, 31);
@@ -219,7 +219,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = SystemColors.Control;
-            label4.Location = new Point(598, 90);
+            label4.Location = new Point(490, 80);
             label4.Name = "label4";
             label4.Size = new Size(79, 25);
             label4.TabIndex = 14;
@@ -234,7 +234,7 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnSearch.ForeColor = SystemColors.Control;
-            btnSearch.Location = new Point(565, 155);
+            btnSearch.Location = new Point(458, 147);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(150, 50);
             btnSearch.TabIndex = 17;
@@ -247,7 +247,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
-            ClientSize = new Size(1300, 650);
+            ClientSize = new Size(1080, 650);
             Controls.Add(btnSearch);
             Controls.Add(label4);
             Controls.Add(txtINSS);

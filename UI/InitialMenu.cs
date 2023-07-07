@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Service.Core.Interfaces;
 using System.Runtime.InteropServices;
 using UI.Forms;
+using UI.Forms.LoanForms;
 using UI.Forms.PeriodsForms;
 
 namespace UI
@@ -85,6 +86,11 @@ namespace UI
         private void btnMainPeriods_Click(object sender, EventArgs e)
         {
             OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmPeriodsList>());
+        }
+
+        private void btnControlPrestamos_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmLoansList>());
         }
     }
 }

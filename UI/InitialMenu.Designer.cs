@@ -203,6 +203,7 @@
             btnControlPrestamos.TabIndex = 4;
             btnControlPrestamos.Text = "Préstamos";
             btnControlPrestamos.UseVisualStyleBackColor = true;
+            btnControlPrestamos.Click += btnControlPrestamos_Click;
             // 
             // panel2
             // 

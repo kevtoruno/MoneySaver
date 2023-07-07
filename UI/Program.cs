@@ -13,6 +13,7 @@ using UI.Forms;
 using Data.Persistence;
 using Service.Core.DataModel;
 using UI.Forms.SavingAccountForms;
+using UI.Forms.LoanForms;
 
 namespace UI
 {
@@ -57,6 +58,7 @@ namespace UI
                     services.AddTransient<FrmClientList>();
                     services.AddTransient<FrmPeriodsList>();
                     services.AddTransient<FrmSavingAccountList>();
+                    services.AddTransient<FrmLoansList>();
                     //services.AddTransient<FrmSavingAccountAddDeposit>();
                 });
         }

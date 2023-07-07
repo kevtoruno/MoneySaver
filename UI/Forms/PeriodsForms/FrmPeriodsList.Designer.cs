@@ -38,6 +38,7 @@
             EndDate = new DataGridViewTextBoxColumn();
             btnNewPeriod = new Button();
             btnView = new Button();
+            lblLoansTitle = new Label();
             ((System.ComponentModel.ISupportInitialize)gridPeriodsList).BeginInit();
             SuspendLayout();
             // 
@@ -155,12 +156,25 @@
             btnView.Text = "Ver";
             btnView.UseVisualStyleBackColor = false;
             // 
+            // lblLoansTitle
+            // 
+            lblLoansTitle.Anchor = AnchorStyles.Top;
+            lblLoansTitle.AutoSize = true;
+            lblLoansTitle.Font = new Font("Microsoft YaHei UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
+            lblLoansTitle.ForeColor = SystemColors.Control;
+            lblLoansTitle.Location = new Point(523, 14);
+            lblLoansTitle.Name = "lblLoansTitle";
+            lblLoansTitle.Size = new Size(140, 37);
+            lblLoansTitle.TabIndex = 17;
+            lblLoansTitle.Text = "Períodos";
+            // 
             // FrmPeriodsList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1282, 603);
+            Controls.Add(lblLoansTitle);
             Controls.Add(btnView);
             Controls.Add(btnNewPeriod);
             Controls.Add(gridPeriodsList);
@@ -170,6 +184,7 @@
             Load += FrmPeriodsList_Load;
             ((System.ComponentModel.ISupportInitialize)gridPeriodsList).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -181,5 +196,6 @@
         private DataGridViewTextBoxColumn PeriodName;
         private DataGridViewTextBoxColumn StartDate;
         private DataGridViewTextBoxColumn EndDate;
+        private Label lblLoansTitle;
     }
 }

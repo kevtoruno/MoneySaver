@@ -53,11 +53,11 @@
             // 
             lblSavingAcountTitle.Anchor = AnchorStyles.Top;
             lblSavingAcountTitle.AutoSize = true;
-            lblSavingAcountTitle.Font = new Font("Microsoft Sans Serif", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
+            lblSavingAcountTitle.Font = new Font("Microsoft YaHei UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
             lblSavingAcountTitle.ForeColor = SystemColors.Control;
-            lblSavingAcountTitle.Location = new Point(425, 35);
+            lblSavingAcountTitle.Location = new Point(399, 15);
             lblSavingAcountTitle.Name = "lblSavingAcountTitle";
-            lblSavingAcountTitle.Size = new Size(205, 29);
+            lblSavingAcountTitle.Size = new Size(265, 37);
             lblSavingAcountTitle.TabIndex = 0;
             lblSavingAcountTitle.Text = "Fondos de ahorro";
             // 
@@ -122,7 +122,7 @@
             gridSavingAccountsList.DefaultCellStyle = dataGridViewCellStyle2;
             gridSavingAccountsList.EnableHeadersVisualStyles = false;
             gridSavingAccountsList.GridColor = Color.SteelBlue;
-            gridSavingAccountsList.Location = new Point(12, 338);
+            gridSavingAccountsList.Location = new Point(9, 292);
             gridSavingAccountsList.Name = "gridSavingAccountsList";
             gridSavingAccountsList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -137,7 +137,7 @@
             gridSavingAccountsList.RowHeadersWidth = 51;
             gridSavingAccountsList.RowTemplate.Height = 29;
             gridSavingAccountsList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridSavingAccountsList.Size = new Size(1056, 300);
+            gridSavingAccountsList.Size = new Size(1070, 346);
             gridSavingAccountsList.TabIndex = 7;
             // 
             // SavingAccountID
@@ -221,7 +221,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = SystemColors.Control;
-            label4.Location = new Point(490, 82);
+            label4.Location = new Point(490, 80);
             label4.Name = "label4";
             label4.Size = new Size(79, 25);
             label4.TabIndex = 15;
@@ -235,7 +235,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnDelete.ForeColor = SystemColors.Control;
-            btnDelete.Location = new Point(119, 282);
+            btnDelete.Location = new Point(116, 236);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(111, 50);
             btnDelete.TabIndex = 17;
@@ -250,7 +250,7 @@
             btnView.FlatStyle = FlatStyle.Flat;
             btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnView.ForeColor = SystemColors.Control;
-            btnView.Location = new Point(12, 282);
+            btnView.Location = new Point(9, 236);
             btnView.Name = "btnView";
             btnView.Size = new Size(87, 50);
             btnView.TabIndex = 16;
