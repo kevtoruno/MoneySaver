@@ -70,12 +70,19 @@ namespace UI
                 context.Companies.Add(new CompaniesDataModel 
                 { CompanyName = "SITRA", CurrentAmount = 0, FloatingAmount = 0 });
                 context.SaveChanges();
-            }
+            } 
 
             var defaultCompany = context.Companies.FirstOrDefault();
 
             if (defaultCompany != null)
                 CompanyID = defaultCompany.CompanyID;
+
+            if (context.LoanInterests.Any() == false)
+            {
+                context.LoanInterests.Add(new LoanInterestsDataModel
+                { CompanyID = defaultCompany.CompanyID, InterestRate = 6, IsDefault = true });
+                context.SaveChanges();
+            }
         }
     }
 }

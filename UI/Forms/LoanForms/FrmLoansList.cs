@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,11 +11,20 @@ using System.Windows.Forms;
 
 namespace UI.Forms.LoanForms
 {
-    public partial class FrmLoansList : Form
+    public partial class FrmLoansList : BaseForm
     {
-        public FrmLoansList()
+        private readonly IMoneySaverRepository _moneySaverRepository;
+
+        public FrmLoansList(IMoneySaverRepository moneySaverRepository)
         {
             InitializeComponent();
+            _moneySaverRepository = moneySaverRepository;
+        }
+
+        private void btnNewLoan_Click(object sender, EventArgs e)
+        {
+            var frmNewLoan = new FrmLoanNew(_moneySaverRepository, this);
+            frmNewLoan.ShowDialog();
         }
     }
 }

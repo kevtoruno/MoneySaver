@@ -40,5 +40,7 @@ namespace Service.Core.Interfaces
         SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID);
         bool WithdrawInterestsSavingAccount(SavingAccountDomainAggregate saDomain);
         string GetFullNameByINSS(string INSS);
+        public List<SubPeriodDomain> GetSubPeriodsForDateRange(DateTime startDate, DateTime endDate);
+        LoanInterestsDataModel GetDefaultLoanInterest();
     }
 }

@@ -321,5 +321,26 @@ namespace Data.Repositories
             return _context.SavingAccountWidthdrawals.Any(saw => saw.SubPeriodID == subPeriodID && 
             saw.SavingAccountID == savingAccountID && saw.WithDrawalType == WithDrawalType.Interests);
         }
+
+        public List<SubPeriodDomain> GetSubPeriodsForDateRange(DateTime startDate, DateTime endDate)
+        {
+            var subPeriodsForTheYears = _context.SubPeriods.Include(a => a.Period)
+                .Where(sp => sp.EndDate.Date >= startDate.Date && sp.EndDate.Date <= endDate.Date)
+                .Select(sp => new SubPeriodDomain
+                {
+                    EndDate = sp.EndDate,
+                    Month = sp.Month,
+                    StartDate = sp.StartDate,
+                    SubPeriodID = sp.SubPeriodID,
+                })
+                .ToList();
+
+            return subPeriodsForTheYears;
+        }
+
+        public LoanInterestsDataModel GetDefaultLoanInterest()
+        {
+            return _context.LoanInterests.First(a => a.IsDefault);
+        }
     }
 }

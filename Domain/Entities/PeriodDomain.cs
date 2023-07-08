@@ -11,11 +11,11 @@ namespace Domain.Entities
         public int Year { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
-        public List<SubPeriod> SubPeriods { get; private set; }
+        public List<SubPeriodDomain> SubPeriods { get; private set; }
 
         public PeriodDomain(int year)
         {
-            this.SubPeriods = new List<SubPeriod>();
+            this.SubPeriods = new List<SubPeriodDomain>();
             this.Year = year;   
 
             int lastDayOfDecember = DateTime.DaysInMonth(this.Year, 12);
@@ -36,7 +36,7 @@ namespace Domain.Entities
 
                 var endDate = new DateTime(Year, month, lastDayOfTheMonth);
 
-                var subPeriodToCreate = new SubPeriod
+                var subPeriodToCreate = new SubPeriodDomain
                 {
                     Month = month,
                     StartDate = startDate,
@@ -48,7 +48,7 @@ namespace Domain.Entities
         }
     }
 
-    public class SubPeriod 
+    public class SubPeriodDomain 
     {
         public int SubPeriodID { get; set; }
         public int Month { get; set; }  

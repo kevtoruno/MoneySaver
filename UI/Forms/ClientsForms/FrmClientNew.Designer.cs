@@ -129,7 +129,7 @@
             // 
             txtSecondName.Anchor = AnchorStyles.Top;
             txtSecondName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSecondName.Location = new Point(63, 224);
+            txtSecondName.Location = new Point(63, 225);
             txtSecondName.Name = "txtSecondName";
             txtSecondName.PlaceholderText = "Segundo nombre";
             txtSecondName.Size = new Size(211, 31);
@@ -232,7 +232,7 @@
             // txtAge
             // 
             txtAge.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtAge.Location = new Point(411, 224);
+            txtAge.Location = new Point(411, 225);
             txtAge.Mask = "000";
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(52, 31);

@@ -27,9 +27,6 @@ namespace Service.Features.Client
             if (dtoValidationErros.Count > 0)
                 return Result<bool>.Failure(dtoValidationErros.First().ErrorMessage);
 
-            if (clientToCreateDto.Identification.Length != 14)
-                return Result<bool>.Failure("Formato de cédula incorrecto.");
-
             string clientExists = ValidateIfClientExists(clientToCreateDto);
 
             if (clientExists != "")
