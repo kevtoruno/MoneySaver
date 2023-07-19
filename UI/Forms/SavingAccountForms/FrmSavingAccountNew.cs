@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Service.Core;
+using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.Client;
 using Service.Features.Periods;
@@ -19,12 +20,13 @@ namespace UI.Forms.SavingAccountForms
     {
         private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly FrmSavingAccountList _frmSavingAccountList;
-
+        private SavingAccountToCreateDto SavingAccountToCreateDto;
         public FrmSavingAccountNew(IMoneySaverRepository moneySaverRepository, FrmSavingAccountList frmSavingAccountList)
         {
             InitializeComponent();
             _moneySaverRepository = moneySaverRepository;
             _frmSavingAccountList = frmSavingAccountList;
+            SavingAccountToCreateDto = new SavingAccountToCreateDto();
         }
 
         private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
@@ -68,17 +70,29 @@ namespace UI.Forms.SavingAccountForms
                 return;
             }
 
+            SetSavingAccountToCreateDto();
+
             var mbOption = MessageBox.Show($"¿Está seguro que desea crear un nuevo fondo de ahorro para {nombreTrabajador}?", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
             if (mbOption == DialogResult.Yes)
             {
-                var result = savingAccountCreator.CreateSavingAccount(INSSno);
+                var result = savingAccountCreator.CreateSavingAccount(SavingAccountToCreateDto);
 
                 if (result.ResourceCreated)
                     _frmSavingAccountList.LoadGridData();
 
                 HandleResult(result, "Cuenta de ahorro");
             }
+        }
+
+        private void SetSavingAccountToCreateDto()
+        {
+            SavingAccountToCreateDto.INSSNo = txtINSS.Text;
+            SavingAccountToCreateDto.BeneficiaryRelationship = txtBeneficiaryRelationship.Text;
+            SavingAccountToCreateDto.BeneficiaryNames = txtBeneficiaryNames.Text;
+            SavingAccountToCreateDto.BeneficiaryLastNames = txtBeneficiaryLastName.Text;
+            SavingAccountToCreateDto.BeneficiaryAddress = txtBeneficiaryAddress.Text;
+            SavingAccountToCreateDto.BeneficiaryPhoneNumber = txtBenenficiaryPhoneNumber.Text;
         }
     }
 }

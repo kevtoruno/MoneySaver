@@ -13,6 +13,13 @@ namespace Service.Core.Dtos
         public int TotalTerms { get; set; }
         public decimal LoanAmount { get; set; }
 
+        public string GuarantorFullName { get; set; }
+        public string GuarantorWorkArea { get; set; }
+        public string CKCode { get; set; }
+        public string GuarantorINSSNo { get; set; }
+        public decimal GuarantorBaseIncome { get; set; }
+        public string GuarantorAddress { get; set; }
+
         public DateTime StartDate { get; set; }
     }
 }

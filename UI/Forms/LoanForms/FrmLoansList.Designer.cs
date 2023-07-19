@@ -36,12 +36,13 @@
             btnSearch = new Button();
             lblLoansTitle = new Label();
             gridLoansList = new DataGridView();
-            SavingAccountID = new DataGridViewTextBoxColumn();
-            INSS = new DataGridViewTextBoxColumn();
+            LoanID = new DataGridViewTextBoxColumn();
+            INSSNo = new DataGridViewTextBoxColumn();
             ClientFullName = new DataGridViewTextBoxColumn();
             Description = new DataGridViewTextBoxColumn();
+            IsCurrent = new DataGridViewCheckBoxColumn();
             LoanAmount = new DataGridViewTextBoxColumn();
-            PendingAmount = new DataGridViewTextBoxColumn();
+            DueAmount = new DataGridViewTextBoxColumn();
             btnNewLoan = new Button();
             btnView = new Button();
             ((System.ComponentModel.ISupportInitialize)gridLoansList).BeginInit();
@@ -85,6 +86,7 @@
             btnSearch.TabIndex = 17;
             btnSearch.Text = "Buscar";
             btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
             // 
             // lblLoansTitle
             // 
@@ -115,7 +117,7 @@
             gridLoansList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridLoansList.ColumnHeadersHeight = 30;
             gridLoansList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridLoansList.Columns.AddRange(new DataGridViewColumn[] { SavingAccountID, INSS, ClientFullName, Description, LoanAmount, PendingAmount });
+            gridLoansList.Columns.AddRange(new DataGridViewColumn[] { LoanID, INSSNo, ClientFullName, Description, IsCurrent, LoanAmount, DueAmount });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -144,29 +146,30 @@
             gridLoansList.Size = new Size(1070, 346);
             gridLoansList.TabIndex = 20;
             // 
-            // SavingAccountID
+            // LoanID
             // 
-            SavingAccountID.DataPropertyName = "SavingAccountID";
-            SavingAccountID.HeaderText = "SavingAccountID";
-            SavingAccountID.MinimumWidth = 6;
-            SavingAccountID.Name = "SavingAccountID";
-            SavingAccountID.Visible = false;
-            SavingAccountID.Width = 125;
+            LoanID.DataPropertyName = "LoanID";
+            LoanID.FillWeight = 125F;
+            LoanID.HeaderText = "LoanID";
+            LoanID.MinimumWidth = 6;
+            LoanID.Name = "LoanID";
+            LoanID.Visible = false;
+            LoanID.Width = 125;
             // 
-            // INSS
+            // INSSNo
             // 
-            INSS.DataPropertyName = "INSS";
-            INSS.HeaderText = "INSS";
-            INSS.MinimumWidth = 6;
-            INSS.Name = "INSS";
-            INSS.ReadOnly = true;
-            INSS.Width = 125;
+            INSSNo.DataPropertyName = "INSSNo";
+            INSSNo.HeaderText = "INSS";
+            INSSNo.MinimumWidth = 6;
+            INSSNo.Name = "INSSNo";
+            INSSNo.ReadOnly = true;
+            INSSNo.Width = 125;
             // 
             // ClientFullName
             // 
             ClientFullName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             ClientFullName.DataPropertyName = "ClientFullName";
-            ClientFullName.HeaderText = "Trabajador";
+            ClientFullName.HeaderText = "Afiliado";
             ClientFullName.MinimumWidth = 6;
             ClientFullName.Name = "ClientFullName";
             ClientFullName.ReadOnly = true;
@@ -180,6 +183,16 @@
             Description.Name = "Description";
             Description.ReadOnly = true;
             // 
+            // IsCurrent
+            // 
+            IsCurrent.DataPropertyName = "IsCurrent";
+            IsCurrent.HeaderText = "¿Pendiente?";
+            IsCurrent.MinimumWidth = 6;
+            IsCurrent.Name = "IsCurrent";
+            IsCurrent.Resizable = DataGridViewTriState.True;
+            IsCurrent.SortMode = DataGridViewColumnSortMode.Automatic;
+            IsCurrent.Width = 125;
+            // 
             // LoanAmount
             // 
             LoanAmount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -189,15 +202,15 @@
             LoanAmount.Name = "LoanAmount";
             LoanAmount.ReadOnly = true;
             // 
-            // PendingAmount
+            // DueAmount
             // 
-            PendingAmount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            PendingAmount.DataPropertyName = "PendingAmount";
-            PendingAmount.HeaderText = "Cantidad pendiente";
-            PendingAmount.MinimumWidth = 6;
-            PendingAmount.Name = "PendingAmount";
-            PendingAmount.ReadOnly = true;
-            PendingAmount.Resizable = DataGridViewTriState.True;
+            DueAmount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DueAmount.DataPropertyName = "DueAmount";
+            DueAmount.HeaderText = "Cantidad pendiente";
+            DueAmount.MinimumWidth = 6;
+            DueAmount.Name = "DueAmount";
+            DueAmount.ReadOnly = true;
+            DueAmount.Resizable = DataGridViewTriState.True;
             // 
             // btnNewLoan
             // 
@@ -229,6 +242,7 @@
             btnView.TabIndex = 22;
             btnView.Text = "Ver";
             btnView.UseVisualStyleBackColor = false;
+            btnView.Click += btnView_Click;
             // 
             // FrmLoansList
             // 
@@ -246,6 +260,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "FrmLoansList";
             Text = "FrmLoansList";
+            Load += FrmLoansList_Load;
             ((System.ComponentModel.ISupportInitialize)gridLoansList).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -258,13 +273,14 @@
         private Button btnSearch;
         private Label lblLoansTitle;
         private DataGridView gridLoansList;
-        private DataGridViewTextBoxColumn SavingAccountID;
-        private DataGridViewTextBoxColumn INSS;
-        private DataGridViewTextBoxColumn ClientFullName;
-        private DataGridViewTextBoxColumn Description;
-        private DataGridViewTextBoxColumn LoanAmount;
-        private DataGridViewTextBoxColumn PendingAmount;
         private Button btnNewLoan;
         private Button btnView;
+        private DataGridViewTextBoxColumn LoanID;
+        private DataGridViewTextBoxColumn INSSNo;
+        private DataGridViewTextBoxColumn ClientFullName;
+        private DataGridViewTextBoxColumn Description;
+        private DataGridViewCheckBoxColumn IsCurrent;
+        private DataGridViewTextBoxColumn LoanAmount;
+        private DataGridViewTextBoxColumn DueAmount;
     }
 }

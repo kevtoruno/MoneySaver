@@ -36,7 +36,7 @@ namespace Service.Features.Periods
             Result<bool> isPeriodValid;
             bool doPeriodExists = _moneySaverRepo.DoPeriodForTheYearExists(year);
 
-            if (year <= 2000)
+            if (year <= 1980)
             {
                 isPeriodValid = Result<bool>.Failure("Año invalido");
             }

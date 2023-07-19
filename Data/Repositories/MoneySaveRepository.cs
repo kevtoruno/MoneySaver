@@ -13,6 +13,9 @@ using Azure.Core;
 using Data.Persistence;
 using Service.Core.Dtos.PeriodsDto;
 using Domain.Entities;
+using Domain.Entities.SavingAccount;
+using Service.Core;
+using Domain;
 
 namespace Data.Repositories
 {
@@ -57,7 +60,6 @@ namespace Data.Repositories
                 new ClientToListDto
                 {
                     FullName = $"{c.LastNames} {c.FirstName} {c.SecondName}",
-                    Age = c.Age,
                     Identification = c.Identification,
                     INSS = c.INSS,
                     ClientID = c.ClientID
@@ -166,9 +168,9 @@ namespace Data.Repositories
             return hasSavingAccount;
         }
 
-        public void CreateSavingAccount(SavingAccountToCreate savingAccountToCreateDto)
+        public void CreateSavingAccount(SavingAccountDomainCreator savingAccountDomain)
         {
-            var savingAccountToCreate = _mapper.Map<SavingAccountsDataModel>(savingAccountToCreateDto);
+            var savingAccountToCreate = _mapper.Map<SavingAccountsDataModel>(savingAccountDomain);
 
             _context.SavingAccounts.Add(savingAccountToCreate);
             _context.SaveChanges();
@@ -177,7 +179,7 @@ namespace Data.Repositories
         public List<SavingAccountToListDto> GetSavingAccountsList(string INSS) 
         {
             var query = _context.SavingAccounts.AsNoTracking()
-                .Include(sa => sa.Client).OrderBy(sa => sa.IsActive).AsQueryable();
+                .Include(sa => sa.Client).OrderByDescending(sa => sa.SavingAccountID).AsQueryable();
 
             if (INSS.Length > 0)
                 query = query.Where(q => q.Client.INSS == INSS);
@@ -194,9 +196,9 @@ namespace Data.Repositories
 
                 savingAccounts.Add(new SavingAccountToListDto
                 {
-                    Amount = String.Format("{0:#,##0.00}", sa.Amount),
+                    Amount = sa.Amount.CordobaFormat(),
                     INSS = sa.Client.INSS,
-                    AmountForInterests = String.Format("{0:#,##0.00}", sa.AmountForInterests),
+                    AmountForInterests = sa.AmountForInterests.CordobaFormat(),
                     IsActive = sa.IsActive,
                     SavingAccountID = sa.SavingAccountID,
                     ClientID = sa.ClientID,
@@ -325,7 +327,7 @@ namespace Data.Repositories
         public List<SubPeriodDomain> GetSubPeriodsForDateRange(DateTime startDate, DateTime endDate)
         {
             var subPeriodsForTheYears = _context.SubPeriods.Include(a => a.Period)
-                .Where(sp => sp.EndDate.Date >= startDate.Date && sp.EndDate.Date <= endDate.Date)
+                .Where(sp => sp.EndDate.Date >= startDate.Date && sp.StartDate.Date <= endDate.Date)
                 .Select(sp => new SubPeriodDomain
                 {
                     EndDate = sp.EndDate,
@@ -338,9 +340,19 @@ namespace Data.Repositories
             return subPeriodsForTheYears;
         }
 
-        public LoanInterestsDataModel GetDefaultLoanInterest()
+        public CompanyDomain GetDefaultCompany()
         {
-            return _context.LoanInterests.First(a => a.IsDefault);
+            try
+            {
+                var defaultCompany = _context.Companies.AsNoTracking()
+                    .FirstOrDefault() ?? throw new NullReferenceException("No existe una empresa por defecto");
+
+                return _mapper.Map<CompanyDomain>(defaultCompany);
+            }
+            catch (NullReferenceException)
+            {
+                throw;
+            }
         }
     }
 }

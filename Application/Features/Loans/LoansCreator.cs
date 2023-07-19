@@ -1,91 +1,141 @@
-﻿using Service.Core.Dtos;
-using Service.Core;
-using Service.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Service.Core.Validators;
+﻿using AutoMapper;
+using Domain;
 using Domain.Entities;
-using Service.Core.DataModel;
 using Domain.Entities.Loans;
+using Service.Core;
+using Service.Core.DataModel;
+using Service.Core.Dtos;
+using Service.Core.Dtos.LoansDto;
+using Service.Core.Interfaces;
+using Service.Core.Validators;
 
 namespace Service.Features.Loans
 {
     public class LoansCreator
     {
+        private readonly ILoansRepository _loansRepo;
         private readonly IMoneySaverRepository _moneySaverRepo;
-
-        public LoansCreator(IMoneySaverRepository moneySaverRepo)
+        private readonly IMapper _mapper;
+        private int ClientID = 0;
+        private List<SubPeriodDomain> SubPeriodsForLoan = new List<SubPeriodDomain>();
+        private LoanInterestsDataModel DefaultLoanInterest;
+        private DateTime EndDate;
+        private CompanyDomain DefaultCompany;
+        public LoansCreator(ILoansRepository loansRepo, IMoneySaverRepository moneySaverRepo, IMapper mapper)
         {
+            _loansRepo = loansRepo;
             _moneySaverRepo = moneySaverRepo;
+            _mapper = mapper;
+        }
+
+        public Result<LoanPreviewDto> PreviewLoan(LoanToCreateDto loanToCreateDto)
+        {
+            try
+            {
+                var DBValidationsResult = SetDataFromDBAndValidate(loanToCreateDto);
+
+                if (DBValidationsResult.IsSucess == false)
+                    return Result<LoanPreviewDto>.Failure(DBValidationsResult.ErrorMessage);
+
+                var defaultLoanInterestDomain = _mapper.Map<LoanInterestsDomain>(DefaultLoanInterest);
+
+                var loanDomain = new LoanDomain(ClientID, loanToCreateDto.Description, loanToCreateDto.TotalTerms,
+                    loanToCreateDto.LoanAmount, defaultLoanInterestDomain, loanToCreateDto.StartDate, EndDate
+                    ,loanToCreateDto.GuarantorFullName, loanToCreateDto.GuarantorWorkArea, loanToCreateDto.GuarantorINSSNo,
+                    loanToCreateDto.GuarantorBaseIncome, loanToCreateDto.GuarantorAddress, loanToCreateDto.CKCode, DefaultCompany);
+
+                loanDomain.CreateLoan(SubPeriodsForLoan);
+
+                var loanPreviewDto = _mapper.Map<LoanPreviewDto>(loanDomain);
+
+                loanPreviewDto.ClientFullname = _moneySaverRepo.GetFullNameByINSS(loanToCreateDto.INSSNo);
+
+                return Result<LoanPreviewDto>.Success(loanPreviewDto);
+            }
+            catch (Exception ex)
+            {
+                return Result<LoanPreviewDto>.Failure(ex.Message);
+            }
         }
 
         public Result<bool> CreateLoan(LoanToCreateDto loanToCreateDto)
         {
-            var loansToCreateValidator = new LoanToCreateValidator();
-            var dtoValidationErros = loansToCreateValidator.Validate(loanToCreateDto).Errors;
+            try
+            {
+                var ValidationsResult = SetDataFromDBAndValidate(loanToCreateDto);
 
-            if (dtoValidationErros.Count > 0)
-                return Result<bool>.Failure(dtoValidationErros.First().ErrorMessage);
+                if (ValidationsResult.IsSucess == false)
+                    return ValidationsResult;
 
-            int clientID = _moneySaverRepo.GetClientIDByINSSNo(loanToCreateDto.INSSNo);
+                var defaultLoanInterestDomain = _mapper.Map<LoanInterestsDomain>(DefaultLoanInterest);
 
-            if (clientID == 0)
-                return Result<bool>.Failure("No existe un trabajador asociado al número de INSS");
+                var loanDomain = new LoanDomain(ClientID, loanToCreateDto.Description, loanToCreateDto.TotalTerms,
+                    loanToCreateDto.LoanAmount, defaultLoanInterestDomain, loanToCreateDto.StartDate, 
+                    EndDate, loanToCreateDto.GuarantorFullName, loanToCreateDto.GuarantorWorkArea, 
+                    loanToCreateDto.GuarantorINSSNo, loanToCreateDto.GuarantorBaseIncome, 
+                    loanToCreateDto.GuarantorAddress, loanToCreateDto.CKCode, DefaultCompany);
 
-            string validationFromDatabase = ValidationsToDatabase(loanToCreateDto, clientID);
+                loanDomain.CreateLoan(SubPeriodsForLoan);
 
-            if (validationFromDatabase != "")
-                return Result<bool>.Failure(validationFromDatabase);
+                var result = _loansRepo.SaveLoan(loanDomain);
 
-            var periodsForLoanDomain = GetSubPeriodsForLoan(loanToCreateDto);
+                if (result == false)
+                    return Result<bool>.Failure("Hubo un error al crear el préstamo.");
 
-            if (periodsForLoanDomain.Count != loanToCreateDto.TotalTerms)
-                return Result<bool>.Failure("No existen los subperiodos para cubrir los plazos del préstamo");
-
-            var loanInterestsDefault = _moneySaverRepo.GetDefaultLoanInterest();
-
-            if (loanInterestsDefault == null)
-                return Result<bool>.Failure("No existe un interes definido para los préstamos");
-
-            var endDate = CalcEndDateForLoan(loanToCreateDto.StartDate, loanToCreateDto.TotalTerms);
-
-            var loanDomain = new LoanDomain(clientID, loanToCreateDto.Description, loanToCreateDto.TotalTerms,
-                loanToCreateDto.LoanAmount, loanToCreateDto.StartDate, endDate);
-
-            loanDomain.CreateLoan(periodsForLoanDomain, loanInterestsDefault.InterestRate);
-
-            return Result<bool>.Created(true, "Préstamo creado exitosamente.");
+                return Result<bool>.Created(true, "Préstamo creado exitosamente.");
+            }
+            catch (Exception ex)
+            {
+                return Result<bool>.Failure(ex.Message);
+            }   
         }
 
-        private string ValidationsToDatabase(LoanToCreateDto loanToCreateDto, int clientID)
+        private Result<bool> SetDataFromDBAndValidate(LoanToCreateDto loanToCreateDto)
         {
-            string errorMsg = "";
-            bool doClientAlreadyHasAnotherPendingLoan = false; //CheckIfClientHasAnotherLoan
+            try
+            {
+                var loansToCreateValidator = new LoanToCreateValidator(validateGuarantor: true);
+                var dtoValidationErros = loansToCreateValidator.Validate(loanToCreateDto).Errors;
 
-            if (doClientAlreadyHasAnotherPendingLoan)
-                errorMsg = "Este trabajador tiene actualmente un préstamo pendiente";
+                if (dtoValidationErros.Count > 0)
+                    return Result<bool>.Failure(dtoValidationErros.First().ErrorMessage);
 
-            bool isThereAPeriodForStartDate = true; //CheckIfPeriodExistsForMonthAndYear
+                ClientID = _moneySaverRepo.GetClientIDByINSSNo(loanToCreateDto.INSSNo);
 
-            if (isThereAPeriodForStartDate == false)
-                errorMsg = "No existe un período configurado para la fecha de inicio";
+                if (ClientID == 0)
+                    return Result<bool>.Failure("No existe un trabajador asociado al número de INSS");
 
-            return errorMsg;
+                bool doClientHasAnotherLoan = _loansRepo.CheckIfClientHasAnotherLoan(ClientID);
+
+                if (doClientHasAnotherLoan == true)
+                    return Result<bool>.Failure("Este trabajador tiene actualmente un préstamo pendiente");
+
+                EndDate = CalculateEndDateForLoan(loanToCreateDto.StartDate, loanToCreateDto.TotalTerms);
+
+                SubPeriodsForLoan = GetSubPeriodsForLoan(loanToCreateDto);
+
+                if (SubPeriodsForLoan.Count != loanToCreateDto.TotalTerms)
+                    return Result<bool>.Failure("No existen los subperiodos para cubrir los plazos del préstamo");
+
+                DefaultLoanInterest = _loansRepo.GetDefaultLoanInterest();
+
+                if (DefaultLoanInterest == null)
+                    return Result<bool>.Failure("No existe un interes definido para los préstamos");
+
+                DefaultCompany = _moneySaverRepo.GetDefaultCompany();
+
+                if (loanToCreateDto.LoanAmount > DefaultCompany.CurrentAmount)
+                    return Result<bool>.Failure("No existen fondos suficientes para realizar el préstamo");
+
+                return Result<bool>.Success(true);
+            }
+            catch (Exception ex)
+            {
+                return Result<bool>.Failure(ex.Message);
+            }
         }
 
-        private List<SubPeriodDomain> GetSubPeriodsForLoan(LoanToCreateDto loanToCreateDto) 
-        {
-            var endDate = CalcEndDateForLoan(loanToCreateDto.StartDate, loanToCreateDto.TotalTerms);
-
-            var subPeriodsForLoan = _moneySaverRepo.GetSubPeriodsForDateRange(loanToCreateDto.StartDate, endDate);
-
-            return subPeriodsForLoan;
-        }
-
-        private DateTime CalcEndDateForLoan(DateTime startDate, int loanTerms)
+        private DateTime CalculateEndDateForLoan(DateTime startDate, int loanTerms)
         {
             DateTime endDate = startDate.AddMonths(loanTerms-1).Date;
 
@@ -97,6 +147,13 @@ namespace Service.Features.Loans
             }
 
             return endDate;
+        }
+
+        private List<SubPeriodDomain> GetSubPeriodsForLoan(LoanToCreateDto loanToCreateDto) 
+        {
+            var subPeriodsForLoan = _moneySaverRepo.GetSubPeriodsForDateRange(loanToCreateDto.StartDate, EndDate);
+
+            return subPeriodsForLoan;
         }
     }
 }

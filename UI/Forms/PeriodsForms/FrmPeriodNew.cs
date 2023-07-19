@@ -91,5 +91,10 @@ namespace UI.Forms.PeriodsForms
 
             HandleResult(result, "Período");
         }
+
+        private void gridPreview_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

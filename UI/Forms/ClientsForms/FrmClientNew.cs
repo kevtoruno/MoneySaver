@@ -1,4 +1,5 @@
-﻿using Service.Core.Dtos;
+﻿using Service.Core;
+using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.Client;
 using System;
@@ -47,12 +48,14 @@ namespace UI.Forms.ClientsForms
             var clientToCreate = new ClientToCreateDto();
 
             clientToCreate.FirstName = this.txtFirstName.Text;
-            clientToCreate.INSS = this.txtINSS.Text;
+            clientToCreate.INSS = this.txtINSS.Text.RemoveAllWhiteSpaces();
             clientToCreate.LastNames = this.txtLastName.Text;
-            clientToCreate.Age = this.txtAge.Text == "" ? 0 : Convert.ToInt32(this.txtAge.Text);
             clientToCreate.SecondName = this.txtSecondName.Text;
             clientToCreate.Identification = this.txtIdentification.Text;
             clientToCreate.CompanyID = Program.CompanyID;
+            clientToCreate.Address = this.txtAddress.Text;
+            clientToCreate.WorkArea = this.txtWorkArea.Text;
+            clientToCreate.BaseIncome = this.txtBaseIncome.Value;
 
             var clientCreator = new ClientCreator(_moneySaverRepository);
             var result = clientCreator.CreateNewClient(clientToCreate);

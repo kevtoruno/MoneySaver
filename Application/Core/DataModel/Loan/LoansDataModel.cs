@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,14 @@ namespace Service.Core.DataModel
         public ClientsDataModel Client { get; set; }
         public int LoanInterestID { get; set; }
         public LoanInterestsDataModel LoanInterest { get; set; }
+        public string GuarantorFullName { get; set; }
+        public string GuarantorWorkArea { get; set; }
+        public string GuarantorINSSNo { get; set; }
+        [Column(TypeName="money")]
+        public decimal GuarantorBaseIncome { get; set; }
+        public string GuarantorAddress { get; set; }
+
+        public string CKCode { get; set; }
         public int CreatedBy { get; set; }
         public string Description { get; set; }
         public int TotalTerms { get; set; }

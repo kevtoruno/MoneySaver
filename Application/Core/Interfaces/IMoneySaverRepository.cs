@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Domain;
+using Domain.Entities;
+using Domain.Entities.SavingAccount;
 using Service.Core.DataModel;
 using Service.Core.Dtos;
 using Service.Core.Dtos.PeriodsDto;
@@ -28,7 +30,7 @@ namespace Service.Core.Interfaces
 
         bool CheckIfClientHasActiveSavingAccount(int clientID);
         int GetClientIDByINSSNo(string INSSNo);
-        void CreateSavingAccount(SavingAccountToCreate savingAccountToCreate);
+        void CreateSavingAccount(SavingAccountDomainCreator savingAccountToCreate);
 
         List<SavingAccountToListDto> GetSavingAccountsList(string INSS);
         SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID);
@@ -37,10 +39,11 @@ namespace Service.Core.Interfaces
         bool AddDepositToSavingAccount(SavingAccountDomainAggregate saDomain);
         bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID);
         bool CheckIfInterestWithdrawExistsForSubPeriod(int subPeriodID, int savingAccountID);
+        
         SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID);
         bool WithdrawInterestsSavingAccount(SavingAccountDomainAggregate saDomain);
         string GetFullNameByINSS(string INSS);
-        public List<SubPeriodDomain> GetSubPeriodsForDateRange(DateTime startDate, DateTime endDate);
-        LoanInterestsDataModel GetDefaultLoanInterest();
+        List<SubPeriodDomain> GetSubPeriodsForDateRange(DateTime startDate, DateTime endDate);
+        CompanyDomain GetDefaultCompany();
     }
 }

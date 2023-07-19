@@ -43,11 +43,16 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
-            label5 = new Label();
-            txtAge = new MaskedTextBox();
             txtINSS = new MaskedTextBox();
+            label14 = new Label();
+            txtAddress = new RichTextBox();
+            txtWorkArea = new TextBox();
+            label11 = new Label();
+            label13 = new Label();
+            txtBaseIncome = new NumericUpDown();
             BarraTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnCerrar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtBaseIncome).BeginInit();
             SuspendLayout();
             // 
             // BarraTitulo
@@ -57,7 +62,7 @@
             BarraTitulo.Dock = DockStyle.Top;
             BarraTitulo.Location = new Point(2, 2);
             BarraTitulo.Name = "BarraTitulo";
-            BarraTitulo.Size = new Size(688, 38);
+            BarraTitulo.Size = new Size(740, 38);
             BarraTitulo.TabIndex = 1;
             BarraTitulo.MouseDown += BarraTitulo_MouseDown;
             // 
@@ -67,7 +72,7 @@
             btnCerrar.BackgroundImage = (Image)resources.GetObject("btnCerrar.BackgroundImage");
             btnCerrar.BackgroundImageLayout = ImageLayout.Zoom;
             btnCerrar.Cursor = Cursors.Hand;
-            btnCerrar.Location = new Point(662, 5);
+            btnCerrar.Location = new Point(714, 5);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(25, 25);
             btnCerrar.TabIndex = 0;
@@ -76,9 +81,8 @@
             // 
             // txtLastName
             // 
-            txtLastName.Anchor = AnchorStyles.Top;
             txtLastName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtLastName.Location = new Point(63, 295);
+            txtLastName.Location = new Point(30, 295);
             txtLastName.Name = "txtLastName";
             txtLastName.PlaceholderText = "Apellidos";
             txtLastName.Size = new Size(211, 31);
@@ -94,20 +98,19 @@
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCreate.ForeColor = Color.White;
-            btnCreate.Location = new Point(63, 374);
+            btnCreate.Location = new Point(30, 475);
             btnCreate.Margin = new Padding(0);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(170, 50);
-            btnCreate.TabIndex = 7;
+            btnCreate.TabIndex = 9;
             btnCreate.Text = "Agregar";
             btnCreate.UseVisualStyleBackColor = false;
             btnCreate.Click += btnCreate_Click;
             // 
             // txtFirstName
             // 
-            txtFirstName.Anchor = AnchorStyles.Top;
             txtFirstName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtFirstName.Location = new Point(63, 155);
+            txtFirstName.Location = new Point(30, 155);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.PlaceholderText = "Primer nombre";
             txtFirstName.Size = new Size(211, 31);
@@ -119,7 +122,7 @@
             lblClientTitle.AutoSize = true;
             lblClientTitle.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point);
             lblClientTitle.ForeColor = SystemColors.Control;
-            lblClientTitle.Location = new Point(255, 70);
+            lblClientTitle.Location = new Point(281, 70);
             lblClientTitle.Name = "lblClientTitle";
             lblClientTitle.Size = new Size(205, 36);
             lblClientTitle.TabIndex = 5;
@@ -127,9 +130,8 @@
             // 
             // txtSecondName
             // 
-            txtSecondName.Anchor = AnchorStyles.Top;
             txtSecondName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSecondName.Location = new Point(63, 225);
+            txtSecondName.Location = new Point(30, 224);
             txtSecondName.Name = "txtSecondName";
             txtSecondName.PlaceholderText = "Segundo nombre";
             txtSecondName.Size = new Size(211, 31);
@@ -145,11 +147,11 @@
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(443, 374);
+            btnCancel.Location = new Point(548, 475);
             btnCancel.Margin = new Padding(0);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(170, 50);
-            btnCancel.TabIndex = 8;
+            btnCancel.TabIndex = 10;
             btnCancel.Text = "Cancelar";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
@@ -157,18 +159,18 @@
             // txtIdentification
             // 
             txtIdentification.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtIdentification.Location = new Point(411, 295);
+            txtIdentification.Location = new Point(292, 155);
             txtIdentification.Mask = "0000000000000L";
             txtIdentification.Name = "txtIdentification";
             txtIdentification.Size = new Size(150, 31);
-            txtIdentification.TabIndex = 6;
+            txtIdentification.TabIndex = 5;
             // 
             // lblIdentification
             // 
             lblIdentification.AutoSize = true;
             lblIdentification.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblIdentification.ForeColor = SystemColors.Control;
-            lblIdentification.Location = new Point(411, 267);
+            lblIdentification.Location = new Point(292, 127);
             lblIdentification.Name = "lblIdentification";
             lblIdentification.Size = new Size(66, 25);
             lblIdentification.TabIndex = 9;
@@ -179,7 +181,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.Control;
-            label1.Location = new Point(63, 267);
+            label1.Location = new Point(30, 267);
             label1.Name = "label1";
             label1.Size = new Size(86, 25);
             label1.TabIndex = 10;
@@ -190,7 +192,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(63, 196);
+            label2.Location = new Point(30, 196);
             label2.Name = "label2";
             label2.Size = new Size(152, 25);
             label2.TabIndex = 11;
@@ -201,7 +203,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label3.ForeColor = SystemColors.Control;
-            label3.Location = new Point(63, 127);
+            label3.Location = new Point(30, 127);
             label3.Name = "label3";
             label3.Size = new Size(131, 25);
             label3.TabIndex = 12;
@@ -212,52 +214,100 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = SystemColors.Control;
-            label4.Location = new Point(411, 127);
+            label4.Location = new Point(30, 337);
             label4.Name = "label4";
             label4.Size = new Size(79, 25);
             label4.TabIndex = 13;
             label4.Text = "No INSS";
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.ForeColor = SystemColors.Control;
-            label5.Location = new Point(411, 196);
-            label5.Name = "label5";
-            label5.Size = new Size(52, 25);
-            label5.TabIndex = 14;
-            label5.Text = "Edad";
-            // 
-            // txtAge
-            // 
-            txtAge.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtAge.Location = new Point(411, 225);
-            txtAge.Mask = "000";
-            txtAge.Name = "txtAge";
-            txtAge.Size = new Size(52, 31);
-            txtAge.TabIndex = 5;
-            // 
             // txtINSS
             // 
-            txtINSS.Anchor = AnchorStyles.Top;
             txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtINSS.Location = new Point(411, 155);
-            txtINSS.Mask = "9999999999";
+            txtINSS.HidePromptOnLeave = true;
+            txtINSS.InsertKeyMode = InsertKeyMode.Insert;
+            txtINSS.Location = new Point(30, 365);
+            txtINSS.Mask = "999999999";
             txtINSS.Name = "txtINSS";
+            txtINSS.PromptChar = ' ';
             txtINSS.Size = new Size(125, 31);
             txtINSS.TabIndex = 4;
             txtINSS.ValidatingType = typeof(int);
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.ForeColor = SystemColors.Control;
+            label14.Location = new Point(292, 267);
+            label14.Name = "label14";
+            label14.Size = new Size(85, 25);
+            label14.TabIndex = 59;
+            label14.Text = "Dirección";
+            // 
+            // txtAddress
+            // 
+            txtAddress.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtAddress.Location = new Point(292, 295);
+            txtAddress.Name = "txtAddress";
+            txtAddress.Size = new Size(231, 101);
+            txtAddress.TabIndex = 7;
+            txtAddress.Text = "";
+            // 
+            // txtWorkArea
+            // 
+            txtWorkArea.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtWorkArea.Location = new Point(536, 155);
+            txtWorkArea.Name = "txtWorkArea";
+            txtWorkArea.Size = new Size(150, 31);
+            txtWorkArea.TabIndex = 8;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.ForeColor = SystemColors.Control;
+            label11.Location = new Point(536, 127);
+            label11.Name = "label11";
+            label11.Size = new Size(48, 25);
+            label11.TabIndex = 60;
+            label11.Text = "Area";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.ForeColor = SystemColors.Control;
+            label13.Location = new Point(292, 196);
+            label13.Name = "label13";
+            label13.Size = new Size(107, 25);
+            label13.TabIndex = 63;
+            label13.Text = "Salario base";
+            // 
+            // txtBaseIncome
+            // 
+            txtBaseIncome.DecimalPlaces = 2;
+            txtBaseIncome.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtBaseIncome.Location = new Point(292, 224);
+            txtBaseIncome.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
+            txtBaseIncome.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
+            txtBaseIncome.Name = "txtBaseIncome";
+            txtBaseIncome.Size = new Size(164, 31);
+            txtBaseIncome.TabIndex = 6;
+            txtBaseIncome.Value = new decimal(new int[] { 1000, 0, 0, 0 });
             // 
             // FrmClientNew
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
-            ClientSize = new Size(692, 488);
+            ClientSize = new Size(744, 553);
+            Controls.Add(label13);
+            Controls.Add(txtBaseIncome);
+            Controls.Add(txtWorkArea);
+            Controls.Add(label11);
+            Controls.Add(label14);
+            Controls.Add(txtAddress);
             Controls.Add(txtINSS);
-            Controls.Add(txtAge);
-            Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -276,10 +326,11 @@
             Name = "FrmClientNew";
             Padding = new Padding(2);
             StartPosition = FormStartPosition.CenterParent;
-            Text = "FrmClientNew";
+            Text = "Nuevo afiliado";
             Load += FrmClientNew_Load;
             BarraTitulo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)btnCerrar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtBaseIncome).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -300,8 +351,12 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private Label label5;
-        private MaskedTextBox txtAge;
         private MaskedTextBox txtINSS;
+        private Label label14;
+        private RichTextBox txtAddress;
+        private TextBox txtWorkArea;
+        private Label label11;
+        private Label label13;
+        private NumericUpDown txtBaseIncome;
     }
 }

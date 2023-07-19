@@ -32,11 +32,11 @@ namespace Service.Core.Dtos
         public int SubPeriodID { get; set; }
         public string SubPeriodName { get; set; }
         public decimal Amount { get; set; }
-        public string AmountDisplay { get { return "C$ " + String.Format("{0:#,##0.00}", Amount); } }
+        public string AmountDisplay { get { return Amount.CordobaFormat(); } }
         public SavingAccountHistoryType HistoryType { get; set; }
         public string HistoryName { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string TotalDisplay { get { return "C$ " + String.Format("{0:#,##0.00}", Total); } }
+        public string TotalDisplay { get { return Total.CordobaFormat(); } }
         public decimal Total { get; set; }
     }
 

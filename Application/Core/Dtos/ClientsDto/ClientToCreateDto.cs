@@ -14,7 +14,9 @@ namespace Service.Core.Dtos
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string LastNames { get; set; }
-        public int Age { get; set; }
+        public string Address { get; set; }
+        public string WorkArea { get; set; }
+        public decimal BaseIncome { get; set; }
         public string INSS { get; set; }
         public string Identification { get; set; }
         public int CreatedBy { get; set; }

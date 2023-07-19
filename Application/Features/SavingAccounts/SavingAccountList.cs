@@ -116,7 +116,7 @@ namespace Service.Features.SavingAccounts
                 {
                     var date = new DateTime(saw.SubPeriod.Period.Year, saw.SubPeriod.Month, 1);
 
-                    subPeriodName = $"Período de {date.ToString("MMMM")} del {saw.SubPeriod.Period.Year}";
+                    subPeriodName = $"{date.ToString("MMMM")} {saw.SubPeriod.Period.Year}";
                 }
 
                 var saHistoryToListDto = new SavingAccountsHistoryToListDto
@@ -158,7 +158,7 @@ namespace Service.Features.SavingAccounts
                     else if (s.HistoryType == SavingAccountHistoryType.InterestsWithdrawn)
                         s.Total = prevTotalAmount - s.Amount;
                     else if (s.HistoryType == SavingAccountHistoryType.FullWithdrawn)
-                        s.Total = 0;                   
+                        s.Total = prevTotalAmount - s.Amount;                   
                 }
                 else
                     s.Total = s.Amount;

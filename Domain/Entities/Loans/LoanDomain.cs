@@ -12,8 +12,10 @@ namespace Domain.Entities.Loans
     {
         public int ClientID { get; set; }
         public int LoanInterestID { get; set; }
-        public LoanInterestsDomain LoanInterest { get; set; }
+        public CompanyDomain Company { get; set; }
+        public LoanInterestsDomain DefaultLoanInterest { get; set; }
         public int CreatedBy { get; set; }
+        public string CKCode { get; set; }
         public string Description { get; set; }
         public int TotalTerms { get; set; }
         /// <summary>
@@ -23,7 +25,8 @@ namespace Domain.Entities.Loans
 
         public decimal Interests { get; set; }
         /// <summary>
-        /// Sum of the loan amount asked for the client + interests.
+        /// Amount to give the customer to.
+        /// This amount equals LoanAmount - interests - papercost decreased.
         /// </summary>
         public decimal Amount { get; set; }
         public decimal DueAmount { get; set; }
@@ -32,34 +35,68 @@ namespace Domain.Entities.Loans
         public DateTime EndDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsCurrent { get; set; }
+        public decimal PaperCostAmount { get; set; }
+        public string GuarantorFullName { get; set; }
+        public string GuarantorWorkArea { get; set; }
+        public string GuarantorINSSNo { get; set; }
+        public decimal GuarantorBaseIncome { get; set; }
+        public string GuarantorAddress { get; set; }
         public List<SubPeriodDomain> SubPeriods { get; private set; }
         public List<LoanInstallmentsDomain> LoanInstallments { get; private set; }
 
-        public LoanDomain(int clientID, string description, int totalTerms, decimal loanAmount, DateTime startDate, DateTime endDate)
+        public LoanDomain(int clientID, string description, int totalTerms, 
+            decimal loanAmount, LoanInterestsDomain loanInterest,   DateTime startDate, DateTime endDate, string guarantorFullName
+            ,string guarantorWorkArea, string guarantorINSSNo, decimal guarantorBaseIncome, string guarantorAddress, string ckCode
+            , CompanyDomain company)
         {
+            DefaultLoanInterest = loanInterest;
             ClientID = clientID;
             Description = description;
             TotalTerms = totalTerms;
             LoanAmount = loanAmount;
             StartDate = startDate;
             EndDate = endDate;
+            LoanInterestID = loanInterest.LoanInterestID;
+            GuarantorAddress = guarantorAddress;
+            GuarantorBaseIncome = guarantorBaseIncome;
+            GuarantorFullName = guarantorFullName;
+            GuarantorINSSNo = guarantorINSSNo;
+            GuarantorWorkArea = guarantorWorkArea;
             LoanInstallments = new List<LoanInstallmentsDomain>();
+            CKCode = ckCode;
+            Company = company;
         }
 
-        public void CreateLoan(List<SubPeriodDomain> subPeriods, decimal interestRate)
+        public void CreateLoan(List<SubPeriodDomain> subPeriods)
         {
-            SubPeriods = subPeriods;
-            SetBaseLoanValues(interestRate);
-
-            CreateLoanInstallments();
+            try
+            {
+                SubPeriods = subPeriods;
+                SetBaseLoanValues();
+                SetCompanyValues();
+                CreateLoanInstallments();  
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        private void SetBaseLoanValues(decimal interestRate)
+        private void SetBaseLoanValues()
         {
-            Interests = LoanAmount * (interestRate / 100);
-            Amount = Interests + LoanAmount + 6;
-            DueAmount = Amount;
-            TermAmount = Amount / TotalTerms;
+            Interests = LoanAmount * (DefaultLoanInterest.InterestRate / 100);
+            Amount = LoanAmount - Interests - DefaultLoanInterest.LoanPaperCost;
+            DueAmount = LoanAmount;
+            TermAmount = LoanAmount / TotalTerms;
+            this.CreatedDate = DateTime.Now;
+            this.IsCurrent = true;
+            this.PaperCostAmount = DefaultLoanInterest.LoanPaperCost;
+        }
+
+        private void SetCompanyValues()
+        {
+            Company.DecreaseCurrentAmount(LoanAmount);
+            Company.AddFloatingAmount(LoanAmount);
         }
 
         private void CreateLoanInstallments()
@@ -74,7 +111,8 @@ namespace Domain.Entities.Loans
                     DueAmount = TermAmount,
                     IsPaid = false,
                     SubPeriodID = subPeriod.SubPeriodID,
-                    DueDate = dueDate
+                    DueDate = dueDate,
+                    PeriodName = subPeriod.SubPeriodName,
                 });
             }
         }
@@ -102,6 +140,7 @@ namespace Domain.Entities.Loans
     {
         public int LoanID { get; set; }
         public int SubPeriodID { get; set; }
+        public string PeriodName { get; set; }
         public decimal Amount { get; set; }
         public decimal DueAmount { get; set; }
         public bool IsPaid { get; set; }

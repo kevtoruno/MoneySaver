@@ -8,6 +8,16 @@ namespace Domain.Entities.SavingAccount
 {
     public class SavingAccountDomainCreator : SavingAccountDomainAggregate
     {
+        public SavingAccountDomainCreator(string beneficiaryNames, string beneficiaryLastNames, 
+            string beneficiaryPhoneNumber, string beneficiaryRelationship, string beneficiaryAddress)
+        {
+            BeneficiaryNames = beneficiaryNames;
+            BeneficiaryLastNames = beneficiaryLastNames;
+            BeneficiaryPhoneNumber = beneficiaryPhoneNumber;
+            BeneficiaryRelationship = beneficiaryRelationship;
+            BeneficiaryAddress = beneficiaryAddress;
+        }
+
         public void CreateNewSavingAccountForClient(int clientID)
         {
             this.ClientID = clientID;

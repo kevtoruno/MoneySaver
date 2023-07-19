@@ -15,6 +15,12 @@ namespace Service.Core.DataModel
         public int ClientID { get; set; }
         public ClientsDataModel Client { get; set; }
 
+        public string BeneficiaryNames { get; set; }
+        public string BeneficiaryLastNames { get; set; }
+        public string BeneficiaryPhoneNumber { get; set; }
+        public string BeneficiaryRelationship { get; set; }
+        public string BeneficiaryAddress { get; set; }
+
         [Column(TypeName="money")]
         public decimal Amount { get; set; }
 

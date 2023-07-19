@@ -12,8 +12,6 @@ namespace Data
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
             bool useSQLServer = true;
 
             var assembly = Assembly.GetExecutingAssembly().GetName().Name;
@@ -33,6 +31,7 @@ namespace Data
             }, ServiceLifetime.Transient);
 
             services.AddTransient<IMoneySaverRepository, MoneySaveRepository>();
+            services.AddTransient<ILoansRepository, LoanRepository>();
 
             return services;
         }

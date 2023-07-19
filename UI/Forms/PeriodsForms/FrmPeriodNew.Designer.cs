@@ -213,6 +213,7 @@
             gridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridPreview.Size = new Size(741, 206);
             gridPreview.TabIndex = 19;
+            gridPreview.CellContentClick += gridPreview_CellContentClick;
             // 
             // Month
             // 

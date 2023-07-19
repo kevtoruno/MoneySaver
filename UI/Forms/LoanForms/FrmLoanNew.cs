@@ -1,4 +1,7 @@
-﻿using Service.Core.Dtos;
+﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
+using Service.Core.Dtos;
+using Service.Core.Dtos.LoansDto;
 using Service.Core.Interfaces;
 using Service.Features.Loans;
 using System;
@@ -16,13 +19,16 @@ namespace UI.Forms.LoanForms
     public partial class FrmLoanNew : BaseForm
     {
         private readonly IMoneySaverRepository _moneySaverRepository;
+        private readonly ILoansRepository _loansRepo;
         private readonly FrmLoansList _frmLoansList;
-
-        public FrmLoanNew(IMoneySaverRepository moneySaverRepository, FrmLoansList frmLoansList)
+        private LoanToCreateDto LoanToCreateDto;
+        public FrmLoanNew(IMoneySaverRepository moneySaverRepository, ILoansRepository loansRepo, FrmLoansList frmLoansList)
         {
             InitializeComponent();
             _moneySaverRepository = moneySaverRepository;
+            _loansRepo = loansRepo;
             _frmLoansList = frmLoansList;
+            LoanToCreateDto = new LoanToCreateDto();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -43,18 +49,74 @@ namespace UI.Forms.LoanForms
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            var loanToCreateDto = new LoanToCreateDto();
+            SetLoanToCreateDto();
 
-            loanToCreateDto.StartDate = dtStartDate.Value;
-            loanToCreateDto.TotalTerms = (int) txtInstallments.Value;
-            loanToCreateDto.INSSNo = txtINSS.Text;
-            loanToCreateDto.Description = txtDescription.Text;
-            loanToCreateDto.LoanAmount = txtLoanAmount.Value;
-            
-            var loanCreator = new LoansCreator(_moneySaverRepository);
-            var result = loanCreator.CreateLoan(loanToCreateDto);
+            var loanCreator = new LoansCreator(_loansRepo, _moneySaverRepository, Program.ServiceProvider.GetRequiredService<IMapper>());
+            var result = loanCreator.CreateLoan(LoanToCreateDto);
 
             HandleResult(result, "Préstamo");
+
+            if (result.ResourceCreated)
+                _frmLoansList.LoadGridData();
+        }
+
+        private void btnPreview_Click(object sender, EventArgs e)
+        {
+            SetLoanToCreateDto();
+
+            var loanCreator = new LoansCreator(_loansRepo, _moneySaverRepository, Program.ServiceProvider.GetRequiredService<IMapper>());
+            var result = loanCreator.PreviewLoan(LoanToCreateDto);
+
+            if (result.IsSucess)
+            {
+                this.btnCreate.Visible = true;
+                SetPreviewData(result.Value);
+            }
+            else
+                HandleResult(result, "Préstamo");
+        }
+
+        private void SetLoanToCreateDto()
+        {
+            LoanToCreateDto.StartDate = dtStartDate.Value;
+            LoanToCreateDto.TotalTerms = (int)txtInstallments.Value;
+            LoanToCreateDto.INSSNo = txtINSS.Text;
+            LoanToCreateDto.Description = txtDescription.Text;
+            LoanToCreateDto.LoanAmount = txtLoanAmount.Value;
+            LoanToCreateDto.GuarantorFullName = txtGuarantorFullName.Text;
+            LoanToCreateDto.GuarantorINSSNo = txtGuarantorINSS.Text;
+            LoanToCreateDto.GuarantorWorkArea = txtGuarantorWorkArea.Text;
+            LoanToCreateDto.GuarantorAddress = txtGurantorAddress.Text;
+            LoanToCreateDto.GuarantorBaseIncome = txtGuarantorBaseIncome.Value;
+            LoanToCreateDto.CKCode = txtCKCode.Text;
+        }
+
+        private void SetPreviewData(LoanPreviewDto previewDto)
+        {
+            lblAmountData.Visible = true;
+            lblAmountData.Text = previewDto.Amount;
+
+            lblClientFullNameData.Visible = true;
+            lblClientFullNameData.Text = previewDto.ClientFullname;
+
+            lblInterestsData.Visible = true;
+            lblInterestsData.Text = previewDto.Interests;
+
+            lblPaperCostData.Visible = true;
+            lblPaperCostData.Text = previewDto.PaperCostAmount;
+
+            lblTermAmountData.Visible = true;
+            lblTermAmountData.Text = previewDto.TermAmount;
+
+            SetGridData(previewDto);
+        }
+
+        private void SetGridData(LoanPreviewDto previewDto)
+        {
+            BindingSource bindingSource = CreateBindingSource(previewDto.LoanInstallments);
+
+            this.gridPreview.AutoGenerateColumns = false;
+            this.gridPreview.DataSource = bindingSource;
         }
     }
 }

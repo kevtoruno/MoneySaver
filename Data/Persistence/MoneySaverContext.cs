@@ -35,6 +35,10 @@ namespace Data.Persistence
             modelBuilder.Entity<ClientsDataModel>()
                 .Property(e => e.ClientID)
                 .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<LoansDataModel>()
+                .HasIndex(l => l.CKCode)
+                .IsUnique();
         }
 
     }

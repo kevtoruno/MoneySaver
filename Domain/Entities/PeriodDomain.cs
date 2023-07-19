@@ -54,5 +54,12 @@ namespace Domain.Entities
         public int Month { get; set; }  
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string SubPeriodName
+        {
+            get
+            {    
+                return  $"{StartDate.ToString("MMMM")} - {StartDate.Year}";
+            }
+        }
     }
 }

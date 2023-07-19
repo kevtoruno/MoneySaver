@@ -80,7 +80,7 @@ namespace UI
             if (context.LoanInterests.Any() == false)
             {
                 context.LoanInterests.Add(new LoanInterestsDataModel
-                { CompanyID = defaultCompany.CompanyID, InterestRate = 6, IsDefault = true });
+                { CompanyID = defaultCompany.CompanyID, InterestRate = 6, IsDefault = true, LoanPaperCost = 6 });
                 context.SaveChanges();
             }
         }

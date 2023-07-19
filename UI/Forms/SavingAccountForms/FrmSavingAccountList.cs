@@ -48,11 +48,6 @@ namespace UI.Forms
             LoadGridData();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             LoadGridData();
@@ -60,6 +55,9 @@ namespace UI.Forms
 
         private void btnView_Click(object sender, EventArgs e)
         {
+            if (this.gridSavingAccountsList.Rows.Count <= 0)
+                return;
+
             if (this.gridSavingAccountsList.CurrentRow.Cells[0].Value == null)
             {
                 MessageBox.Show("Debe seleccionar una cuenta bancaria.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

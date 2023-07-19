@@ -55,6 +55,11 @@ namespace UI.Forms.SavingAccountForms
             this.cbPeriods.ValueMember = "PeriodID";
             this.cbPeriods.DisplayMember = "PeriodName";
             this.cbPeriods.DataSource = bindingSource;
+
+            var todayPeriod = periodsDto.FirstOrDefault(a => a.Year == DateTime.Now.Year);
+
+            if (todayPeriod != null)
+                this.cbPeriods.SelectedItem = todayPeriod;
         }
 
         private void ValidateFormOnOpen(List<PeriodsToListDto> periodsDto)

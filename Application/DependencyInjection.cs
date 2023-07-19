@@ -13,6 +13,7 @@ namespace Service
     {
         public static IServiceCollection AddServiceLayer(this IServiceCollection services)
         {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }

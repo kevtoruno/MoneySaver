@@ -30,8 +30,12 @@ namespace SQLServerMigrations.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientID"));
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("BaseIncome")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
@@ -56,6 +60,10 @@ namespace SQLServerMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecondName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkArea")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -171,6 +179,9 @@ namespace SQLServerMigrations.Migrations
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
 
+                    b.Property<decimal>("LoanPaperCost")
+                        .HasColumnType("money");
+
                     b.HasKey("LoanInterestID");
 
                     b.HasIndex("CompanyID");
@@ -224,6 +235,10 @@ namespace SQLServerMigrations.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
+                    b.Property<string>("CKCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("ClientID")
                         .HasColumnType("int");
 
@@ -242,6 +257,25 @@ namespace SQLServerMigrations.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GuarantorAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("GuarantorBaseIncome")
+                        .HasColumnType("money");
+
+                    b.Property<string>("GuarantorFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GuarantorINSSNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GuarantorWorkArea")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Interests")
                         .HasColumnType("money");
@@ -265,6 +299,9 @@ namespace SQLServerMigrations.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("LoanID");
+
+                    b.HasIndex("CKCode")
+                        .IsUnique();
 
                     b.HasIndex("ClientID");
 
@@ -377,6 +414,26 @@ namespace SQLServerMigrations.Migrations
 
                     b.Property<decimal>("AmountForInterests")
                         .HasColumnType("money");
+
+                    b.Property<string>("BeneficiaryAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BeneficiaryLastNames")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BeneficiaryNames")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BeneficiaryPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BeneficiaryRelationship")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ClientID")
                         .HasColumnType("int");

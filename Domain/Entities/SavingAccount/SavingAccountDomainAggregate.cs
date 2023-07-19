@@ -14,6 +14,11 @@ namespace Domain.Entities
         public int ClientID { get; set; }
         public decimal Amount { get; set; }
         public decimal AmountForInterests { get; set; }
+        public string BeneficiaryNames { get; set; }
+        public string BeneficiaryLastNames { get; set; }
+        public string BeneficiaryPhoneNumber { get; set; }
+        public string BeneficiaryRelationship { get; set; }
+        public string BeneficiaryAddress { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ClosedDate { get; set; }

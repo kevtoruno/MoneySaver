@@ -11,6 +11,7 @@ namespace Domain.Entities.Loans
         public int LoanInterestID { get; set; }
         public int CompanyID { get; set; }
         public decimal InterestRate { get; set; }
+        public decimal LoanPaperCost { get; set; }
         public bool IsDefault { get; set; }
     }
 }

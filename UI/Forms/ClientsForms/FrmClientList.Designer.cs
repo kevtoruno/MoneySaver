@@ -37,13 +37,12 @@
             INSS = new DataGridViewTextBoxColumn();
             FullName = new DataGridViewTextBoxColumn();
             Identification = new DataGridViewTextBoxColumn();
-            Age = new DataGridViewTextBoxColumn();
             btnNewClient = new Button();
             btnView = new Button();
             btnDelete = new Button();
-            txtINSS = new MaskedTextBox();
             label4 = new Label();
             btnSearch = new Button();
+            txtINSS = new MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)gridClientList).BeginInit();
             SuspendLayout();
             // 
@@ -76,7 +75,7 @@
             gridClientList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridClientList.ColumnHeadersHeight = 30;
             gridClientList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridClientList.Columns.AddRange(new DataGridViewColumn[] { ClientID, INSS, FullName, Identification, Age });
+            gridClientList.Columns.AddRange(new DataGridViewColumn[] { ClientID, INSS, FullName, Identification });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -142,15 +141,6 @@
             Identification.Name = "Identification";
             Identification.ReadOnly = true;
             // 
-            // Age
-            // 
-            Age.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Age.DataPropertyName = "Age";
-            Age.HeaderText = "Edad";
-            Age.MinimumWidth = 6;
-            Age.Name = "Age";
-            Age.ReadOnly = true;
-            // 
             // btnNewClient
             // 
             btnNewClient.BackColor = Color.SteelBlue;
@@ -200,19 +190,6 @@
             btnDelete.Text = "Eliminar";
             btnDelete.UseVisualStyleBackColor = false;
             // 
-            // txtINSS
-            // 
-            txtINSS.Anchor = AnchorStyles.Top;
-            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtINSS.Location = new Point(471, 110);
-            txtINSS.Mask = "9999999999";
-            txtINSS.Name = "txtINSS";
-            txtINSS.Size = new Size(125, 31);
-            txtINSS.TabIndex = 8;
-            txtINSS.ValidatingType = typeof(int);
-            txtINSS.MaskInputRejected += txtINSS_MaskInputRejected;
-            txtINSS.Click += txtINSS_Click;
-            // 
             // label4
             // 
             label4.Anchor = AnchorStyles.Top;
@@ -241,6 +218,19 @@
             btnSearch.Text = "Buscar";
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
+            // 
+            // txtINSS
+            // 
+            txtINSS.Anchor = AnchorStyles.Top;
+            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtINSS.Location = new Point(471, 110);
+            txtINSS.Mask = "9999999999";
+            txtINSS.Name = "txtINSS";
+            txtINSS.Size = new Size(125, 31);
+            txtINSS.TabIndex = 8;
+            txtINSS.ValidatingType = typeof(int);
+            txtINSS.MaskInputRejected += txtINSS_MaskInputRejected;
+            txtINSS.Click += txtINSS_Click;
             // 
             // FrmClientList
             // 
@@ -273,7 +263,6 @@
         private Button btnNewClient;
         private Button btnView;
         private Button btnDelete;
-        private MaskedTextBox txtINSS;
         private Label label4;
         private TextBox textBox1;
         private Button button1;
@@ -282,6 +271,6 @@
         private DataGridViewTextBoxColumn INSS;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Identification;
-        private DataGridViewTextBoxColumn Age;
+        private MaskedTextBox txtINSS;
     }
 }
