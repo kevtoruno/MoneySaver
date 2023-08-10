@@ -54,7 +54,7 @@ namespace UI.Forms.LoanForms
             var loanCreator = new LoansCreator(_loansRepo, _moneySaverRepository, Program.ServiceProvider.GetRequiredService<IMapper>());
             var result = loanCreator.CreateLoan(LoanToCreateDto);
 
-            HandleResult(result, "Préstamo");
+            HandleResult(result);
 
             if (result.ResourceCreated)
                 _frmLoansList.LoadGridData();
@@ -73,7 +73,7 @@ namespace UI.Forms.LoanForms
                 SetPreviewData(result.Value);
             }
             else
-                HandleResult(result, "Préstamo");
+                HandleResult(result);
         }
 
         private void SetLoanToCreateDto()

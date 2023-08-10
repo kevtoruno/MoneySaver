@@ -1,4 +1,7 @@
 ﻿using Domain.Entities;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using Service.Core;
 using Service.Core.DataModel;
 using Service.Core.Dtos;
@@ -14,6 +17,7 @@ namespace Service.Features.SavingAccounts
     public class SavingAccountDepositsAdd
     {
         private readonly IMoneySaverRepository _moneySaverRepo;
+        private int SubPeriodID = 0;
 
         public SavingAccountDepositsAdd(IMoneySaverRepository moneySaverRepo)
         {
@@ -22,10 +26,14 @@ namespace Service.Features.SavingAccounts
 
         public Result<bool> AddDepositToSavingAccount(SADepositToCreateDto sADepositToCreateDto)
         {
-            if (sADepositToCreateDto.SubPeriodID <= 0)
-                return Result<bool>.Failure("No se ha seleccionado un subperiodo.");
+            var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(sADepositToCreateDto.CreatedDate);
 
-            bool checkIfDepositExists = _moneySaverRepo.CheckIfDepositExistsForSubPeriod(sADepositToCreateDto.SubPeriodID, sADepositToCreateDto.SavingAccountID);
+            SubPeriodID = subPeriod != null ? subPeriod.SubPeriodID : 0;
+
+            if (SubPeriodID <= 0)
+                return Result<bool>.Failure("No existe un subperiodo para la fecha seleccionada.");
+
+            bool checkIfDepositExists = _moneySaverRepo.CheckIfDepositExistsForSubPeriod(SubPeriodID, sADepositToCreateDto.SavingAccountID);
 
             if (checkIfDepositExists)
                 return Result<bool>.Failure("Ya se ha hecho un deposito para este subperiodo.");
@@ -35,14 +43,14 @@ namespace Service.Features.SavingAccounts
             if (SADomain.IsActive == false)
                 return Result<bool>.Failure("Este fondo de ahorro no está activo.");
 
-            SADomain.AddDeposit(sADepositToCreateDto.Amount, sADepositToCreateDto.CreatedDate, sADepositToCreateDto.SubPeriodID, sADepositToCreateDto.InterestsAmount);
+            SADomain.AddDeposit(sADepositToCreateDto.Amount, sADepositToCreateDto.CreatedDate, SubPeriodID, sADepositToCreateDto.InterestsAmount);
 
             var result = _moneySaverRepo.AddDepositToSavingAccount(SADomain);
 
             if (result)
-                return Result<bool>.Created(true, "Se ha agregado el deposito de ahorro correctamente.");
+                return Result<bool>.Created(true, "Se ha agregado el deposito correctamente.");
 
             return Result<bool>.Failure("Hubo un error al agregar el deposito.");
-        }        
+        }              
     }
 }

@@ -2,6 +2,7 @@
 using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.Client;
+using Service.Handlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,14 +18,15 @@ namespace UI.Forms.ClientsForms
 {
     public partial class FrmClientNew : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly FrmClientList _frmClientList;
-
-        public FrmClientNew(IMoneySaverRepository moneySaverRepository, FrmClientList frmClientList)
+        private readonly int _clientID;
+        private ClientToCreateDto ClientForEdit;
+        public FrmClientNew(FrmClientList frmClientList, int clientID = 0)
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
             _frmClientList = frmClientList;
+            _clientID = clientID;
+            ClientForEdit = new ClientToCreateDto();
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -34,7 +36,31 @@ namespace UI.Forms.ClientsForms
 
         private void FrmClientNew_Load(object sender, EventArgs e)
         {
+            if (_clientID == 0)
+                return;
 
+            ClientForEdit = Mediator.Send(new GetClientForEditQuery() { ClientID = _clientID }).Result;
+
+            lblClientTitle.Text = "Editar afiliado";
+            btnCreate.Text = "Editar";
+            this.Text = "Editar afiliado";
+            SetTextBoxesWithData();
+        }
+
+        private void SetTextBoxesWithData()
+        {
+            txtAddress.Text = ClientForEdit.Address;
+
+            if (ClientForEdit.BaseIncome < txtBaseIncome.Minimum)
+                txtBaseIncome.Minimum = ClientForEdit.BaseIncome;
+
+            txtBaseIncome.Value = ClientForEdit.BaseIncome;
+            txtFirstName.Text = ClientForEdit.FirstName;
+            txtIdentification.Text = ClientForEdit.Identification;
+            txtINSS.Text = ClientForEdit.INSS;
+            txtLastName.Text = ClientForEdit.LastNames;
+            txtSecondName.Text = ClientForEdit.SecondName;
+            txtWorkArea.Text = ClientForEdit.WorkArea;
         }
 
         private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
@@ -45,25 +71,45 @@ namespace UI.Forms.ClientsForms
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            var clientToCreate = new ClientToCreateDto();
+            if (_clientID != 0)
+                EditClient();
+            else
+                CreateNewClient();
+        }
 
-            clientToCreate.FirstName = this.txtFirstName.Text;
-            clientToCreate.INSS = this.txtINSS.Text.RemoveAllWhiteSpaces();
-            clientToCreate.LastNames = this.txtLastName.Text;
-            clientToCreate.SecondName = this.txtSecondName.Text;
-            clientToCreate.Identification = this.txtIdentification.Text;
-            clientToCreate.CompanyID = Program.CompanyID;
-            clientToCreate.Address = this.txtAddress.Text;
-            clientToCreate.WorkArea = this.txtWorkArea.Text;
-            clientToCreate.BaseIncome = this.txtBaseIncome.Value;
+        private void EditClient()
+        {
+            SetClientForEditDtoFromTextBoxes();
 
-            var clientCreator = new ClientCreator(_moneySaverRepository);
-            var result = clientCreator.CreateNewClient(clientToCreate);
+            var result = Mediator.Send(new EditClientCommand() { ClientToCreateDto = ClientForEdit });
 
-            if (result.ResourceCreated)
+            if (result.Result.ResourceCreated)
                 _frmClientList.LoadGridData();
 
-            HandleResult(result, "Afiliado");
+            HandleResult(result.Result);
+        }
+
+        private void CreateNewClient()
+        {
+            SetClientForEditDtoFromTextBoxes();
+            var result = Mediator.Send(new CreateClientCommand() { ClientToCreateDto = ClientForEdit });
+
+            if (result.Result.ResourceCreated)
+                _frmClientList.LoadGridData();
+
+            HandleResult(result.Result);
+        }
+
+        private void SetClientForEditDtoFromTextBoxes()
+        {
+            ClientForEdit.FirstName = this.txtFirstName.Text;
+            ClientForEdit.INSS = this.txtINSS.Text.RemoveAllWhiteSpaces();
+            ClientForEdit.LastNames = this.txtLastName.Text;
+            ClientForEdit.SecondName = this.txtSecondName.Text;
+            ClientForEdit.Identification = this.txtIdentification.Text;
+            ClientForEdit.Address = this.txtAddress.Text;
+            ClientForEdit.WorkArea = this.txtWorkArea.Text;
+            ClientForEdit.BaseIncome = this.txtBaseIncome.Value;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

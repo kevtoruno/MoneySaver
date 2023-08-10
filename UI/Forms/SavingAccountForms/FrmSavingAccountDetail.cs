@@ -2,6 +2,7 @@
 using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
+using Service.Handlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,14 +17,13 @@ namespace UI.Forms.SavingAccountForms
 {
     public partial class FrmSavingAccountDetail : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly int _selectedSavingAccountID;
         private SavingAccountToDetailDto SavingAccountToDetailDto;
-        public FrmSavingAccountDetail(IMoneySaverRepository moneySaverRepository, int selectedSavingAccountID)
+        public FrmSavingAccountDetail(int selectedSavingAccountID)
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
             _selectedSavingAccountID = selectedSavingAccountID;
+            SavingAccountToDetailDto = new SavingAccountToDetailDto();
         }
 
         private void FrmSavingAccountDetail_Load(object sender, EventArgs e)
@@ -33,9 +33,9 @@ namespace UI.Forms.SavingAccountForms
 
         public void LoadFormData()
         {
-            var savingAccountToList = new SavingAccountList(_moneySaverRepository);
+            var data = Mediator.Send(new GetSavingAccountDetailQuery { SavingAccountID = _selectedSavingAccountID });
 
-            SavingAccountToDetailDto = savingAccountToList.GetSavingAccountDetail(_selectedSavingAccountID);
+            SavingAccountToDetailDto = data.Result;
 
             SetLabelsData();
             SetGridsData();
@@ -69,13 +69,7 @@ namespace UI.Forms.SavingAccountForms
 
         private void btnDeposit_Click(object sender, EventArgs e)
         {
-            /*var frmSAAccountDeposit = Program.ServiceProvider.GetRequiredService<FrmSavingAccountAddDeposit>();
-            frmSAAccountDeposit._savingAccountID = SavingAccountToDetailDto.SavingAccountID;
-            frmSAAccountDeposit._frmSavingAccountDetail = this;
-
-            frmSAAccountDeposit.ShowDialog();*/
-
-            var frmSavingAccountDeposit = new FrmSavingAccountAddDeposit(this._moneySaverRepository, SavingAccountToDetailDto.SavingAccountID, this);
+            var frmSavingAccountDeposit = new FrmSavingAccountAddDeposit(SavingAccountToDetailDto.SavingAccountID, this);
 
             frmSavingAccountDeposit.ShowDialog();
         }
@@ -102,7 +96,7 @@ namespace UI.Forms.SavingAccountForms
 
         private void btnWithdrawInsterest_Click(object sender, EventArgs e)
         {
-            var frmSavingAccountWithdrawInterests = new FrmSavingAccountWithdrawInterests(this._moneySaverRepository, SavingAccountToDetailDto.SavingAccountID, this);
+            var frmSavingAccountWithdrawInterests = new FrmSavingAccountWithdrawInterests(SavingAccountToDetailDto.SavingAccountID, this);
 
             frmSavingAccountWithdrawInterests.ShowDialog();
         }

@@ -14,9 +14,9 @@ namespace Service.Core.Interfaces
 {
     public interface IMoneySaverRepository
     {
-        bool DoINSSExists(string INSS);
+        bool DoINSSExists(string INSS, int clientIDIgnore = 0);
 
-        bool DoIdentificationExists(string identification);
+        bool DoIdentificationExists(string identification, int clientIDIgnore = 0);
 
         void CreateClient (ClientToCreateDto clientToCreateDto);
 
@@ -30,7 +30,7 @@ namespace Service.Core.Interfaces
 
         bool CheckIfClientHasActiveSavingAccount(int clientID);
         int GetClientIDByINSSNo(string INSSNo);
-        void CreateSavingAccount(SavingAccountDomainCreator savingAccountToCreate);
+        int CreateSavingAccount(SavingAccountDomainCreator savingAccountToCreate);
 
         List<SavingAccountToListDto> GetSavingAccountsList(string INSS);
         SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID);
@@ -39,11 +39,19 @@ namespace Service.Core.Interfaces
         bool AddDepositToSavingAccount(SavingAccountDomainAggregate saDomain);
         bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID);
         bool CheckIfInterestWithdrawExistsForSubPeriod(int subPeriodID, int savingAccountID);
-        
+
+        SubPeriodsDataModel GetSubPeriodIDFromDate(DateTime date);
+
         SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID);
         bool WithdrawInterestsSavingAccount(SavingAccountDomainAggregate saDomain);
         string GetFullNameByINSS(string INSS);
         List<SubPeriodDomain> GetSubPeriodsForDateRange(DateTime startDate, DateTime endDate);
         CompanyDomain GetDefaultCompany();
+        ClientToCreateDto GetClient(int ClientID);
+        List<SavingAccountDomainAggregate> GetSavingAccountDomainsWithDepositsForPeriod(List<int> savingAccountIDs, int periodID);
+        List<SavingAccountsDataModel> GetSavingAccountsWithDepositsForPeriodData(int periodID);
+        bool AddDepositsToSavingAccounts(List<SavingAccountDomainAggregate> saDomainLst);
+        void EditClient(ClientToCreateDto clientToEditDto);
+        DateTime GetLatestWithdrawDateForSavingAccountID(int savingAccountID);
     }
 }

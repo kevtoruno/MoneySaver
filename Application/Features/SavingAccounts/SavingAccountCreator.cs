@@ -23,7 +23,7 @@ namespace Service.Features.Periods
             _moneySaverRepo = moneySaverRepo;
         }
 
-        public Result<bool> CreateSavingAccount(SavingAccountToCreateDto SavingAccountToCreate) 
+        public Result<int> CreateSavingAccount(SavingAccountToCreateDto SavingAccountToCreate) 
         {
             ClientID = _moneySaverRepo.GetClientIDByINSSNo(SavingAccountToCreate.INSSNo);
 
@@ -38,17 +38,17 @@ namespace Service.Features.Periods
 
             savingAccountDomain.CreateNewSavingAccountForClient(ClientID);
 
-            _moneySaverRepo.CreateSavingAccount(savingAccountDomain);
+            int saCreatedID = _moneySaverRepo.CreateSavingAccount(savingAccountDomain);
 
-            return Result<bool>.Created(true, "El fondo de ahorro ha sido creada exitosamente.");
+            return Result<int>.Created(saCreatedID, "El fondo de ahorro ha sido creada exitosamente.");
         }
 
-        private Result<bool> SetDataFromDBAndValidate(SavingAccountToCreateDto SavingAccountToCreate)
+        private Result<int> SetDataFromDBAndValidate(SavingAccountToCreateDto SavingAccountToCreate)
         {
             ClientID = _moneySaverRepo.GetClientIDByINSSNo(SavingAccountToCreate.INSSNo);
 
            if (ClientID == 0) 
-                return Result<bool>.Failure($"No existe un trabajador asociado al número de INSS {SavingAccountToCreate.INSSNo}"); 
+                return Result<int>.Failure($"No existe un trabajador asociado al número de INSS {SavingAccountToCreate.INSSNo}"); 
         
             //Commented just while I add all of the data!!!!!!
             /*var savingAccToCreateValidator = new SavingAccountToCreateValidator();
@@ -60,9 +60,9 @@ namespace Service.Features.Periods
             bool savingAccountExists = _moneySaverRepo.CheckIfClientHasActiveSavingAccount(ClientID);
 
             if (savingAccountExists) 
-                return Result<bool>.Failure("Este trabajador ya tiene un fondo de ahorro activo");
+                return Result<int>.Failure("Este trabajador ya tiene un fondo de ahorro activo");
 
-            return Result<bool>.Success(true);
+            return Result<int>.Success(0);
         }
 
         public string GetFullNameByINSS(string INSSNo)

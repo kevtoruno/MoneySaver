@@ -48,7 +48,7 @@ namespace UI.Forms.PeriodsForms
 
             var isPeriodValidResult = _periodCreator.CheckIfPeriodExists(year);
 
-            HandleResult(isPeriodValidResult, "");
+            HandleResult(isPeriodValidResult);
 
             if (isPeriodValidResult.Value == false)
                 return;
@@ -89,7 +89,7 @@ namespace UI.Forms.PeriodsForms
                 this.btnCreate.Visible = false;
             }
 
-            HandleResult(result, "Período");
+            HandleResult(result);
         }
 
         private void gridPreview_CellContentClick(object sender, DataGridViewCellEventArgs e)

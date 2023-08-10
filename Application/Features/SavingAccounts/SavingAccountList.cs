@@ -58,12 +58,11 @@ namespace Service.Features.SavingAccounts
                 .Where(sa => sa.HistoryType == SavingAccountHistoryType.Deposit || sa.HistoryType == SavingAccountHistoryType.InterestDeposit)
                 .Sum(a => a.Amount);
 
-            savingAccountDetailDto.TotalAmount = String.Format("{0:#,##0.00}", totalAmount);
-
-            savingAccountDetailDto.SavingAccountsHistoryToList = savingAccountDetailDto
-                .SavingAccountsHistoryToList.OrderBy(a => a.CreatedDate).ToList();
+            savingAccountDetailDto.TotalAmount = String.Format("{0:#,##0.00}", totalAmount); 
 
             SetTotal(savingAccountDetailDto);
+
+            savingAccountDetailDto.SavingAccountsHistoryToList.Reverse();
 
             return savingAccountDetailDto;
         }
@@ -146,6 +145,9 @@ namespace Service.Features.SavingAccounts
 
         private void SetTotal(SavingAccountToDetailDto savingAccountDetailDto)
         {
+            savingAccountDetailDto.SavingAccountsHistoryToList = savingAccountDetailDto
+                .SavingAccountsHistoryToList.OrderBy(a => a.CreatedDate).ToList();
+
             int count = 0;
             decimal prevTotalAmount = 0;
 

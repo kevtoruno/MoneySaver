@@ -24,7 +24,7 @@ namespace Domain.Entities
         public DateTime ClosedDate { get; set; }
         public int CreatedBy { get; set; }
         public List<SavingAccountDepositDomain> Deposits { get; set; }
-        public List<SavingAccountWithdrawsDomain> Withdraws { get; set; }
+        public List<SavingAccountWithdrawsDomain> Withdrawals { get; set; }
 
         public SavingAccountDomainAggregate(int savingAccountID, decimal amount, decimal amountForInterests, 
             bool isActive, int clientID, DateTime createdDate)
@@ -34,7 +34,7 @@ namespace Domain.Entities
             AmountForInterests = amountForInterests;
             IsActive = isActive;
             Deposits = new List<SavingAccountDepositDomain>();
-            Withdraws = new List<SavingAccountWithdrawsDomain>();
+            Withdrawals = new List<SavingAccountWithdrawsDomain>();
             ClientID = clientID;
             CreatedDate = createdDate;
         }
@@ -42,7 +42,7 @@ namespace Domain.Entities
         public SavingAccountDomainAggregate()
         {
             Deposits = new List<SavingAccountDepositDomain>();
-            Withdraws = new List<SavingAccountWithdrawsDomain>();
+            Withdrawals = new List<SavingAccountWithdrawsDomain>();
         }
         
         public void WithdrawInterests(DateTime withdrawDate, int subPeriodID)
@@ -52,13 +52,13 @@ namespace Domain.Entities
 
             if (withdrawDate.Month == 6 || withdrawDate.Month == 12)
             {
-                Withdraws.Add(new SavingAccountWithdrawsDomain
+                Withdrawals.Add(new SavingAccountWithdrawsDomain
                 {
                     Amount = this.AmountForInterests,
                     SavingAccountID = this.SavingAccountID,
                     CreatedDate = withdrawDate,
                     SubPeriodID = subPeriodID,
-                    WithdrawType = 0 //Interests
+                    WithDrawalType = 0 //Interests
                 });
      
                 this.Amount -= AmountForInterests;
@@ -80,6 +80,7 @@ namespace Domain.Entities
                 SavingAccountID = this.SavingAccountID,
                 CreatedDate = depositDate,
                 SubPeriodID = subPeriodID,
+                SavingAccountDepositID = 0,
                 DepositType = 0 //Saving
             });
 
@@ -100,6 +101,7 @@ namespace Domain.Entities
                     SavingAccountID = this.SavingAccountID,
                     CreatedDate = depositDate,
                     SubPeriodID = subPeriodID,
+                    SavingAccountDepositID = 0,
                     DepositType = 1 //Interests
                 });
             }
@@ -109,6 +111,7 @@ namespace Domain.Entities
     public class SavingAccountDepositDomain
     { 
         public int SavingAccountID { get; set; }
+        public int SavingAccountDepositID { get; set; }
         public int SubPeriodID { get; set; }
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -117,10 +120,11 @@ namespace Domain.Entities
 
     public class SavingAccountWithdrawsDomain
     { 
+        public int SavingAccountWithdrawalID { get; set; }
         public int SavingAccountID { get; set; }
         public int SubPeriodID { get; set; }
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int WithdrawType { get; set; } //Interests 0, Close account 1
+        public int WithDrawalType { get; set; } //Interests 0, Close account 1
     }
 }

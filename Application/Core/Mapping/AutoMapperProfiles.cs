@@ -20,17 +20,19 @@ namespace Service.Mapping
         public AutoMapperProfiles()
         {
             CreateMap<ClientToCreateDto, ClientsDataModel>();  
+            CreateMap<ClientsDataModel, ClientToCreateDto>();  
             CreateMap<PeriodToCreateDto, PeriodsDataModel>();
             CreateMap<SubPeriodsToCreateDto, SubPeriodsDataModel>();
             CreateMap<SavingAccountToCreateDto, SavingAccountsDataModel>();
             CreateMap<SavingAccountDomainAggregate,  SavingAccountsDataModel>();
             CreateMap<SavingAccountDomainCreator,  SavingAccountsDataModel>();
             CreateMap<SavingAccountDepositDomain,  SavingAccountDepositsDataModel>();
+            CreateMap<SavingAccountDepositsDataModel, SavingAccountDepositDomain>();
             CreateMap<SavingAccountWithdrawsDomain, SavingAccountWidthdrawalsDataModel>();
+            CreateMap<SavingAccountWidthdrawalsDataModel, SavingAccountWithdrawsDomain>();
             CreateMap<SavingAccountsDataModel, SavingAccountDomainAggregate>();
             CreateMap<LoanDomain, LoansDataModel>();
             CreateMap<LoanInstallmentsDomain, LoanInstallmentsDataModel>();
-
             CreateMap<CompaniesDataModel, CompanyDomain>();
             CreateMap<CompanyDomain, CompaniesDataModel>();
 

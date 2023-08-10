@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Service.Core.Interfaces;
 using Service.Features.Client;
+using Service.Handlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,17 +17,14 @@ namespace UI.Forms
 {
     public partial class FrmClientList : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
-
-        public FrmClientList(IMoneySaverRepository moneySaverRepository)
+        public FrmClientList()
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
         }
 
         private void btnNewClient_Click(object sender, EventArgs e)
         {
-            var frmClientNew = new FrmClientNew(_moneySaverRepository, this);
+            var frmClientNew = new FrmClientNew(this);
             frmClientNew.ShowDialog();
         }
 
@@ -37,11 +35,9 @@ namespace UI.Forms
 
         public void LoadGridData()
         {
-            var clientToList = new ClientToList(_moneySaverRepository);
+            var clients = Mediator.Send(new GetClientListQuery { INSS = this.txtINSS.Text });
 
-            var clients = clientToList.GetClientsList(this.txtINSS.Text);
-
-            BindingSource bindingSource = CreateBindingSource(clients);
+            BindingSource bindingSource = CreateBindingSource(clients.Result);
 
             this.gridClientList.AutoGenerateColumns = false;
             this.gridClientList.DataSource = bindingSource;
@@ -71,6 +67,23 @@ namespace UI.Forms
         private void txtINSS_Click(object sender, EventArgs e)
         {
             this.txtINSS.SelectionStart = this.txtINSS.Text.Length;
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (this.gridClientList.Rows.Count <= 0)
+                return;
+
+            if (this.gridClientList.CurrentRow.Cells[0].Value == null)
+            {
+                MessageBox.Show("Debe seleccionar un afiliado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int selectedClientID = (int)this.gridClientList.CurrentRow.Cells[0].Value;
+
+            var frmClientNew = new FrmClientNew(this, selectedClientID);
+            frmClientNew.ShowDialog();
         }
     }
 }

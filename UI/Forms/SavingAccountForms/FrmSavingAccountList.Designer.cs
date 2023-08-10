@@ -35,17 +35,17 @@
             btnSearch = new Button();
             btnNewSavingAccount = new Button();
             gridSavingAccountsList = new DataGridView();
+            txtINSS = new MaskedTextBox();
+            label4 = new Label();
+            btnDelete = new Button();
+            btnView = new Button();
+            btnUploadMonthlyDeposits = new Button();
             SavingAccountID = new DataGridViewTextBoxColumn();
             INSS = new DataGridViewTextBoxColumn();
             ClientFullName = new DataGridViewTextBoxColumn();
             Amount = new DataGridViewTextBoxColumn();
             AmountForInterests = new DataGridViewTextBoxColumn();
             IsActive = new DataGridViewCheckBoxColumn();
-            CreatedDate = new DataGridViewTextBoxColumn();
-            txtINSS = new MaskedTextBox();
-            label4 = new Label();
-            btnDelete = new Button();
-            btnView = new Button();
             ((System.ComponentModel.ISupportInitialize)gridSavingAccountsList).BeginInit();
             SuspendLayout();
             // 
@@ -111,7 +111,7 @@
             gridSavingAccountsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridSavingAccountsList.ColumnHeadersHeight = 30;
             gridSavingAccountsList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridSavingAccountsList.Columns.AddRange(new DataGridViewColumn[] { SavingAccountID, INSS, ClientFullName, Amount, AmountForInterests, IsActive, CreatedDate });
+            gridSavingAccountsList.Columns.AddRange(new DataGridViewColumn[] { SavingAccountID, INSS, ClientFullName, Amount, AmountForInterests, IsActive });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -139,70 +139,6 @@
             gridSavingAccountsList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridSavingAccountsList.Size = new Size(1070, 346);
             gridSavingAccountsList.TabIndex = 7;
-            // 
-            // SavingAccountID
-            // 
-            SavingAccountID.DataPropertyName = "SavingAccountID";
-            SavingAccountID.HeaderText = "SavingAccountID";
-            SavingAccountID.MinimumWidth = 6;
-            SavingAccountID.Name = "SavingAccountID";
-            SavingAccountID.Visible = false;
-            SavingAccountID.Width = 125;
-            // 
-            // INSS
-            // 
-            INSS.DataPropertyName = "INSS";
-            INSS.HeaderText = "INSS";
-            INSS.MinimumWidth = 6;
-            INSS.Name = "INSS";
-            INSS.ReadOnly = true;
-            INSS.Width = 125;
-            // 
-            // ClientFullName
-            // 
-            ClientFullName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ClientFullName.DataPropertyName = "ClientFullName";
-            ClientFullName.HeaderText = "Trabajador";
-            ClientFullName.MinimumWidth = 6;
-            ClientFullName.Name = "ClientFullName";
-            ClientFullName.ReadOnly = true;
-            // 
-            // Amount
-            // 
-            Amount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Amount.DataPropertyName = "Amount";
-            Amount.HeaderText = "Cantidad";
-            Amount.MinimumWidth = 6;
-            Amount.Name = "Amount";
-            Amount.ReadOnly = true;
-            // 
-            // AmountForInterests
-            // 
-            AmountForInterests.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            AmountForInterests.DataPropertyName = "AmountForInterests";
-            AmountForInterests.HeaderText = "Intereses acumulados";
-            AmountForInterests.MinimumWidth = 6;
-            AmountForInterests.Name = "AmountForInterests";
-            AmountForInterests.ReadOnly = true;
-            // 
-            // IsActive
-            // 
-            IsActive.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            IsActive.DataPropertyName = "IsActive";
-            IsActive.HeaderText = "¿Está activa?";
-            IsActive.MinimumWidth = 6;
-            IsActive.Name = "IsActive";
-            IsActive.ReadOnly = true;
-            IsActive.Resizable = DataGridViewTriState.True;
-            IsActive.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // CreatedDate
-            // 
-            CreatedDate.DataPropertyName = "CreatedDate";
-            CreatedDate.HeaderText = "Fecha creada";
-            CreatedDate.MinimumWidth = 6;
-            CreatedDate.Name = "CreatedDate";
-            CreatedDate.Width = 125;
             // 
             // txtINSS
             // 
@@ -258,12 +194,91 @@
             btnView.UseVisualStyleBackColor = false;
             btnView.Click += btnView_Click;
             // 
+            // btnUploadMonthlyDeposits
+            // 
+            btnUploadMonthlyDeposits.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnUploadMonthlyDeposits.BackColor = Color.SteelBlue;
+            btnUploadMonthlyDeposits.Cursor = Cursors.Hand;
+            btnUploadMonthlyDeposits.FlatAppearance.BorderSize = 0;
+            btnUploadMonthlyDeposits.FlatStyle = FlatStyle.Flat;
+            btnUploadMonthlyDeposits.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnUploadMonthlyDeposits.ForeColor = SystemColors.Control;
+            btnUploadMonthlyDeposits.Location = new Point(871, 10);
+            btnUploadMonthlyDeposits.Name = "btnUploadMonthlyDeposits";
+            btnUploadMonthlyDeposits.Size = new Size(197, 72);
+            btnUploadMonthlyDeposits.TabIndex = 18;
+            btnUploadMonthlyDeposits.Text = "Ingresar cotizaciones mensuales";
+            btnUploadMonthlyDeposits.UseVisualStyleBackColor = false;
+            btnUploadMonthlyDeposits.Click += btnUploadMonthlyDeposits_Click;
+            // 
+            // SavingAccountID
+            // 
+            SavingAccountID.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            SavingAccountID.DataPropertyName = "SavingAccountID";
+            SavingAccountID.HeaderText = "SavingAccountID";
+            SavingAccountID.MinimumWidth = 6;
+            SavingAccountID.Name = "SavingAccountID";
+            SavingAccountID.Visible = false;
+            SavingAccountID.Width = 6;
+            // 
+            // INSS
+            // 
+            INSS.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            INSS.DataPropertyName = "INSS";
+            INSS.FillWeight = 130F;
+            INSS.HeaderText = "INSS";
+            INSS.MinimumWidth = 6;
+            INSS.Name = "INSS";
+            INSS.ReadOnly = true;
+            // 
+            // ClientFullName
+            // 
+            ClientFullName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ClientFullName.DataPropertyName = "ClientFullName";
+            ClientFullName.FillWeight = 350F;
+            ClientFullName.HeaderText = "Afiliado";
+            ClientFullName.MinimumWidth = 6;
+            ClientFullName.Name = "ClientFullName";
+            ClientFullName.ReadOnly = true;
+            // 
+            // Amount
+            // 
+            Amount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Amount.DataPropertyName = "Amount";
+            Amount.FillWeight = 150F;
+            Amount.HeaderText = "Cantidad";
+            Amount.MinimumWidth = 6;
+            Amount.Name = "Amount";
+            Amount.ReadOnly = true;
+            // 
+            // AmountForInterests
+            // 
+            AmountForInterests.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            AmountForInterests.DataPropertyName = "AmountForInterests";
+            AmountForInterests.FillWeight = 210F;
+            AmountForInterests.HeaderText = "Intereses acumulados";
+            AmountForInterests.MinimumWidth = 6;
+            AmountForInterests.Name = "AmountForInterests";
+            AmountForInterests.ReadOnly = true;
+            // 
+            // IsActive
+            // 
+            IsActive.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            IsActive.DataPropertyName = "IsActive";
+            IsActive.HeaderText = "¿Activo?";
+            IsActive.MinimumWidth = 6;
+            IsActive.Name = "IsActive";
+            IsActive.ReadOnly = true;
+            IsActive.Resizable = DataGridViewTriState.True;
+            IsActive.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
             // FrmSavingAccountList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 650);
+            Controls.Add(btnUploadMonthlyDeposits);
             Controls.Add(btnDelete);
             Controls.Add(btnView);
             Controls.Add(label4);
@@ -289,6 +304,9 @@
         private DataGridView gridSavingAccountsList;
         private MaskedTextBox txtINSS;
         private Label label4;
+        private Button btnDelete;
+        private Button btnView;
+        private Button btnUploadMonthlyDeposits;
         private DataGridViewTextBoxColumn SavingAccountID;
         private DataGridViewTextBoxColumn INSS;
         private DataGridViewTextBoxColumn ClientFullName;
@@ -296,7 +314,5 @@
         private DataGridViewTextBoxColumn AmountForInterests;
         private DataGridViewCheckBoxColumn IsActive;
         private DataGridViewTextBoxColumn CreatedDate;
-        private Button btnDelete;
-        private Button btnView;
     }
 }

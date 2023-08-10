@@ -1,8 +1,11 @@
-﻿using Service.Core;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Service.Core;
 using Service.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,17 +20,18 @@ namespace UI
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         public extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        protected void HandleResult<T>(Result<T> result, string entitiyName, string message = "")
+        private ISender _mediator = null!;
+
+        protected ISender Mediator => _mediator ??= Program.ServiceProvider.GetRequiredService<ISender>();
+
+        protected void HandleResult<T>(Result<T> result)
         {
             if (result.ResourceCreated)
             {
-                if (message == "")
-                    message = entitiyName + " agregado exitosamente";
+                var dialogResult = MessageBox.Show(result.CreatedMessage, "Operación exitosa",MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                var dialogResult = MessageBox.Show(message, "Operación exitosa",MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                /*if (dialogResult == DialogResult.OK)
-                    this.Close();*/
+                if (dialogResult == DialogResult.OK)
+                    this.Close();
                         
             }
             else if (result.IsSucess == false)

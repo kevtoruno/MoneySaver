@@ -40,6 +40,9 @@
     <Compile Update="Forms\SavingAccountForms\FrmSavingAccountList.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\SavingAccountForms\FrmSavingAccountsMontlyDeposit.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SavingAccountForms\FrmSavingAccountWithdrawInterests.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -30,5 +30,9 @@ namespace Service.Core.DataModel
         public DateTime CreatedDate { get; set; }
         public DateTime ClosedDate { get; set; }
         public int CreatedBy { get; set; }
+
+        public ICollection<SavingAccountDepositsDataModel> Deposits { get; set; }
+        public ICollection<SavingAccountWidthdrawalsDataModel> Withdrawals { get; set; }
+
     }
 }

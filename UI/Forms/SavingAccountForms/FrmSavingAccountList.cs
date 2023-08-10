@@ -1,6 +1,8 @@
-﻿using Service.Core;
+﻿using AutoMapper;
+using Service.Core;
 using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
+using Service.Handlers.SavingAccountsHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,30 +19,32 @@ namespace UI.Forms
 {
     public partial class FrmSavingAccountList : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
-
-        public FrmSavingAccountList(IMoneySaverRepository moneySaverRepository)
+        public FrmSavingAccountList()
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
         }
 
         private void btnNewSavingAccount_Click(object sender, EventArgs e)
         {
-            var frmClientNew = new FrmSavingAccountNew(_moneySaverRepository, this);
+            var frmClientNew = new FrmSavingAccountNew(this);
             frmClientNew.ShowDialog();
         }
 
-        public void LoadGridData()
+        public void LoadGridData(int saDetailViewID = 0)
         {
-            var savingAccountsListService = new SavingAccountList(_moneySaverRepository);
+            if (saDetailViewID > 0)
+            {
+                Program.InitialMenu.OpenChildForm(new FrmSavingAccountDetail(saDetailViewID));
+            }
+            else
+            {
+                var savingAccountData = Mediator.Send(new GetSavingAccountListQuery { INSSNo = this.txtINSS.Text });
 
-            var savingAccountData = savingAccountsListService.GetSavingAccountsList(this.txtINSS.Text);
+                var bindingSource = CreateBindingSource(savingAccountData.Result);
 
-            var bindingSource = CreateBindingSource(savingAccountData);
-
-            this.gridSavingAccountsList.AutoGenerateColumns = false;
-            this.gridSavingAccountsList.DataSource = bindingSource;
+                this.gridSavingAccountsList.AutoGenerateColumns = false;
+                this.gridSavingAccountsList.DataSource = bindingSource;
+            }
         }
 
         private void FrmSavingAccountList_Load(object sender, EventArgs e)
@@ -66,7 +70,13 @@ namespace UI.Forms
 
             int selectedSavingAccountID = (int)this.gridSavingAccountsList.CurrentRow.Cells[0].Value;
 
-            Program.InitialMenu.OpenChildForm(new FrmSavingAccountDetail(this._moneySaverRepository, selectedSavingAccountID));
+            Program.InitialMenu.OpenChildForm(new FrmSavingAccountDetail(selectedSavingAccountID));
+        }
+
+        private void btnUploadMonthlyDeposits_Click(object sender, EventArgs e)
+        {
+            var frmMonthlyDeposit = new FrmSavingAccountsMontlyDeposit(this);
+            frmMonthlyDeposit.ShowDialog();
         }
     }
 }

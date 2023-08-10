@@ -19,6 +19,11 @@ namespace Service.Features.Client
             _moneySaverRepo = moneySaverRepo;
         }
 
+        public ClientToCreateDto GetClientForEdit(int clientID)
+        {
+            return _moneySaverRepo.GetClient(clientID);
+        }
+
         public List<ClientToListDto> GetClientsList(string INSS) 
         {
             var clientToListDto = _moneySaverRepo.GetClientsList(INSS);

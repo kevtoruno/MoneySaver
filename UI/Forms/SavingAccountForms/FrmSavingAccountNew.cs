@@ -4,6 +4,8 @@ using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.Client;
 using Service.Features.Periods;
+using Service.Handlers.ClientHandlers;
+using Service.Handlers.SavingAccountsHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,13 +20,11 @@ namespace UI.Forms.SavingAccountForms
 {
     public partial class FrmSavingAccountNew : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly FrmSavingAccountList _frmSavingAccountList;
         private SavingAccountToCreateDto SavingAccountToCreateDto;
-        public FrmSavingAccountNew(IMoneySaverRepository moneySaverRepository, FrmSavingAccountList frmSavingAccountList)
+        public FrmSavingAccountNew(FrmSavingAccountList frmSavingAccountList)
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
             _frmSavingAccountList = frmSavingAccountList;
             SavingAccountToCreateDto = new SavingAccountToCreateDto();
         }
@@ -60,11 +60,9 @@ namespace UI.Forms.SavingAccountForms
                 return;
             }
 
-            var savingAccountCreator = new SavingAccountCreator(_moneySaverRepository);
+            string clietFullName = Mediator.Send(new GetFullNameByINSSQuery { INSSNo = INSSno }).Result;
 
-            string nombreTrabajador = savingAccountCreator.GetFullNameByINSS(INSSno);
-
-            if (nombreTrabajador == "")
+            if (clietFullName == "")
             {
                 MessageBox.Show($"No existe un afiliado asociado al no INSS {INSSno}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -72,16 +70,16 @@ namespace UI.Forms.SavingAccountForms
 
             SetSavingAccountToCreateDto();
 
-            var mbOption = MessageBox.Show($"¿Está seguro que desea crear un nuevo fondo de ahorro para {nombreTrabajador}?", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            var mbOption = MessageBox.Show($"¿Está seguro que desea crear un nuevo fondo de ahorro para {clietFullName}?", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
             if (mbOption == DialogResult.Yes)
             {
-                var result = savingAccountCreator.CreateSavingAccount(SavingAccountToCreateDto);
+                var result = Mediator.Send(new CreateSavingAccountCommand { SavingAccountToCreateDto = SavingAccountToCreateDto }).Result;
 
                 if (result.ResourceCreated)
-                    _frmSavingAccountList.LoadGridData();
+                    _frmSavingAccountList.LoadGridData(saDetailViewID: result.Value);
 
-                HandleResult(result, "Cuenta de ahorro");
+                HandleResult(result);
             }
         }
 

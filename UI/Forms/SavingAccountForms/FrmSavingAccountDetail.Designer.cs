@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             lblTotalWidthdrawnData = new Label();
             lblTotalWidthdrawn = new Label();
             lblCurrentAmountData = new Label();
@@ -84,7 +84,7 @@
             lblTotalWidthdrawn.AutoSize = true;
             lblTotalWidthdrawn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalWidthdrawn.ForeColor = Color.White;
-            lblTotalWidthdrawn.Location = new Point(597, 120);
+            lblTotalWidthdrawn.Location = new Point(743, 120);
             lblTotalWidthdrawn.Name = "lblTotalWidthdrawn";
             lblTotalWidthdrawn.Size = new Size(146, 28);
             lblTotalWidthdrawn.TabIndex = 36;
@@ -108,7 +108,7 @@
             lblCurrentAmount.AutoSize = true;
             lblCurrentAmount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblCurrentAmount.ForeColor = Color.White;
-            lblCurrentAmount.Location = new Point(597, 20);
+            lblCurrentAmount.Location = new Point(745, 20);
             lblCurrentAmount.Name = "lblCurrentAmount";
             lblCurrentAmount.Size = new Size(144, 28);
             lblCurrentAmount.TabIndex = 34;
@@ -149,11 +149,11 @@
             lblClientFullNameTitle.BackColor = Color.Transparent;
             lblClientFullNameTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblClientFullNameTitle.ForeColor = Color.White;
-            lblClientFullNameTitle.Location = new Point(127, 5);
+            lblClientFullNameTitle.Location = new Point(151, 5);
             lblClientFullNameTitle.Name = "lblClientFullNameTitle";
-            lblClientFullNameTitle.Size = new Size(109, 28);
+            lblClientFullNameTitle.Size = new Size(84, 28);
             lblClientFullNameTitle.TabIndex = 15;
-            lblClientFullNameTitle.Text = "Trabajador:";
+            lblClientFullNameTitle.Text = "Afiliado:";
             // 
             // lblCreatedDateData
             // 
@@ -264,7 +264,7 @@
             lblAmountForInterests.AutoSize = true;
             lblAmountForInterests.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblAmountForInterests.ForeColor = Color.White;
-            lblAmountForInterests.Location = new Point(597, 70);
+            lblAmountForInterests.Location = new Point(668, 70);
             lblAmountForInterests.Name = "lblAmountForInterests";
             lblAmountForInterests.Size = new Size(221, 28);
             lblAmountForInterests.TabIndex = 27;
@@ -302,7 +302,7 @@
             lblTotalAmount.AutoSize = true;
             lblTotalAmount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalAmount.ForeColor = Color.White;
-            lblTotalAmount.Location = new Point(597, 170);
+            lblTotalAmount.Location = new Point(733, 170);
             lblTotalAmount.Name = "lblTotalAmount";
             lblTotalAmount.Size = new Size(156, 28);
             lblTotalAmount.TabIndex = 19;
@@ -392,38 +392,38 @@
             gridWidthdrawalsList.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridWidthdrawalsList.BorderStyle = BorderStyle.None;
             gridWidthdrawalsList.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.HotTrack;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            gridWidthdrawalsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            gridWidthdrawalsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridWidthdrawalsList.ColumnHeadersHeight = 30;
             gridWidthdrawalsList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridWidthdrawalsList.Columns.AddRange(new DataGridViewColumn[] { SavingAccountHistorylID, SubPeriodName, HistoryType, HistoryName, AmountDisplay, CreatedDate, TotalDisplay });
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle5.SelectionForeColor = Color.White;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            gridWidthdrawalsList.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            gridWidthdrawalsList.DefaultCellStyle = dataGridViewCellStyle2;
             gridWidthdrawalsList.EnableHeadersVisualStyles = false;
             gridWidthdrawalsList.GridColor = Color.SteelBlue;
             gridWidthdrawalsList.Location = new Point(0, 326);
             gridWidthdrawalsList.Name = "gridWidthdrawalsList";
             gridWidthdrawalsList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            gridWidthdrawalsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            gridWidthdrawalsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             gridWidthdrawalsList.RowHeadersVisible = false;
             gridWidthdrawalsList.RowHeadersWidth = 51;
             gridWidthdrawalsList.RowTemplate.Height = 29;

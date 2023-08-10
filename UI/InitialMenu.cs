@@ -66,11 +66,15 @@ namespace UI
 
         private void btnClients_Click(object sender, EventArgs e)
         {
+            ResetSelectedStyleUI();
+            btnClients.BackColor = Color.FromArgb(13, 93, 142);
             OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmClientList>());
         }
 
         private void btnControlAhorro_Click(object sender, EventArgs e)
         {
+            ResetSelectedStyleUI();
+            btnControlAhorro.BackColor = Color.FromArgb(13, 93, 142);
             OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmSavingAccountList>());
         }
 
@@ -80,17 +84,28 @@ namespace UI
                 this.SubMenuAdminPanel.Visible = false;
             else
                 this.SubMenuAdminPanel.Visible = true;
-
         }
 
         private void btnMainPeriods_Click(object sender, EventArgs e)
         {
+            ResetSelectedStyleUI();
+            btnMainPeriods.BackColor = Color.FromArgb(13, 93, 142);
             OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmPeriodsList>());
         }
 
         private void btnControlPrestamos_Click(object sender, EventArgs e)
         {
+            ResetSelectedStyleUI();
+            btnControlPrestamos.BackColor = Color.FromArgb(13, 93, 142);
             OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmLoansList>());
+        }
+
+        private void ResetSelectedStyleUI()
+        {
+            btnClients.BackColor = Color.FromArgb(26, 32, 40);
+            btnControlAhorro.BackColor = Color.FromArgb(26, 32, 40);
+            btnControlPrestamos.BackColor = Color.FromArgb(26, 32, 40);
+            btnMainPeriods.BackColor = Color.FromArgb(26, 32, 40);
         }
     }
 }

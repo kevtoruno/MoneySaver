@@ -43,6 +43,7 @@
             label4 = new Label();
             btnSearch = new Button();
             txtINSS = new MaskedTextBox();
+            btnEdit = new Button();
             ((System.ComponentModel.ISupportInitialize)gridClientList).BeginInit();
             SuspendLayout();
             // 
@@ -183,7 +184,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnDelete.ForeColor = SystemColors.Control;
-            btnDelete.Location = new Point(116, 236);
+            btnDelete.Location = new Point(244, 236);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(111, 50);
             btnDelete.TabIndex = 7;
@@ -232,12 +233,29 @@
             txtINSS.MaskInputRejected += txtINSS_MaskInputRejected;
             txtINSS.Click += txtINSS_Click;
             // 
+            // btnEdit
+            // 
+            btnEdit.BackColor = Color.SteelBlue;
+            btnEdit.Cursor = Cursors.Hand;
+            btnEdit.FlatAppearance.BorderSize = 0;
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnEdit.ForeColor = SystemColors.Control;
+            btnEdit.Location = new Point(117, 236);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(111, 50);
+            btnEdit.TabIndex = 18;
+            btnEdit.Text = "Editar";
+            btnEdit.UseVisualStyleBackColor = false;
+            btnEdit.Click += btnEdit_Click;
+            // 
             // FrmClientList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 650);
+            Controls.Add(btnEdit);
             Controls.Add(btnSearch);
             Controls.Add(label4);
             Controls.Add(txtINSS);
@@ -272,5 +290,6 @@
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Identification;
         private MaskedTextBox txtINSS;
+        private Button btnEdit;
     }
 }

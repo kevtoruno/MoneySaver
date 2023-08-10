@@ -9,7 +9,6 @@ namespace Service.Core.Dtos
     public class SADepositToCreateDto
     {
         public int SavingAccountID { get; set; }
-        public int SubPeriodID { get; set; }
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
         public decimal InterestsAmount { get; set; }
