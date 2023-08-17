@@ -17,21 +17,19 @@ namespace UI.Forms.LoanForms
 {
     public partial class FrmLoansList : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly ILoansRepository _loansRepo;
         private readonly IMapper _mapper;
 
-        public FrmLoansList(IMoneySaverRepository moneySaverRepository, ILoansRepository loansRepo, IMapper mapper)
+        public FrmLoansList(ILoansRepository loansRepo, IMapper mapper)
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
             _loansRepo = loansRepo;
             _mapper = mapper;
         }
 
         private void btnNewLoan_Click(object sender, EventArgs e)
         {
-            var frmNewLoan = new FrmLoanNew(_moneySaverRepository, _loansRepo, this);
+            var frmNewLoan = new FrmLoanNew(this);
             frmNewLoan.ShowDialog();
         }
 

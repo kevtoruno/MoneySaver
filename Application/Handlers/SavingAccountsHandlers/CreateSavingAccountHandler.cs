@@ -10,7 +10,7 @@ using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.Periods;
 
-namespace Service.Handlers.SavingAccountsHandlers;
+namespace Service.Handlers;
 
 public class CreateSavingAccountCommand : IRequest<Result<int>>
 {

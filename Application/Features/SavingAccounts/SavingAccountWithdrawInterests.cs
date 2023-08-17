@@ -20,37 +20,32 @@ namespace Service.Features.SavingAccounts
 
         public Result<bool> WithdrawInterestsFromSavingAccount(int savingAccountID, DateTime withdrawDate)
         {
-            var validationResult = WithdrawInterestsValidation(savingAccountID, withdrawDate);
+            try
+            {
+                var validationResult = WithdrawInterestsValidation(savingAccountID, withdrawDate);
 
-            if (validationResult.IsSucess == false)
-                return validationResult;
+                if (validationResult.IsSucess == false)
+                    return validationResult;
 
-            var SADomain = _moneySaverRepo.GetSavingAccountDomain(savingAccountID);
+                var SADomain = _moneySaverRepo.GetSavingAccountDomain(savingAccountID);
 
-            if (SADomain.IsActive == false)
-                return Result<bool>.Failure("Este fondo de ahorro no está activo.");
+                SADomain.WithdrawInterests(withdrawDate, SubPeriodID);
 
-            if (SADomain.AmountForInterests == 0)
-                return Result<bool>.Failure("No existen intereses a retirar.");
+                bool result = _moneySaverRepo.WithdrawInterestsSavingAccount(SADomain);
 
-            SADomain.WithdrawInterests(withdrawDate, SubPeriodID);
+                if (result)
+                    return Result<bool>.Created(true, "Se han retirado intereses correctamente.");
 
-            bool result = _moneySaverRepo.WithdrawInterestsSavingAccount(SADomain);
-
-            if (result)
-                return Result<bool>.Created(true, "Se han retirado intereses correctamente.");
-
-            return Result<bool>.Failure("Hubo un error al retirar intereses.");
+                return Result<bool>.Failure("Hubo un error al retirar intereses.");
+            }
+            catch (Exception ex)
+            {
+                return Result<bool>.Failure(ex.Message);
+            }  
         }
 
         private Result<bool> WithdrawInterestsValidation(int savingAccountID, DateTime withdrawDate)
         {
-            if (withdrawDate.Month != 6 )
-            {
-                if (withdrawDate.Month != 12)
-                    return Result<bool>.Failure("Unicamente se puede retirar intereses en los meses de Junio y Diciembre.");
-            }
-            
             var latestWithdrawalDate = _moneySaverRepo.GetLatestWithdrawDateForSavingAccountID(savingAccountID);
 
             if (latestWithdrawalDate > withdrawDate)

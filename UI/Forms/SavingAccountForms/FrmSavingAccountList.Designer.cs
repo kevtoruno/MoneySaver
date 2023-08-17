@@ -35,17 +35,17 @@
             btnSearch = new Button();
             btnNewSavingAccount = new Button();
             gridSavingAccountsList = new DataGridView();
-            txtINSS = new MaskedTextBox();
-            label4 = new Label();
-            btnDelete = new Button();
-            btnView = new Button();
-            btnUploadMonthlyDeposits = new Button();
             SavingAccountID = new DataGridViewTextBoxColumn();
             INSS = new DataGridViewTextBoxColumn();
             ClientFullName = new DataGridViewTextBoxColumn();
             Amount = new DataGridViewTextBoxColumn();
             AmountForInterests = new DataGridViewTextBoxColumn();
             IsActive = new DataGridViewCheckBoxColumn();
+            txtINSS = new MaskedTextBox();
+            label4 = new Label();
+            btnDelete = new Button();
+            btnView = new Button();
+            btnUploadMonthlyDeposits = new Button();
             ((System.ComponentModel.ISupportInitialize)gridSavingAccountsList).BeginInit();
             SuspendLayout();
             // 
@@ -140,77 +140,6 @@
             gridSavingAccountsList.Size = new Size(1070, 346);
             gridSavingAccountsList.TabIndex = 7;
             // 
-            // txtINSS
-            // 
-            txtINSS.Anchor = AnchorStyles.Top;
-            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtINSS.Location = new Point(471, 110);
-            txtINSS.Mask = "9999999999";
-            txtINSS.Name = "txtINSS";
-            txtINSS.Size = new Size(125, 31);
-            txtINSS.TabIndex = 9;
-            txtINSS.ValidatingType = typeof(int);
-            // 
-            // label4
-            // 
-            label4.Anchor = AnchorStyles.Top;
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.ForeColor = SystemColors.Control;
-            label4.Location = new Point(490, 80);
-            label4.Name = "label4";
-            label4.Size = new Size(79, 25);
-            label4.TabIndex = 15;
-            label4.Text = "No INSS";
-            // 
-            // btnDelete
-            // 
-            btnDelete.BackColor = Color.SteelBlue;
-            btnDelete.Cursor = Cursors.Hand;
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnDelete.ForeColor = SystemColors.Control;
-            btnDelete.Location = new Point(116, 236);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(111, 50);
-            btnDelete.TabIndex = 17;
-            btnDelete.Text = "Eliminar";
-            btnDelete.UseVisualStyleBackColor = false;
-            // 
-            // btnView
-            // 
-            btnView.BackColor = Color.SteelBlue;
-            btnView.Cursor = Cursors.Hand;
-            btnView.FlatAppearance.BorderSize = 0;
-            btnView.FlatStyle = FlatStyle.Flat;
-            btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnView.ForeColor = SystemColors.Control;
-            btnView.Location = new Point(9, 236);
-            btnView.Name = "btnView";
-            btnView.Size = new Size(87, 50);
-            btnView.TabIndex = 16;
-            btnView.Text = "Ver";
-            btnView.UseVisualStyleBackColor = false;
-            btnView.Click += btnView_Click;
-            // 
-            // btnUploadMonthlyDeposits
-            // 
-            btnUploadMonthlyDeposits.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnUploadMonthlyDeposits.BackColor = Color.SteelBlue;
-            btnUploadMonthlyDeposits.Cursor = Cursors.Hand;
-            btnUploadMonthlyDeposits.FlatAppearance.BorderSize = 0;
-            btnUploadMonthlyDeposits.FlatStyle = FlatStyle.Flat;
-            btnUploadMonthlyDeposits.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnUploadMonthlyDeposits.ForeColor = SystemColors.Control;
-            btnUploadMonthlyDeposits.Location = new Point(871, 10);
-            btnUploadMonthlyDeposits.Name = "btnUploadMonthlyDeposits";
-            btnUploadMonthlyDeposits.Size = new Size(197, 72);
-            btnUploadMonthlyDeposits.TabIndex = 18;
-            btnUploadMonthlyDeposits.Text = "Ingresar cotizaciones mensuales";
-            btnUploadMonthlyDeposits.UseVisualStyleBackColor = false;
-            btnUploadMonthlyDeposits.Click += btnUploadMonthlyDeposits_Click;
-            // 
             // SavingAccountID
             // 
             SavingAccountID.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
@@ -271,6 +200,78 @@
             IsActive.ReadOnly = true;
             IsActive.Resizable = DataGridViewTriState.True;
             IsActive.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // txtINSS
+            // 
+            txtINSS.Anchor = AnchorStyles.Top;
+            txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            txtINSS.Location = new Point(471, 110);
+            txtINSS.Mask = "9999999999";
+            txtINSS.Name = "txtINSS";
+            txtINSS.Size = new Size(125, 31);
+            txtINSS.TabIndex = 9;
+            txtINSS.ValidatingType = typeof(int);
+            txtINSS.Click += txtINSS_Click;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Top;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = SystemColors.Control;
+            label4.Location = new Point(490, 80);
+            label4.Name = "label4";
+            label4.Size = new Size(79, 25);
+            label4.TabIndex = 15;
+            label4.Text = "No INSS";
+            // 
+            // btnDelete
+            // 
+            btnDelete.BackColor = Color.SteelBlue;
+            btnDelete.Cursor = Cursors.Hand;
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnDelete.ForeColor = SystemColors.Control;
+            btnDelete.Location = new Point(116, 236);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(111, 50);
+            btnDelete.TabIndex = 17;
+            btnDelete.Text = "Eliminar";
+            btnDelete.UseVisualStyleBackColor = false;
+            // 
+            // btnView
+            // 
+            btnView.BackColor = Color.SteelBlue;
+            btnView.Cursor = Cursors.Hand;
+            btnView.FlatAppearance.BorderSize = 0;
+            btnView.FlatStyle = FlatStyle.Flat;
+            btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnView.ForeColor = SystemColors.Control;
+            btnView.Location = new Point(9, 236);
+            btnView.Name = "btnView";
+            btnView.Size = new Size(87, 50);
+            btnView.TabIndex = 16;
+            btnView.Text = "Ver";
+            btnView.UseVisualStyleBackColor = false;
+            btnView.Click += btnView_Click;
+            // 
+            // btnUploadMonthlyDeposits
+            // 
+            btnUploadMonthlyDeposits.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnUploadMonthlyDeposits.BackColor = Color.SteelBlue;
+            btnUploadMonthlyDeposits.Cursor = Cursors.Hand;
+            btnUploadMonthlyDeposits.FlatAppearance.BorderSize = 0;
+            btnUploadMonthlyDeposits.FlatStyle = FlatStyle.Flat;
+            btnUploadMonthlyDeposits.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnUploadMonthlyDeposits.ForeColor = SystemColors.Control;
+            btnUploadMonthlyDeposits.Location = new Point(871, 10);
+            btnUploadMonthlyDeposits.Name = "btnUploadMonthlyDeposits";
+            btnUploadMonthlyDeposits.Size = new Size(197, 72);
+            btnUploadMonthlyDeposits.TabIndex = 18;
+            btnUploadMonthlyDeposits.Text = "Ingresar cotizaciones mensuales";
+            btnUploadMonthlyDeposits.UseVisualStyleBackColor = false;
+            btnUploadMonthlyDeposits.Click += btnUploadMonthlyDeposits_Click;
             // 
             // FrmSavingAccountList
             // 

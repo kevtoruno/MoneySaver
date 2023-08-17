@@ -28,7 +28,12 @@ namespace Service.Core.Interfaces
         List<PeriodsToListDto> GetPeriodsList();
         List<SubPeriodsToListDto> GetSubPeriodsList(int periodID);
 
-        bool CheckIfClientHasActiveSavingAccount(int clientID);
+         /// <summary>
+        /// 0 means Not existing
+        /// 1 means exists and its active
+        /// 2 means exists but inactive
+        /// </summary>
+        int CheckIfClientHasSavingAccount(int clientID);
         int GetClientIDByINSSNo(string INSSNo);
         int CreateSavingAccount(SavingAccountDomainCreator savingAccountToCreate);
 
@@ -42,16 +47,18 @@ namespace Service.Core.Interfaces
 
         SubPeriodsDataModel GetSubPeriodIDFromDate(DateTime date);
 
-        SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID);
+        SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID, bool includeTransactionalHistory = false);
         bool WithdrawInterestsSavingAccount(SavingAccountDomainAggregate saDomain);
         string GetFullNameByINSS(string INSS);
         List<SubPeriodDomain> GetSubPeriodsForDateRange(DateTime startDate, DateTime endDate);
         CompanyDomain GetDefaultCompany();
         ClientToCreateDto GetClient(int ClientID);
-        List<SavingAccountDomainAggregate> GetSavingAccountDomainsWithDepositsForPeriod(List<int> savingAccountIDs, int periodID);
         List<SavingAccountsDataModel> GetSavingAccountsWithDepositsForPeriodData(int periodID);
         bool AddDepositsToSavingAccounts(List<SavingAccountDomainAggregate> saDomainLst);
         void EditClient(ClientToCreateDto clientToEditDto);
         DateTime GetLatestWithdrawDateForSavingAccountID(int savingAccountID);
+        bool FullWithdrawalSavingAccount(SavingAccountDomainAggregate saDomain);
+
+        bool UpdateSavingAccount(SavingAccountDomainAggregate saDomain);
     }
 }

@@ -47,7 +47,7 @@ namespace Service.Features.SavingAccounts
 
                 SetDepositsForPreviewDtos(date);
 
-                return Result<List<MonthlyDepositsForPreviewDto>>.Success(DepositsForPreviewDtos);
+                return Result<List<MonthlyDepositsForPreviewDto>>.Success(DepositsForPreviewDtos.OrderBy(a => a.IsValid).ThenBy(a => a.INSSNo).ToList());
             }
             catch (FormatException ex)
             {

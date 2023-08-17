@@ -24,13 +24,13 @@ namespace UI
 
         protected ISender Mediator => _mediator ??= Program.ServiceProvider.GetRequiredService<ISender>();
 
-        protected void HandleResult<T>(Result<T> result)
+        protected void HandleResult<T>(Result<T> result, bool closeIfResourceCreated = true)
         {
             if (result.ResourceCreated)
             {
                 var dialogResult = MessageBox.Show(result.CreatedMessage, "Operación exitosa",MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                if (dialogResult == DialogResult.OK)
+                if (dialogResult == DialogResult.OK && closeIfResourceCreated == true)
                     this.Close();
                         
             }

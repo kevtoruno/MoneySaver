@@ -3,6 +3,7 @@ using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
 using Service.Handlers;
+using Service.Handlers.SavingAccountsHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,7 +29,7 @@ namespace UI.Forms.SavingAccountForms
 
         private void FrmSavingAccountDetail_Load(object sender, EventArgs e)
         {
-            LoadFormData();
+            LoadFormData();    
         }
 
         public void LoadFormData()
@@ -39,6 +40,7 @@ namespace UI.Forms.SavingAccountForms
 
             SetLabelsData();
             SetGridsData();
+            SetButtonsState();
         }
 
         private void SetLabelsData()
@@ -57,6 +59,24 @@ namespace UI.Forms.SavingAccountForms
             lblCurrentAmountData.Text = "C$ " + SavingAccountToDetailDto.Amount;
             lblTotalWidthdrawnData.Text = "C$ " + SavingAccountToDetailDto.TotalWithdrawn;
             lblTotalAmountData.Text = "C$ " + SavingAccountToDetailDto.TotalAmount;
+        }
+
+        private void SetButtonsState()
+        {
+            if (SavingAccountToDetailDto.IsActive == false)
+            {
+                this.btnDeposit.Visible = false;
+                this.btnWithdrawInsterest.Visible = false;
+                this.btnFinishSavingAccount.Text = "Re activar fondo.";
+                this.btnFinishSavingAccount.BackColor = Color.FromArgb(51, 178, 73);
+            }
+            else
+            {
+                this.btnDeposit.Visible = true;
+                this.btnWithdrawInsterest.Visible = true;
+                this.btnFinishSavingAccount.Text = "Retiro total.";
+                this.btnFinishSavingAccount.BackColor = Color.Crimson;
+            }
         }
 
         private void SetGridsData()
@@ -91,7 +111,6 @@ namespace UI.Forms.SavingAccountForms
                 e.CellStyle.BackColor = cellColor;
                 e.CellStyle.SelectionBackColor = cellColor;
             }
-
         }
 
         private void btnWithdrawInsterest_Click(object sender, EventArgs e)
@@ -99,6 +118,40 @@ namespace UI.Forms.SavingAccountForms
             var frmSavingAccountWithdrawInterests = new FrmSavingAccountWithdrawInterests(SavingAccountToDetailDto.SavingAccountID, this);
 
             frmSavingAccountWithdrawInterests.ShowDialog();
+        }
+
+        private void btnFinishSavingAccount_Click(object sender, EventArgs e)
+        {
+            if (SavingAccountToDetailDto.IsActive)
+            {
+                var frmSavingAccountTotalWithdraw = new FrmSavingAccountTotalWithdraw(SavingAccountToDetailDto.SavingAccountID, this);
+
+                frmSavingAccountTotalWithdraw.ShowDialog();
+            }
+            else
+            {
+                AskToReActivateSavingAccount();
+            }
+        }
+
+        private void AskToReActivateSavingAccount()
+        {
+            var mbOption = MessageBox.Show($"¿Está seguro que desea volver a activar el fondo de ahorro?.", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if(mbOption == DialogResult.Yes)
+            {
+                ReActivateSavingAccount();
+            }
+        }
+
+        private void ReActivateSavingAccount()
+        {
+            var result = Mediator.Send(new ReactivateSavingAccountCommand { SavingAccountID = _selectedSavingAccountID }).Result;
+
+            if (result.ResourceCreated)
+                LoadFormData();
+
+            HandleResult(result, closeIfResourceCreated: false);     
         }
     }
 }

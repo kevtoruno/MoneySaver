@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.DomainExceptions;
+using Domain.DomainExceptions.SavingAccountExceptions;
 
 namespace Domain.Entities
 {
@@ -25,7 +27,7 @@ namespace Domain.Entities
         public int CreatedBy { get; set; }
         public List<SavingAccountDepositDomain> Deposits { get; set; }
         public List<SavingAccountWithdrawsDomain> Withdrawals { get; set; }
-
+        public CompanyDomain Company { get; set; }
         public SavingAccountDomainAggregate(int savingAccountID, decimal amount, decimal amountForInterests, 
             bool isActive, int clientID, DateTime createdDate)
         {
@@ -43,34 +45,43 @@ namespace Domain.Entities
         {
             Deposits = new List<SavingAccountDepositDomain>();
             Withdrawals = new List<SavingAccountWithdrawsDomain>();
+            Company = new CompanyDomain();
         }
         
         public void WithdrawInterests(DateTime withdrawDate, int subPeriodID)
         {
-            if (this.AmountForInterests <= 0)
-                return;
+            if (this.IsActive == false)
+                throw new InactiveSavingAccountException();
 
-            if (withdrawDate.Month == 6 || withdrawDate.Month == 12)
+            if (this.AmountForInterests <= 0)
+                throw new NoInterestsToWithdrawException();
+
+            if (withdrawDate.Month != 6 )
             {
-                Withdrawals.Add(new SavingAccountWithdrawsDomain
-                {
-                    Amount = this.AmountForInterests,
-                    SavingAccountID = this.SavingAccountID,
-                    CreatedDate = withdrawDate,
-                    SubPeriodID = subPeriodID,
-                    WithDrawalType = 0 //Interests
-                });
-     
-                this.Amount -= AmountForInterests;
-                this.AmountForInterests = 0;
+                if (withdrawDate.Month != 12)
+                    throw new InvalidMonthToWithdrawInterestsException();
             }
+
+            Company.DecreaseCurrentAmount(this.AmountForInterests);
+
+            Withdrawals.Add(new SavingAccountWithdrawsDomain
+            {
+                Amount = this.AmountForInterests,
+                SavingAccountID = this.SavingAccountID,
+                CreatedDate = withdrawDate,
+                SubPeriodID = subPeriodID,
+                WithDrawalType = 0 //Interests
+            });
+     
+            this.Amount -= AmountForInterests;
+            this.AmountForInterests = 0;      
         }
 
         public void AddDeposit(decimal depositAmount, DateTime depositDate, 
             int subPeriodID, decimal interestsAmount) 
         {
             if (IsActive == false)
-                return;
+                throw new InactiveSavingAccountException();
 
             Amount += depositAmount;
 
@@ -105,6 +116,60 @@ namespace Domain.Entities
                     DepositType = 1 //Interests
                 });
             }
+        }
+
+        public void FullWithdrawal(DateTime date, int subPeriodID)
+        {
+            CheckIfFullWithdrawalIsValid(date);
+            
+            Withdrawals.Add(new SavingAccountWithdrawsDomain
+            {
+                Amount = this.Amount,
+                SavingAccountID = this.SavingAccountID,
+                CreatedDate = date,
+                SubPeriodID = subPeriodID,
+                WithDrawalType = 1 //FullWithdrawal
+            });
+            
+            Company.DecreaseCurrentAmount(this.Amount);
+
+            this.Amount = 0;
+            this.AmountForInterests = 0;
+            this.IsActive = false;
+        }
+
+        private void CheckIfFullWithdrawalIsValid(DateTime date)
+        {
+            if (IsActive == false)
+                throw new InactiveSavingAccountException();
+
+            if (Amount <= 0)
+                throw new FundlessSavingAccountException();
+
+            bool isDateLastest = CheckIfDateIsLatest(date);
+
+            if (isDateLastest == false)
+                throw new DateIsNotTheLatestSavingAccountException();
+        }
+
+        private bool CheckIfDateIsLatest(DateTime date)
+        {
+            bool isDateLatest = false;
+            var latestWithdrawal = Withdrawals.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+            var latestDeposit = Deposits.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+
+            DateTime latestWithdrawalDate = latestWithdrawal != null ? latestWithdrawal.CreatedDate : DateTime.MinValue;
+            DateTime latestDepositDate = latestDeposit != null ? latestDeposit.CreatedDate : DateTime.MinValue;
+
+            var latestTransactionalDate = latestDepositDate;
+
+            if (latestWithdrawalDate > latestDepositDate)
+                latestTransactionalDate = latestWithdrawalDate;
+
+            if (date > latestTransactionalDate)
+                isDateLatest = true;
+
+            return isDateLatest;
         }
     }
 

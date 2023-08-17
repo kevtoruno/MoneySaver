@@ -20,19 +20,10 @@ namespace Domain
 
         public void DecreaseCurrentAmount(decimal amount)
         {
-            try
-            {
-                if (CurrentAmount < amount) 
-                    throw new InvalidOperationException("No existen fondos suficientes para entregar el préstamo");
+            if (CurrentAmount < amount) 
+                throw new InvalidOperationException("No existen fondos suficientes");
 
-                CurrentAmount -= amount;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            
+            CurrentAmount -= amount;
         }
     }
 }

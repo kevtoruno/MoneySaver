@@ -50,5 +50,7 @@ namespace Service.Core.DataModel
         public DateTime EndDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsCurrent { get; set; }
+
+        public ICollection<LoanInstallmentsDataModel> LoanInstallments { get; set; }
     }
 }

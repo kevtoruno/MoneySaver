@@ -330,7 +330,7 @@
             btnWithdrawInsterest.FlatStyle = FlatStyle.Flat;
             btnWithdrawInsterest.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnWithdrawInsterest.ForeColor = Color.White;
-            btnWithdrawInsterest.Location = new Point(703, 270);
+            btnWithdrawInsterest.Location = new Point(721, 270);
             btnWithdrawInsterest.Margin = new Padding(0);
             btnWithdrawInsterest.Name = "btnWithdrawInsterest";
             btnWithdrawInsterest.Size = new Size(170, 50);
@@ -349,13 +349,14 @@
             btnFinishSavingAccount.FlatStyle = FlatStyle.Flat;
             btnFinishSavingAccount.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnFinishSavingAccount.ForeColor = Color.White;
-            btnFinishSavingAccount.Location = new Point(901, 270);
+            btnFinishSavingAccount.Location = new Point(908, 270);
             btnFinishSavingAccount.Margin = new Padding(0);
             btnFinishSavingAccount.Name = "btnFinishSavingAccount";
-            btnFinishSavingAccount.Size = new Size(170, 50);
+            btnFinishSavingAccount.Size = new Size(163, 50);
             btnFinishSavingAccount.TabIndex = 25;
-            btnFinishSavingAccount.Text = "Cerrar cuenta";
+            btnFinishSavingAccount.Text = "Retiro total";
             btnFinishSavingAccount.UseVisualStyleBackColor = false;
+            btnFinishSavingAccount.Click += btnFinishSavingAccount_Click;
             // 
             // lblSavingAccTitle
             // 

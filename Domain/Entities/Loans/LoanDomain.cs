@@ -73,7 +73,8 @@ namespace Domain.Entities.Loans
             {
                 SubPeriods = subPeriods;
                 SetBaseLoanValues();
-                SetCompanyValues();
+                Company.DecreaseCurrentAmount(LoanAmount);
+                Company.AddFloatingAmount(LoanAmount);
                 CreateLoanInstallments();  
             }
             catch (Exception)
@@ -91,12 +92,6 @@ namespace Domain.Entities.Loans
             this.CreatedDate = DateTime.Now;
             this.IsCurrent = true;
             this.PaperCostAmount = DefaultLoanInterest.LoanPaperCost;
-        }
-
-        private void SetCompanyValues()
-        {
-            Company.DecreaseCurrentAmount(LoanAmount);
-            Company.AddFloatingAmount(LoanAmount);
         }
 
         private void CreateLoanInstallments()

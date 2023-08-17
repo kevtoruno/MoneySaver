@@ -26,31 +26,36 @@ namespace Service.Features.SavingAccounts
 
         public Result<bool> AddDepositToSavingAccount(SADepositToCreateDto sADepositToCreateDto)
         {
-            var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(sADepositToCreateDto.CreatedDate);
+            try
+            {
+                var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(sADepositToCreateDto.CreatedDate);
 
-            SubPeriodID = subPeriod != null ? subPeriod.SubPeriodID : 0;
+                SubPeriodID = subPeriod != null ? subPeriod.SubPeriodID : 0;
 
-            if (SubPeriodID <= 0)
-                return Result<bool>.Failure("No existe un subperiodo para la fecha seleccionada.");
+                if (SubPeriodID <= 0)
+                    return Result<bool>.Failure("No existe un subperiodo para la fecha seleccionada.");
 
-            bool checkIfDepositExists = _moneySaverRepo.CheckIfDepositExistsForSubPeriod(SubPeriodID, sADepositToCreateDto.SavingAccountID);
+                bool checkIfDepositExists = _moneySaverRepo.CheckIfDepositExistsForSubPeriod(SubPeriodID, sADepositToCreateDto.SavingAccountID);
 
-            if (checkIfDepositExists)
-                return Result<bool>.Failure("Ya se ha hecho un deposito para este subperiodo.");
+                if (checkIfDepositExists)
+                    return Result<bool>.Failure("Ya se ha hecho un deposito para este subperiodo.");
 
-            var SADomain = _moneySaverRepo.GetSavingAccountDomain(sADepositToCreateDto.SavingAccountID);
+                var SADomain = _moneySaverRepo.GetSavingAccountDomain(sADepositToCreateDto.SavingAccountID);
 
-            if (SADomain.IsActive == false)
-                return Result<bool>.Failure("Este fondo de ahorro no está activo.");
+                SADomain.AddDeposit(sADepositToCreateDto.Amount, sADepositToCreateDto.CreatedDate, SubPeriodID, sADepositToCreateDto.InterestsAmount);
 
-            SADomain.AddDeposit(sADepositToCreateDto.Amount, sADepositToCreateDto.CreatedDate, SubPeriodID, sADepositToCreateDto.InterestsAmount);
+                var result = _moneySaverRepo.AddDepositToSavingAccount(SADomain);
 
-            var result = _moneySaverRepo.AddDepositToSavingAccount(SADomain);
+                if (result)
+                    return Result<bool>.Created(true, "Se ha agregado el deposito correctamente.");
 
-            if (result)
-                return Result<bool>.Created(true, "Se ha agregado el deposito correctamente.");
-
-            return Result<bool>.Failure("Hubo un error al agregar el deposito.");
+                return Result<bool>.Failure("Hubo un error al agregar el deposito.");
+            }
+            catch (Exception ex)
+            {
+                return Result<bool>.Failure(ex.Message);
+            }
+            
         }              
     }
 }

@@ -4,6 +4,7 @@ using Service.Core.Dtos;
 using Service.Core.Dtos.LoansDto;
 using Service.Core.Interfaces;
 using Service.Features.Loans;
+using Service.Handlers.LoansHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,15 +19,11 @@ namespace UI.Forms.LoanForms
 {
     public partial class FrmLoanNew : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
-        private readonly ILoansRepository _loansRepo;
         private readonly FrmLoansList _frmLoansList;
         private LoanToCreateDto LoanToCreateDto;
-        public FrmLoanNew(IMoneySaverRepository moneySaverRepository, ILoansRepository loansRepo, FrmLoansList frmLoansList)
+        public FrmLoanNew(FrmLoansList frmLoansList)
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
-            _loansRepo = loansRepo;
             _frmLoansList = frmLoansList;
             LoanToCreateDto = new LoanToCreateDto();
         }
@@ -51,8 +48,7 @@ namespace UI.Forms.LoanForms
         {
             SetLoanToCreateDto();
 
-            var loanCreator = new LoansCreator(_loansRepo, _moneySaverRepository, Program.ServiceProvider.GetRequiredService<IMapper>());
-            var result = loanCreator.CreateLoan(LoanToCreateDto);
+            var result = Mediator.Send(new CreateLoanCommand { LoanToCreateDto = LoanToCreateDto }).Result;
 
             HandleResult(result);
 
@@ -64,8 +60,7 @@ namespace UI.Forms.LoanForms
         {
             SetLoanToCreateDto();
 
-            var loanCreator = new LoansCreator(_loansRepo, _moneySaverRepository, Program.ServiceProvider.GetRequiredService<IMapper>());
-            var result = loanCreator.PreviewLoan(LoanToCreateDto);
+            var result = Mediator.Send(new GenerateLoanPreviewQuery { LoanToCreateDto = LoanToCreateDto }).Result;
 
             if (result.IsSucess)
             {

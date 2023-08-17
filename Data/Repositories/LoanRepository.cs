@@ -44,12 +44,6 @@ namespace Data.Repositories
                 _context.Loans.Add(LoanToCreate);
                 _context.SaveChanges();
 
-                var loansInstallmentsToCreate = _mapper.Map<List<LoanInstallmentsDataModel>>(loanDomain.LoanInstallments);
-
-                loansInstallmentsToCreate.ForEach(li => li.LoanID = LoanToCreate.LoanID);
-
-                _context.LoanInstallments.AddRange(loansInstallmentsToCreate);
-
                 _context.Companies.Update(defaultCompany);
                 _context.SaveChanges();
 

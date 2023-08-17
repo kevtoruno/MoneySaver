@@ -2,7 +2,7 @@
 using Service.Core;
 using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
-using Service.Handlers.SavingAccountsHandlers;
+using Service.Handlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -77,6 +77,11 @@ namespace UI.Forms
         {
             var frmMonthlyDeposit = new FrmSavingAccountsMontlyDeposit(this);
             frmMonthlyDeposit.ShowDialog();
+        }
+
+        private void txtINSS_Click(object sender, EventArgs e)
+        {
+            this.txtINSS.SelectionStart = this.txtINSS.Text.Length;
         }
     }
 }

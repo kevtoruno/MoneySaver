@@ -20,7 +20,7 @@ public class EditClientCommand : IRequest<Result<bool>>
     }
 }
 
-public class EditClientHandler : IRequestHandler<CreateClientCommand, Result<bool>>
+public class EditClientHandler : IRequestHandler<EditClientCommand, Result<bool>>
 {
     private readonly IMoneySaverRepository _moneySaverRepo;
 
@@ -29,7 +29,7 @@ public class EditClientHandler : IRequestHandler<CreateClientCommand, Result<boo
         _moneySaverRepo = moneySaverRepo;
     }
 
-    public Task<Result<bool>> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+    public Task<Result<bool>> Handle(EditClientCommand request, CancellationToken cancellationToken)
     {
         var clientCreator = new ClientCreator(_moneySaverRepo);
         var result = clientCreator.EditClient(request.ClientToCreateDto);

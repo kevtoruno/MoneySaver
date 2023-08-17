@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Handlers.SavingAccountsHandlers;
+namespace Service.Handlers;
 
 public class GenerateMonthlyDepositsPreviewQuery : IRequest<Result<List<MonthlyDepositsForPreviewDto>>>
 {
@@ -26,6 +26,7 @@ internal class GenerateMonthlyDepositsPreviewHandler :
     {
         _moneySaverRepo = moneySaverRepo;
     }
+
     public Task<Result<List<MonthlyDepositsForPreviewDto>>> Handle(GenerateMonthlyDepositsPreviewQuery request, CancellationToken cancellationToken)
     {
         var saMonthlyPreviewGenerator = new SAMonthlyDepositsPreviewGenerator(_moneySaverRepo);

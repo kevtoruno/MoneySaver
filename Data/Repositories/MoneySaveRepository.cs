@@ -10,6 +10,7 @@ using Domain.Entities.SavingAccount;
 using Service.Core;
 using Domain;
 using System.Xml;
+using Domain.Entities.Loans;
 
 namespace Data.Repositories
 {
@@ -155,9 +156,20 @@ namespace Data.Repositories
             return ClientID;
         }
 
-        public bool CheckIfClientHasActiveSavingAccount(int clientID) 
+        public int CheckIfClientHasSavingAccount(int clientID) 
         {
-            bool hasSavingAccount = _context.SavingAccounts.Any(sa => sa.ClientID == clientID && sa.IsActive);
+            int hasSavingAccount = 0;
+
+            var savingAccount = _context.SavingAccounts.AsNoTracking()
+                .FirstOrDefault(sa => sa.ClientID == clientID);
+
+            if (savingAccount != null)
+            {
+                if (savingAccount.IsActive)
+                    hasSavingAccount = 1;
+                else
+                    hasSavingAccount = 2; 
+            }
 
             return hasSavingAccount;
         }
@@ -217,14 +229,20 @@ namespace Data.Repositories
                 .First(a => a.SavingAccountID == savingAccountID);
         }
 
-        public SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID)
+        public SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID, bool includeTransactionalHistory = false)
         {
-            var savingAccountData = _context.SavingAccounts
+            var query = _context.SavingAccounts
                 .AsNoTracking()
                 .Include(sa => sa.Client)
-                .First(a => a.SavingAccountID == savingAccountID);
+                .AsQueryable();
+
+            if (includeTransactionalHistory)
+                query = query.Include(q => q.Deposits).Include(q => q.Withdrawals);
+            
+            var savingAccountData = query.First(a => a.SavingAccountID == savingAccountID);
 
             var savingAccountDomain = _mapper.Map<SavingAccountDomainAggregate>(savingAccountData);
+            savingAccountDomain.Company = GetDefaultCompany();
 
             return savingAccountDomain;
         }
@@ -239,20 +257,6 @@ namespace Data.Repositories
                 .ToList();
 
             return savingAccountData;
-        }
-
-        public List<SavingAccountDomainAggregate> GetSavingAccountDomainsWithDepositsForPeriod(List<int> savingAccountIDs, int periodID)
-        {
-            var savingAccountData = _context.SavingAccounts
-                .AsNoTracking()
-                .Include(sa => sa.Client)
-                .Include(sa => sa.Deposits.Where(dep => dep.SubPeriod.PeriodID == periodID))
-                .Where(sa => savingAccountIDs.Contains(sa.SavingAccountID))
-                .ToList();
-
-            var savingAccountDomain = _mapper.Map<List<SavingAccountDomainAggregate>>(savingAccountData);
-
-            return savingAccountDomain;
         }
 
         public bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID) 
@@ -285,9 +289,7 @@ namespace Data.Repositories
             try
             {
                 var defaultCompany = _context.Companies.FirstOrDefault() ?? throw new Exception();
-                var savingAccountToUpdate = _mapper.Map<SavingAccountsDataModel>(saDomain);
-
-                _context.SavingAccounts.Update(savingAccountToUpdate);
+                UpdateSavingAccountDomain(saDomain);
 
                 defaultCompany.CurrentAmount += saDomain.Deposits
                     .Where(sa => sa.SavingAccountDepositID == 0)
@@ -314,14 +316,9 @@ namespace Data.Repositories
 
             try
             {
-                var defaultCompany = _context.Companies.FirstOrDefault() ?? throw new Exception();
-                var savingAccountToUpdate = _mapper.Map<SavingAccountsDataModel>(saDomain);
+                UpdateSavingAccountDomain(saDomain);
 
-                _context.SavingAccounts.Update(savingAccountToUpdate);
-
-                defaultCompany.CurrentAmount -= savingAccountToUpdate.Withdrawals
-                    .Where(a => a.SavingAccountWithdrawalID == 0 && a.WithDrawalType == WithDrawalType.Interests)
-                    .Sum(a => a.Amount);
+                var defaultCompany =  _mapper.Map<CompaniesDataModel>(saDomain.Company);
 
                 _context.Companies.Update(defaultCompany);
                 _context.SaveChanges();
@@ -383,14 +380,6 @@ namespace Data.Repositories
             return clienToEdit;
         }
 
-        public List<SavingAccountDepositsDataModel> GetSavingAccountsDepositsBySubPeriodID(int subPeriodID)
-        {
-            return _context.SavingAccountDeposits
-                .Include(sa => sa.SavingAccount.Client)
-                .Where(sa => sa.SubPeriodID == subPeriodID)
-                .ToList();
-        }
-
         public bool AddDepositsToSavingAccounts(List<SavingAccountDomainAggregate> saDomainLst)
         {
             _context.ChangeTracker.Clear();
@@ -398,13 +387,13 @@ namespace Data.Repositories
             try
             {
                 var defaultCompany = _context.Companies.FirstOrDefault() ?? throw new Exception();
-                var savingAccountToUpdate = _mapper.Map<List<SavingAccountsDataModel>>(saDomainLst);
+                var savingAccountsToUpdate = _mapper.Map<List<SavingAccountsDataModel>>(saDomainLst);
 
-                decimal totalDepositAmount = savingAccountToUpdate
+                decimal totalDepositAmount = savingAccountsToUpdate
                     .SelectMany(sa => sa.Deposits.Where(dep => dep.SavingAccountDepositID == 0))
                     .Sum(a => a.Amount);
 
-                _context.SavingAccounts.UpdateRange(savingAccountToUpdate);
+                _context.SavingAccounts.UpdateRange(savingAccountsToUpdate);
                 _context.SaveChanges();
      
                 defaultCompany.CurrentAmount += totalDepositAmount;
@@ -413,7 +402,6 @@ namespace Data.Repositories
                 _context.SaveChanges();
 
                 tran.Commit();
-                //tran.Commit();
             }
             catch (Exception) 
             {
@@ -456,6 +444,57 @@ namespace Data.Repositories
                 date = withdrawal.CreatedDate;
 
             return date;
+        }
+
+        public bool FullWithdrawalSavingAccount(SavingAccountDomainAggregate saDomain)
+        {
+            _context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+            try
+            {
+                UpdateSavingAccountDomain(saDomain);
+
+                var defaultCompany =  _mapper.Map<CompaniesDataModel>(saDomain.Company);
+
+                _context.Companies.Update(defaultCompany);
+                _context.SaveChanges();
+
+                tran.Commit();
+            }
+            catch (Exception) 
+            {
+                tran.Rollback();
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool UpdateSavingAccount(SavingAccountDomainAggregate saDomain)
+        {
+            _context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+            try
+            {
+                UpdateSavingAccountDomain(saDomain);
+                _context.SaveChanges();
+
+                tran.Commit();
+            }
+            catch (Exception) 
+            {
+                tran.Rollback();
+                return false;
+            }
+
+            return true;
+        }
+
+        private void UpdateSavingAccountDomain(SavingAccountDomainAggregate saDomain)
+        {
+            var savingAccountToUpdate = _mapper.Map<SavingAccountsDataModel>(saDomain);
+
+            _context.SavingAccounts.Update(savingAccountToUpdate);
         }
     }
 }

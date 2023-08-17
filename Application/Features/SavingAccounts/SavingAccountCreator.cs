@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Entities.SavingAccount;
+using iText.StyledXmlParser.Css.Selector.Item;
 using Service.Core;
 using Service.Core.Dtos;
 using Service.Core.Dtos.LoansDto;
@@ -48,7 +49,7 @@ namespace Service.Features.Periods
             ClientID = _moneySaverRepo.GetClientIDByINSSNo(SavingAccountToCreate.INSSNo);
 
            if (ClientID == 0) 
-                return Result<int>.Failure($"No existe un trabajador asociado al número de INSS {SavingAccountToCreate.INSSNo}"); 
+                return Result<int>.Failure($"No existe un afiliado asociado al número de INSS {SavingAccountToCreate.INSSNo}"); 
         
             //Commented just while I add all of the data!!!!!!
             /*var savingAccToCreateValidator = new SavingAccountToCreateValidator();
@@ -57,10 +58,13 @@ namespace Service.Features.Periods
             /*if (dtoValidationErros.Count > 0)
                 return Result<bool>.Failure(dtoValidationErros.First().ErrorMessage);*/
 
-            bool savingAccountExists = _moneySaverRepo.CheckIfClientHasActiveSavingAccount(ClientID);
+            int savingAccountExists = _moneySaverRepo.CheckIfClientHasSavingAccount(ClientID);
 
-            if (savingAccountExists) 
-                return Result<int>.Failure("Este trabajador ya tiene un fondo de ahorro activo");
+            if (savingAccountExists == 1) 
+                return Result<int>.Failure("Este afiliado ya tiene un fondo de ahorro actualmente activo.");
+            else if(savingAccountExists == 2)    
+                return Result<int>.Failure("Este afiliado ya tiene un fondo de ahorro historico pero está cerrado, " +
+                    "debe volver a abrirlo manualmente.");
 
             return Result<int>.Success(0);
         }

@@ -18,26 +18,21 @@ using System.Windows.Forms;
 
 namespace UI.Forms.SavingAccountForms
 {
-    public partial class FrmSavingAccountAddDeposit : BaseForm
+    public partial class FrmSavingAccountTotalWithdraw : BaseForm
     {
         public int _savingAccountID;
         public FrmSavingAccountDetail _frmSavingAccountDetail;
 
-        public FrmSavingAccountAddDeposit()
+        public FrmSavingAccountTotalWithdraw()
         {
             InitializeComponent();
         }
 
-        public FrmSavingAccountAddDeposit(int savingAccountID, FrmSavingAccountDetail frmSavingAccountDetail)
+        public FrmSavingAccountTotalWithdraw(int savingAccountID, FrmSavingAccountDetail frmSavingAccountDetail)
         {
             InitializeComponent();
             _savingAccountID = savingAccountID;
             _frmSavingAccountDetail = frmSavingAccountDetail;
-        }
-
-        private void FrmSavingAccountAddDeposit_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -51,22 +46,24 @@ namespace UI.Forms.SavingAccountForms
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        private void btnCreate_Click(object sender, EventArgs e)
+        private void FrmSavingAccountTotalWithdraw_Load(object sender, EventArgs e)
         {
-            var saDepositToCreate = new SADepositToCreateDto
+
+        }
+
+        private void btnTotalWithdraw_Click(object sender, EventArgs e)
+        {
+            var mbOption = MessageBox.Show($"¿Está seguro que desea realizar un retiro total? El fondo de ahorro será cerrado.", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (mbOption == DialogResult.Yes)
             {
-                SavingAccountID = _savingAccountID,
-                Amount = Convert.ToDecimal(this.txtAmount.Value),
-                InterestsAmount = Convert.ToDecimal(this.txtInterestsAmount.Value),
-                CreatedDate = this.dtDateCreated.Value.Date
-            };
+                var result = Mediator.Send(new FullWithdrawalCommand { SavingAccountID = _savingAccountID, Date = this.dtDateCreated.Value.Date }).Result;
 
-            var result = Mediator.Send(new AddDepositCommand { DepositToCreateDto = saDepositToCreate });
+                if (result.ResourceCreated)
+                    _frmSavingAccountDetail.LoadFormData();
 
-            if (result.Result.ResourceCreated)
-                _frmSavingAccountDetail.LoadFormData();
-
-            HandleResult(result.Result);
+                HandleResult(result);
+            }
         }
     }
 }
