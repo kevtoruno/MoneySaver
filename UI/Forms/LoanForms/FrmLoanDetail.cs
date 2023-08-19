@@ -5,12 +5,14 @@ using Service.Core.Dtos.LoansDto;
 using Service.Core.Interfaces;
 using Service.Features.Loans;
 using Service.Features.SavingAccounts;
+using Service.Handlers.LoansHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,16 +21,12 @@ namespace UI.Forms.LoanForms
 {
     public partial class FrmLoanDetail : BaseForm
     {
-        private readonly ILoansRepository _loansRepo;
-        private readonly IMapper _mapper;
         private LoanToDetailDto LoanToDetailDto;
         private readonly int _selectedLoanID;
 
-        public FrmLoanDetail(ILoansRepository loansRepo, IMapper mapper, int selectedLoanID)
+        public FrmLoanDetail(int selectedLoanID)
         {
             InitializeComponent();
-            _loansRepo = loansRepo;
-            _mapper = mapper;
             _selectedLoanID = selectedLoanID;
         }
 
@@ -39,9 +37,7 @@ namespace UI.Forms.LoanForms
 
         public void LoadFormData()
         {
-            var LoanList = new LoansList(_loansRepo, _mapper);
-
-            LoanToDetailDto = LoanList.GetLoanDetail(_selectedLoanID);
+            LoanToDetailDto = Mediator.Send(new GetLoanDetailQuery { SelectedLoanID = _selectedLoanID }).Result;
             SetLabelsData();
             SetGridsData();
         }

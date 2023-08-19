@@ -36,6 +36,8 @@
             lblCurrentAmountData = new Label();
             lblCurrentAmount = new Label();
             panel1 = new Panel();
+            lblBeneficiaryData = new Label();
+            lblBeneficiaryTitle = new Label();
             lblClientFullNameTitle = new Label();
             lblCreatedDateData = new Label();
             lblINSSTitle = new Label();
@@ -62,6 +64,7 @@
             AmountDisplay = new DataGridViewTextBoxColumn();
             CreatedDate = new DataGridViewTextBoxColumn();
             TotalDisplay = new DataGridViewTextBoxColumn();
+            btnEditBeneficiary = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridWidthdrawalsList).BeginInit();
             SuspendLayout();
@@ -119,6 +122,8 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(49, 66, 90);
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(lblBeneficiaryData);
+            panel1.Controls.Add(lblBeneficiaryTitle);
             panel1.Controls.Add(lblClientFullNameTitle);
             panel1.Controls.Add(lblCreatedDateData);
             panel1.Controls.Add(lblINSSTitle);
@@ -142,6 +147,32 @@
             panel1.Size = new Size(1059, 202);
             panel1.TabIndex = 33;
             // 
+            // lblBeneficiaryData
+            // 
+            lblBeneficiaryData.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblBeneficiaryData.AutoSize = true;
+            lblBeneficiaryData.BackColor = Color.Transparent;
+            lblBeneficiaryData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            lblBeneficiaryData.ForeColor = Color.White;
+            lblBeneficiaryData.Location = new Point(183, 95);
+            lblBeneficiaryData.Name = "lblBeneficiaryData";
+            lblBeneficiaryData.Size = new Size(122, 23);
+            lblBeneficiaryData.TabIndex = 39;
+            lblBeneficiaryData.Text = "BeneficiaryInfo";
+            // 
+            // lblBeneficiaryTitle
+            // 
+            lblBeneficiaryTitle.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblBeneficiaryTitle.AutoSize = true;
+            lblBeneficiaryTitle.BackColor = Color.Transparent;
+            lblBeneficiaryTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblBeneficiaryTitle.ForeColor = Color.White;
+            lblBeneficiaryTitle.Location = new Point(61, 90);
+            lblBeneficiaryTitle.Name = "lblBeneficiaryTitle";
+            lblBeneficiaryTitle.Size = new Size(117, 28);
+            lblBeneficiaryTitle.TabIndex = 38;
+            lblBeneficiaryTitle.Text = "Beneficiario:";
+            // 
             // lblClientFullNameTitle
             // 
             lblClientFullNameTitle.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -149,7 +180,7 @@
             lblClientFullNameTitle.BackColor = Color.Transparent;
             lblClientFullNameTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblClientFullNameTitle.ForeColor = Color.White;
-            lblClientFullNameTitle.Location = new Point(151, 5);
+            lblClientFullNameTitle.Location = new Point(94, 0);
             lblClientFullNameTitle.Name = "lblClientFullNameTitle";
             lblClientFullNameTitle.Size = new Size(84, 28);
             lblClientFullNameTitle.TabIndex = 15;
@@ -162,7 +193,7 @@
             lblCreatedDateData.BackColor = Color.Transparent;
             lblCreatedDateData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblCreatedDateData.ForeColor = Color.White;
-            lblCreatedDateData.Location = new Point(241, 171);
+            lblCreatedDateData.Location = new Point(183, 155);
             lblCreatedDateData.Name = "lblCreatedDateData";
             lblCreatedDateData.Size = new Size(96, 23);
             lblCreatedDateData.TabIndex = 32;
@@ -175,7 +206,7 @@
             lblINSSTitle.BackColor = Color.Transparent;
             lblINSSTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblINSSTitle.ForeColor = Color.White;
-            lblINSSTitle.Location = new Point(146, 45);
+            lblINSSTitle.Location = new Point(88, 30);
             lblINSSTitle.Name = "lblINSSTitle";
             lblINSSTitle.Size = new Size(90, 28);
             lblINSSTitle.TabIndex = 16;
@@ -188,11 +219,11 @@
             lblCreatedDate.BackColor = Color.Transparent;
             lblCreatedDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblCreatedDate.ForeColor = Color.White;
-            lblCreatedDate.Location = new Point(69, 166);
+            lblCreatedDate.Location = new Point(7, 150);
             lblCreatedDate.Name = "lblCreatedDate";
-            lblCreatedDate.Size = new Size(167, 28);
+            lblCreatedDate.Size = new Size(171, 28);
             lblCreatedDate.TabIndex = 31;
-            lblCreatedDate.Text = "Fecha de creación";
+            lblCreatedDate.Text = "Fecha de creación:";
             // 
             // lblIdentificationTitle
             // 
@@ -201,7 +232,7 @@
             lblIdentificationTitle.BackColor = Color.Transparent;
             lblIdentificationTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblIdentificationTitle.ForeColor = Color.White;
-            lblIdentificationTitle.Location = new Point(160, 85);
+            lblIdentificationTitle.Location = new Point(102, 60);
             lblIdentificationTitle.Name = "lblIdentificationTitle";
             lblIdentificationTitle.Size = new Size(76, 28);
             lblIdentificationTitle.TabIndex = 17;
@@ -214,7 +245,7 @@
             lblStatusData.BackColor = Color.Transparent;
             lblStatusData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblStatusData.ForeColor = Color.White;
-            lblStatusData.Location = new Point(241, 128);
+            lblStatusData.Location = new Point(183, 125);
             lblStatusData.Name = "lblStatusData";
             lblStatusData.Size = new Size(56, 23);
             lblStatusData.TabIndex = 30;
@@ -227,7 +258,7 @@
             lblClientFullNameData.BackColor = Color.Transparent;
             lblClientFullNameData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblClientFullNameData.ForeColor = Color.White;
-            lblClientFullNameData.Location = new Point(241, 10);
+            lblClientFullNameData.Location = new Point(183, 5);
             lblClientFullNameData.Name = "lblClientFullNameData";
             lblClientFullNameData.Size = new Size(18, 23);
             lblClientFullNameData.TabIndex = 21;
@@ -252,7 +283,7 @@
             lblStatus.BackColor = Color.Transparent;
             lblStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblStatus.ForeColor = Color.White;
-            lblStatus.Location = new Point(160, 123);
+            lblStatus.Location = new Point(102, 120);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(75, 28);
             lblStatus.TabIndex = 29;
@@ -277,7 +308,7 @@
             lblINSSData.BackColor = Color.Transparent;
             lblINSSData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblINSSData.ForeColor = Color.White;
-            lblINSSData.Location = new Point(241, 50);
+            lblINSSData.Location = new Point(183, 35);
             lblINSSData.Name = "lblINSSData";
             lblINSSData.Size = new Size(37, 23);
             lblINSSData.TabIndex = 22;
@@ -290,7 +321,7 @@
             lblIdentificationData.BackColor = Color.Transparent;
             lblIdentificationData.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblIdentificationData.ForeColor = Color.White;
-            lblIdentificationData.Location = new Point(241, 90);
+            lblIdentificationData.Location = new Point(183, 65);
             lblIdentificationData.Name = "lblIdentificationData";
             lblIdentificationData.Size = new Size(138, 23);
             lblIdentificationData.TabIndex = 23;
@@ -330,7 +361,7 @@
             btnWithdrawInsterest.FlatStyle = FlatStyle.Flat;
             btnWithdrawInsterest.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnWithdrawInsterest.ForeColor = Color.White;
-            btnWithdrawInsterest.Location = new Point(721, 270);
+            btnWithdrawInsterest.Location = new Point(712, 270);
             btnWithdrawInsterest.Margin = new Padding(0);
             btnWithdrawInsterest.Name = "btnWithdrawInsterest";
             btnWithdrawInsterest.Size = new Size(170, 50);
@@ -376,8 +407,8 @@
             btnDeposit.Cursor = Cursors.Hand;
             btnDeposit.FlatAppearance.BorderSize = 0;
             btnDeposit.FlatStyle = FlatStyle.Flat;
-            btnDeposit.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnDeposit.ForeColor = SystemColors.Control;
+            btnDeposit.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDeposit.ForeColor = Color.White;
             btnDeposit.Location = new Point(12, 270);
             btnDeposit.Name = "btnDeposit";
             btnDeposit.Size = new Size(136, 50);
@@ -496,12 +527,29 @@
             TotalDisplay.MinimumWidth = 6;
             TotalDisplay.Name = "TotalDisplay";
             // 
+            // btnEditBeneficiary
+            // 
+            btnEditBeneficiary.BackColor = Color.SteelBlue;
+            btnEditBeneficiary.Cursor = Cursors.Hand;
+            btnEditBeneficiary.FlatAppearance.BorderSize = 0;
+            btnEditBeneficiary.FlatStyle = FlatStyle.Flat;
+            btnEditBeneficiary.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnEditBeneficiary.ForeColor = Color.White;
+            btnEditBeneficiary.Location = new Point(174, 270);
+            btnEditBeneficiary.Name = "btnEditBeneficiary";
+            btnEditBeneficiary.Size = new Size(136, 50);
+            btnEditBeneficiary.TabIndex = 34;
+            btnEditBeneficiary.Text = "Beneficiario";
+            btnEditBeneficiary.UseVisualStyleBackColor = false;
+            btnEditBeneficiary.Click += btnEditBeneficiary_Click;
+            // 
             // FrmSavingAccountDetail
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 615);
+            Controls.Add(btnEditBeneficiary);
             Controls.Add(btnDeposit);
             Controls.Add(btnWithdrawInsterest);
             Controls.Add(btnFinishSavingAccount);
@@ -556,5 +604,8 @@
         private DataGridViewTextBoxColumn AmountDisplay;
         private DataGridViewTextBoxColumn CreatedDate;
         private DataGridViewTextBoxColumn TotalDisplay;
+        private Label lblBeneficiaryTitle;
+        private Label lblBeneficiaryData;
+        private Button btnEditBeneficiary;
     }
 }

@@ -2,6 +2,7 @@
 using Service.Core.Interfaces;
 using Service.Features.Loans;
 using Service.Features.SavingAccounts;
+using Service.Handlers.LoansHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,14 +18,9 @@ namespace UI.Forms.LoanForms
 {
     public partial class FrmLoansList : BaseForm
     {
-        private readonly ILoansRepository _loansRepo;
-        private readonly IMapper _mapper;
-
-        public FrmLoansList(ILoansRepository loansRepo, IMapper mapper)
+        public FrmLoansList()
         {
             InitializeComponent();
-            _loansRepo = loansRepo;
-            _mapper = mapper;
         }
 
         private void btnNewLoan_Click(object sender, EventArgs e)
@@ -45,9 +41,7 @@ namespace UI.Forms.LoanForms
 
         public void LoadGridData()
         {
-            var loansService = new LoansList(_loansRepo, _mapper);
-
-            var loansData = loansService.GetLoansList(this.txtINSS.Text);
+            var loansData = Mediator.Send(new GetLoanToListQuery { INSS = this.txtINSS.Text }).Result;
 
             var bindingSource = CreateBindingSource(loansData);
 
@@ -68,7 +62,7 @@ namespace UI.Forms.LoanForms
 
             int selectedLoanID = (int)this.gridLoansList.CurrentRow.Cells[0].Value;
 
-            Program.InitialMenu.OpenChildForm(new FrmLoanDetail(this._loansRepo, _mapper , selectedLoanID));
+            Program.InitialMenu.OpenChildForm(new FrmLoanDetail(selectedLoanID));
         }
     }
 }

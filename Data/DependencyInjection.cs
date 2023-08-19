@@ -32,7 +32,6 @@ namespace Data
 
             services.AddTransient<IMoneySaverRepository, MoneySaveRepository>();
             services.AddTransient<ILoansRepository, LoanRepository>();
-
             return services;
         }
     }

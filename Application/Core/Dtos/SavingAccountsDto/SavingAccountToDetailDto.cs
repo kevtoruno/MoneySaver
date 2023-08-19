@@ -18,6 +18,7 @@ namespace Service.Core.Dtos
         public string AmountForInterests { get; set; }
         public string TotalWithdrawn { get; set; }
         public string TotalAmount { get; set; }
+        public string Beneficiary { get; set; }
 
         public List<SavingAccountsHistoryToListDto> SavingAccountsHistoryToList { get; set; }
         public SavingAccountToDetailDto()

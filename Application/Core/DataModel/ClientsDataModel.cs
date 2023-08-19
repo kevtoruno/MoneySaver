@@ -9,7 +9,6 @@ namespace Service.Core.DataModel
         public int CompanyID { get; set; }
         public CompaniesDataModel Company { get; set; }
         public string FirstName { get; set; }
-        public string SecondName { get; set; }
         public string LastNames { get; set; }
         public string Address { get; set; }
         public string WorkArea { get; set; }
@@ -20,9 +19,7 @@ namespace Service.Core.DataModel
 
         public string GetClientFullName()
         {
-            string secondName = SecondName != "" ? " " + SecondName : "";
-
-            string fullName = LastNames + " " + FirstName + secondName ;
+            string fullName = LastNames + " " + FirstName ;
 
             return fullName;
         }

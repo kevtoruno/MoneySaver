@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Service.Core.Interfaces;
 using Service.Features.Periods;
+using Service.Handlers.PeriodsHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,25 +17,20 @@ namespace UI.Forms.PeriodsForms
 {
     public partial class FrmPeriodsList : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
-
-        public FrmPeriodsList(IMoneySaverRepository moneySaverRepository)
+        public FrmPeriodsList()
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
         }
 
         private void btnNewPeriod_Click(object sender, EventArgs e)
         {
-            var frmClientNew = new FrmPeriodNew(_moneySaverRepository, this);
+            var frmClientNew = new FrmPeriodNew(this);
             frmClientNew.ShowDialog();
         }
 
         public void LoadGridData()
         {
-            var periodToList = new PeriodsToList(_moneySaverRepository);
-
-            var periodsList = periodToList.GetPeriodsList();
+            var periodsList = Mediator.Send(new GetPeriodsListQuery()).Result;
 
             BindingSource bindingSource = CreateBindingSource(periodsList);
 

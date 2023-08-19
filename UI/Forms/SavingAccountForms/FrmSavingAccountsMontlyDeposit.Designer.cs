@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSavingAccountsMontlyDeposit));
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             btnFileUpload = new Button();
             label2 = new Label();
             dtDateCreated = new DateTimePicker();
@@ -45,6 +45,7 @@
             INSS = new DataGridViewTextBoxColumn();
             ClientFullName = new DataGridViewTextBoxColumn();
             Amount = new DataGridViewTextBoxColumn();
+            ErrorMessage = new DataGridViewTextBoxColumn();
             btnCreate = new Button();
             btnCancel = new Button();
             lblTotalAmount = new Label();
@@ -66,9 +67,9 @@
             btnFileUpload.FlatStyle = FlatStyle.Flat;
             btnFileUpload.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnFileUpload.ForeColor = SystemColors.Control;
-            btnFileUpload.Location = new Point(265, 168);
+            btnFileUpload.Location = new Point(258, 145);
             btnFileUpload.Name = "btnFileUpload";
-            btnFileUpload.Size = new Size(169, 50);
+            btnFileUpload.Size = new Size(137, 45);
             btnFileUpload.TabIndex = 7;
             btnFileUpload.Text = "Subir archivo";
             btnFileUpload.UseVisualStyleBackColor = false;
@@ -80,7 +81,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(79, 136);
+            label2.Location = new Point(92, 117);
             label2.Name = "label2";
             label2.Size = new Size(62, 25);
             label2.TabIndex = 30;
@@ -92,7 +93,7 @@
             dtDateCreated.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             dtDateCreated.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             dtDateCreated.Format = DateTimePickerFormat.Short;
-            dtDateCreated.Location = new Point(38, 164);
+            dtDateCreated.Location = new Point(51, 145);
             dtDateCreated.Name = "dtDateCreated";
             dtDateCreated.Size = new Size(157, 31);
             dtDateCreated.TabIndex = 29;
@@ -104,7 +105,7 @@
             BarraTitulo.Dock = DockStyle.Top;
             BarraTitulo.Location = new Point(0, 0);
             BarraTitulo.Name = "BarraTitulo";
-            BarraTitulo.Size = new Size(926, 38);
+            BarraTitulo.Size = new Size(1040, 38);
             BarraTitulo.TabIndex = 31;
             BarraTitulo.MouseDown += BarraTitulo_MouseDown;
             // 
@@ -114,7 +115,7 @@
             btnCerrar.BackgroundImage = (Image)resources.GetObject("btnCerrar.BackgroundImage");
             btnCerrar.BackgroundImageLayout = ImageLayout.Zoom;
             btnCerrar.Cursor = Cursors.Hand;
-            btnCerrar.Location = new Point(898, 5);
+            btnCerrar.Location = new Point(1012, 5);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(25, 25);
             btnCerrar.TabIndex = 1;
@@ -127,7 +128,7 @@
             lblAddDepositTitle.AutoSize = true;
             lblAddDepositTitle.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point);
             lblAddDepositTitle.ForeColor = SystemColors.Control;
-            lblAddDepositTitle.Location = new Point(257, 50);
+            lblAddDepositTitle.Location = new Point(314, 50);
             lblAddDepositTitle.Name = "lblAddDepositTitle";
             lblAddDepositTitle.Size = new Size(405, 36);
             lblAddDepositTitle.TabIndex = 32;
@@ -143,7 +144,7 @@
             btnPreview.FlatStyle = FlatStyle.Flat;
             btnPreview.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnPreview.ForeColor = Color.White;
-            btnPreview.Location = new Point(751, 313);
+            btnPreview.Location = new Point(865, 258);
             btnPreview.Margin = new Padding(0);
             btnPreview.Name = "btnPreview";
             btnPreview.Size = new Size(163, 43);
@@ -159,43 +160,43 @@
             gridPreview.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridPreview.BorderStyle = BorderStyle.None;
             gridPreview.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.HotTrack;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            gridPreview.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle10.ForeColor = Color.White;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            gridPreview.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             gridPreview.ColumnHeadersHeight = 30;
             gridPreview.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridPreview.Columns.AddRange(new DataGridViewColumn[] { SavingAccountID, IsValid, INSS, ClientFullName, Amount });
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle5.SelectionForeColor = Color.White;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            gridPreview.DefaultCellStyle = dataGridViewCellStyle5;
+            gridPreview.Columns.AddRange(new DataGridViewColumn[] { SavingAccountID, IsValid, INSS, ClientFullName, Amount, ErrorMessage });
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle11.ForeColor = Color.White;
+            dataGridViewCellStyle11.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle11.SelectionForeColor = Color.White;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
+            gridPreview.DefaultCellStyle = dataGridViewCellStyle11;
             gridPreview.EnableHeadersVisualStyles = false;
             gridPreview.GridColor = Color.SteelBlue;
-            gridPreview.Location = new Point(12, 359);
+            gridPreview.Location = new Point(12, 304);
             gridPreview.Name = "gridPreview";
             gridPreview.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            gridPreview.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle12.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = Color.White;
+            dataGridViewCellStyle12.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
+            gridPreview.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             gridPreview.RowHeadersVisible = false;
             gridPreview.RowHeadersWidth = 51;
             gridPreview.RowTemplate.Height = 29;
             gridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridPreview.Size = new Size(902, 359);
+            gridPreview.Size = new Size(1016, 376);
             gridPreview.TabIndex = 35;
             gridPreview.CellFormatting += gridPreview_CellFormatting;
             // 
@@ -245,9 +246,17 @@
             Amount.DataPropertyName = "AmountDisplay";
             Amount.FillWeight = 11.5773888F;
             Amount.HeaderText = "Cantidad";
-            Amount.MinimumWidth = 200;
+            Amount.MinimumWidth = 150;
             Amount.Name = "Amount";
             Amount.ReadOnly = true;
+            // 
+            // ErrorMessage
+            // 
+            ErrorMessage.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ErrorMessage.DataPropertyName = "ErrorMessage";
+            ErrorMessage.HeaderText = "Mensaje error";
+            ErrorMessage.MinimumWidth = 400;
+            ErrorMessage.Name = "ErrorMessage";
             // 
             // btnCreate
             // 
@@ -259,7 +268,7 @@
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCreate.ForeColor = Color.White;
-            btnCreate.Location = new Point(15, 722);
+            btnCreate.Location = new Point(17, 683);
             btnCreate.Margin = new Padding(0);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(170, 54);
@@ -279,7 +288,7 @@
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(744, 721);
+            btnCancel.Location = new Point(858, 687);
             btnCancel.Margin = new Padding(0);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(170, 50);
@@ -294,7 +303,7 @@
             lblTotalAmount.AutoSize = true;
             lblTotalAmount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalAmount.ForeColor = Color.White;
-            lblTotalAmount.Location = new Point(537, 306);
+            lblTotalAmount.Location = new Point(629, 250);
             lblTotalAmount.Name = "lblTotalAmount";
             lblTotalAmount.Size = new Size(64, 28);
             lblTotalAmount.TabIndex = 38;
@@ -306,7 +315,7 @@
             lblTotalAmountData.AutoSize = true;
             lblTotalAmountData.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalAmountData.ForeColor = Color.LawnGreen;
-            lblTotalAmountData.Location = new Point(538, 329);
+            lblTotalAmountData.Location = new Point(629, 273);
             lblTotalAmountData.Name = "lblTotalAmountData";
             lblTotalAmountData.Size = new Size(60, 28);
             lblTotalAmountData.TabIndex = 39;
@@ -320,7 +329,7 @@
             lblClientsCount.BackColor = Color.Transparent;
             lblClientsCount.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             lblClientsCount.ForeColor = Color.White;
-            lblClientsCount.Location = new Point(38, 334);
+            lblClientsCount.Location = new Point(17, 278);
             lblClientsCount.Name = "lblClientsCount";
             lblClientsCount.Size = new Size(18, 23);
             lblClientsCount.TabIndex = 45;
@@ -333,11 +342,11 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(38, 306);
+            label8.Location = new Point(17, 250);
             label8.Name = "label8";
-            label8.Size = new Size(146, 28);
+            label8.Size = new Size(106, 28);
             label8.TabIndex = 44;
-            label8.Text = "Total afiliados";
+            label8.Text = "Resultado";
             // 
             // lblFileName
             // 
@@ -345,7 +354,7 @@
             lblFileName.AutoSize = true;
             lblFileName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblFileName.ForeColor = Color.White;
-            lblFileName.Location = new Point(292, 140);
+            lblFileName.Location = new Point(289, 117);
             lblFileName.Name = "lblFileName";
             lblFileName.Size = new Size(82, 25);
             lblFileName.TabIndex = 46;
@@ -357,7 +366,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
-            ClientSize = new Size(926, 780);
+            ClientSize = new Size(1040, 742);
             Controls.Add(lblFileName);
             Controls.Add(lblClientsCount);
             Controls.Add(label8);
@@ -406,5 +415,6 @@
         private DataGridViewTextBoxColumn INSS;
         private DataGridViewTextBoxColumn ClientFullName;
         private DataGridViewTextBoxColumn Amount;
+        private DataGridViewTextBoxColumn ErrorMessage;
     }
 }

@@ -59,7 +59,6 @@ namespace UI.Forms.ClientsForms
             txtIdentification.Text = ClientForEdit.Identification;
             txtINSS.Text = ClientForEdit.INSS;
             txtLastName.Text = ClientForEdit.LastNames;
-            txtSecondName.Text = ClientForEdit.SecondName;
             txtWorkArea.Text = ClientForEdit.WorkArea;
         }
 
@@ -105,7 +104,6 @@ namespace UI.Forms.ClientsForms
             ClientForEdit.FirstName = this.txtFirstName.Text;
             ClientForEdit.INSS = this.txtINSS.Text.RemoveAllWhiteSpaces();
             ClientForEdit.LastNames = this.txtLastName.Text;
-            ClientForEdit.SecondName = this.txtSecondName.Text;
             ClientForEdit.Identification = this.txtIdentification.Text;
             ClientForEdit.Address = this.txtAddress.Text;
             ClientForEdit.WorkArea = this.txtWorkArea.Text;

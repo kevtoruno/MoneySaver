@@ -24,7 +24,7 @@ namespace UI.Forms.SavingAccountForms
             openFileDialog.Multiselect = false;
             openFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
 
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog.FileName; //get name of file
 
@@ -75,7 +75,10 @@ namespace UI.Forms.SavingAccountForms
         private void SetPreviewDataInScreen(List<MonthlyDepositsForPreviewDto> monthlyDepositsForPreview)
         {
             lblClientsCount.Visible = true;
-            lblClientsCount.Text = $"{monthlyDepositsForPreview.Where(a => a.IsValid).Count()} afiliados";
+            string totalClients = $"{monthlyDepositsForPreview.Count()} afiliados encontrados";
+            string validClients = $" ({monthlyDepositsForPreview.Where(a => a.IsValid).Count()} validos a procesar)";
+            string notValidClients = $" ({monthlyDepositsForPreview.Where(a => a.IsValid == false).Count()} invalidos)";
+            lblClientsCount.Text = totalClients + validClients + notValidClients;
 
             lblTotalAmountData.Visible = true;
             lblTotalAmountData.Text = monthlyDepositsForPreview.Where(a => a.IsValid).Sum(a => a.Amount).CordobaFormat();

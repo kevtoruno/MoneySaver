@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Loans\" />
-    <Folder Include="Handlers\PeriodsHandlers\" />
   </ItemGroup>
 
 </Project>

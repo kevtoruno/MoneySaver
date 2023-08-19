@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Service.Core.Dtos;
 using Service.Core.Interfaces;
-using Service.Features.SavingAccounts;
+using Service.Features;
 
 namespace Service.Handlers;
 
@@ -21,7 +21,7 @@ internal class GetSavingAccountDetailHandler : IRequestHandler<GetSavingAccountD
 
     public Task<SavingAccountToDetailDto> Handle(GetSavingAccountDetailQuery request, CancellationToken cancellationToken)
     {
-        var savingAccountToList = new SavingAccountList(_moneySaverRepo);
+        var savingAccountToList = new SavingAccountToDetail(_moneySaverRepo);
 
         var savingAccountToDetailDto = savingAccountToList.GetSavingAccountDetail(request.SavingAccountID);
 

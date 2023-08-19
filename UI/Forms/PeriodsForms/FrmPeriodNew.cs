@@ -3,6 +3,7 @@ using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.Client;
 using Service.Features.Periods;
+using Service.Handlers.PeriodsHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,17 +18,13 @@ namespace UI.Forms.PeriodsForms
 {
     public partial class FrmPeriodNew : BaseForm
     {
-        private readonly IMoneySaverRepository _moneySaverRepository;
         private readonly FrmPeriodsList _frmPeriodsList;
         private PeriodToCreateDto periodToCreateDto;
-        private PeriodsCreator _periodCreator;
-        public FrmPeriodNew(IMoneySaverRepository moneySaverRepository, FrmPeriodsList frmPeriodsList)
+        public FrmPeriodNew(FrmPeriodsList frmPeriodsList)
         {
             InitializeComponent();
-            _moneySaverRepository = moneySaverRepository;
             _frmPeriodsList = frmPeriodsList;
             this.txtYear.Text = DateTime.Now.Year.ToString();
-            _periodCreator = new PeriodsCreator(_moneySaverRepository);
             periodToCreateDto = new PeriodToCreateDto();
         }
 
@@ -46,14 +43,15 @@ namespace UI.Forms.PeriodsForms
         {
             int year = Convert.ToInt32(this.txtYear.Text);
 
-            var isPeriodValidResult = _periodCreator.CheckIfPeriodExists(year);
+            var periodToCreateResult = Mediator.Send(new PreviewPeriodToCreateQuery { Year = year }).Result;
 
-            HandleResult(isPeriodValidResult);
-
-            if (isPeriodValidResult.Value == false)
+            if (periodToCreateResult.IsSucess == false)
+            {
+                HandleResult(periodToCreateResult);
                 return;
+            }
 
-            periodToCreateDto = _periodCreator.GeneratePeriodToCreateDto(year);
+            periodToCreateDto = periodToCreateResult.Value;
             periodToCreateDto.CompanyID = Program.CompanyID;
 
             dtPeriodStartDate.Value = periodToCreateDto.StartDate;
@@ -81,7 +79,12 @@ namespace UI.Forms.PeriodsForms
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            var result = _periodCreator.CreatePeriods(periodToCreateDto);
+            var result = Mediator.Send(
+                new CreatePeriodCommand 
+                { 
+                    Year = Convert.ToInt32(this.txtYear.Text), 
+                    CompanyID = Program.CompanyID 
+                }).Result;
 
             if (result.ResourceCreated)
             {

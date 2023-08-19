@@ -51,12 +51,11 @@ namespace Service.Features.Periods
            if (ClientID == 0) 
                 return Result<int>.Failure($"No existe un afiliado asociado al número de INSS {SavingAccountToCreate.INSSNo}"); 
         
-            //Commented just while I add all of the data!!!!!!
-            /*var savingAccToCreateValidator = new SavingAccountToCreateValidator();
+            var savingAccToCreateValidator = new SavingAccountToCreateValidator();
             var dtoValidationErros = savingAccToCreateValidator.Validate(SavingAccountToCreate).Errors;
             
-            /*if (dtoValidationErros.Count > 0)
-                return Result<bool>.Failure(dtoValidationErros.First().ErrorMessage);*/
+            if (dtoValidationErros.Count > 0)
+                return Result<int>.Failure(dtoValidationErros.First().ErrorMessage);
 
             int savingAccountExists = _moneySaverRepo.CheckIfClientHasSavingAccount(ClientID);
 

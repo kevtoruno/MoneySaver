@@ -148,6 +148,7 @@ namespace Service.Features.SavingAccounts
                 };
 
                 SetAmountToDepositForPreviewIfValid(monthlyDepositPreview, saDepositsDataForSubPeriod);
+                SetErrorMessageIfMonthlyDepositNotValid(monthlyDepositPreview, saDepositsDataForSubPeriod);
 
                 DepositsForPreviewDtos.Add(monthlyDepositPreview);
             }
@@ -171,6 +172,25 @@ namespace Service.Features.SavingAccounts
             }
         }
         
+        private void SetErrorMessageIfMonthlyDepositNotValid(MonthlyDepositsForPreviewDto monthlyDepositPreview, 
+            List<SavingAccountDepositsDataModel> saDepositsDataForSubPeriod)
+        {
+            if (monthlyDepositPreview.IsValid == false)
+            {
+                bool doDepositExistsForTheSubPeriod = saDepositsDataForSubPeriod
+                .Any(a => a.SavingAccountID == monthlyDepositPreview.SavingAccountID);
+
+                if (doDepositExistsForTheSubPeriod == true)
+                    monthlyDepositPreview.ErrorMessage = "Ya existe una cotización para este mes.";
+
+                var doDepositExistsInPDF = DepositsDataFromPDF
+                .Any(a => a.INSSNo == monthlyDepositPreview.INSSNo);
+
+                if (doDepositExistsInPDF == false)
+                    monthlyDepositPreview.ErrorMessage = "No existe cotización en el archivo PDF.";
+            }
+        }
+
         private void AddDepositForPreviewNotFoundInDatabase()
         {
             var monthlyDepositsNotFoundInDB = DepositsDataFromPDF
@@ -185,7 +205,8 @@ namespace Service.Features.SavingAccounts
                     INSSNo = md.INSSNo,
                     ClientFullName = "NO EXISTE",
                     IsValid = false,
-                    Amount = md.Amount
+                    Amount = md.Amount,
+                    ErrorMessage = "No existe afiliado en el sistema."
                 };
 
                 DepositsForPreviewDtos.Add(monthlyDepositPreview);

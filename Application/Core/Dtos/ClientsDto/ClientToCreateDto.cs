@@ -12,7 +12,6 @@ namespace Service.Core.Dtos
         public int ClientID { get; set; }
         public int CompanyID { get; set; }
         public string FirstName { get; set; }
-        public string SecondName { get; set; }
         public string LastNames { get; set; }
         public string Address { get; set; }
         public string WorkArea { get; set; }

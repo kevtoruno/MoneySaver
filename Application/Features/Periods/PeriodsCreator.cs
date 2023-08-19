@@ -19,12 +19,16 @@ namespace Service.Features.Periods
             _moneySaverRepo = moneySaverRepo;
         }
 
-        public Result<bool> CreatePeriods(PeriodToCreateDto periodToCreateDto) 
+        public Result<bool> CreatePeriods(int year, int companyID) 
         {
-            var periodExists = CheckIfPeriodExists(periodToCreateDto.Year);
+            var periodExists = CheckIfPeriodExists(year);
 
             if (periodExists.IsSucess == false)
                 return periodExists;
+
+            var periodToCreateDto = GeneratePeriodToCreateDto(year).Value;
+
+            periodToCreateDto.CompanyID = companyID;
 
             _moneySaverRepo.CreatePeriod(periodToCreateDto);
 
@@ -50,9 +54,14 @@ namespace Service.Features.Periods
             return isPeriodValid;
         }
 
-        public PeriodToCreateDto GeneratePeriodToCreateDto(int year) 
+        public Result<PeriodToCreateDto> GeneratePeriodToCreateDto(int year) 
         {
-            PeriodToCreateDto periodToCreateDto = new PeriodToCreateDto();
+            var periodExists = CheckIfPeriodExists(year);
+
+            if (periodExists.IsSucess == false)
+                return Result<PeriodToCreateDto>.Failure(periodExists.ErrorMessage);
+
+            var periodToCreateDto = new PeriodToCreateDto();
             
             var periodDomain = new PeriodDomain(year);
             periodDomain.SetSubPeriods();
@@ -69,7 +78,7 @@ namespace Service.Features.Periods
                 Month = p.Month,
             }).ToList();
 
-            return periodToCreateDto;
+            return Result<PeriodToCreateDto>.Success(periodToCreateDto);
         }
     }
 }

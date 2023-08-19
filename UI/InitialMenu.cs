@@ -50,12 +50,10 @@ namespace UI
 
         }
 
-        public void OpenChildForm(object childFormObject)
+        public void OpenChildForm(Form childForm)
         {
             if (this.PanelContenedor.Controls.Count > 0)
                 this.PanelContenedor.Controls.RemoveAt(0);
-
-            Form childForm = childFormObject as Form;
 
             childForm.TopLevel = false;
             childForm.Dock = DockStyle.Fill;
@@ -68,14 +66,14 @@ namespace UI
         {
             ResetSelectedStyleUI();
             btnClients.BackColor = Color.FromArgb(13, 93, 142);
-            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmClientList>());
+            OpenChildForm(new FrmClientList());
         }
 
         private void btnControlAhorro_Click(object sender, EventArgs e)
         {
             ResetSelectedStyleUI();
             btnControlAhorro.BackColor = Color.FromArgb(13, 93, 142);
-            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmSavingAccountList>());
+            OpenChildForm(new FrmSavingAccountList());
         }
 
         private void btnAdmin_Click(object sender, EventArgs e)
@@ -90,14 +88,14 @@ namespace UI
         {
             ResetSelectedStyleUI();
             btnMainPeriods.BackColor = Color.FromArgb(13, 93, 142);
-            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmPeriodsList>());
+            OpenChildForm(new FrmPeriodsList());
         }
 
         private void btnControlPrestamos_Click(object sender, EventArgs e)
         {
             ResetSelectedStyleUI();
             btnControlPrestamos.BackColor = Color.FromArgb(13, 93, 142);
-            OpenChildForm(Program.ServiceProvider.GetRequiredService<FrmLoansList>());
+            OpenChildForm(new FrmLoansList());
         }
 
         private void ResetSelectedStyleUI()

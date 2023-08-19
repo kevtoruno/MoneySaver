@@ -71,9 +71,7 @@ namespace Data.Repositories
 
             loansFromDB.ForEach(l =>
             {
-                string secondName = l.Client.SecondName != "" ? " " + l.Client.SecondName : "";
-
-                string fullName = l.Client.LastNames + " " + l.Client.FirstName + secondName;
+                string fullName = l.Client.LastNames + " " + l.Client.FirstName;
 
                 loansToListDto.Add(new LoansToListDto
                 {

@@ -20,7 +20,7 @@ namespace Service.Features.Periods
 
         public List<PeriodsToListDto> GetPeriodsList() 
         {
-            var periodsToListDto = _moneySaverRepo.GetPeriodsList().OrderBy(a => a.Year).ToList();
+            var periodsToListDto = _moneySaverRepo.GetPeriodsList().OrderByDescending(a => a.Year).ToList();
 
             return periodsToListDto;
         }

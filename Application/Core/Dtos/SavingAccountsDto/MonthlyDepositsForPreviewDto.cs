@@ -15,5 +15,6 @@ namespace Service.Core.Dtos.SavingAccountsDto
         public string AmountDisplay { get => Amount.CordobaFormat(); }
         public bool IsValid { get; set; }
         public DateTime Date { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

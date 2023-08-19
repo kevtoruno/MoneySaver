@@ -37,7 +37,7 @@ namespace Service.Core.Interfaces
         int GetClientIDByINSSNo(string INSSNo);
         int CreateSavingAccount(SavingAccountDomainCreator savingAccountToCreate);
 
-        List<SavingAccountToListDto> GetSavingAccountsList(string INSS);
+        List<SavingAccountsDataModel> GetSavingAccountsList(string INSS);
         SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID);
         List<SavingAccountWidthdrawalsDataModel> GetSavingAccountWidthdrawals(int savingAccountID);
         List<SavingAccountDepositsDataModel> GetSavingAccountDeposits(int savingAccountID);

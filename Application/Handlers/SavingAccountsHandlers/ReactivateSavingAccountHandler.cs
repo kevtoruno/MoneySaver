@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
 
-namespace Service.Handlers.SavingAccountsHandlers;
+namespace Service.Handlers;
 
 public class ReactivateSavingAccountCommand : IRequest<Result<bool>>
 {

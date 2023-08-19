@@ -49,7 +49,7 @@ namespace Service.Features.SavingAccounts
             var latestWithdrawalDate = _moneySaverRepo.GetLatestWithdrawDateForSavingAccountID(savingAccountID);
 
             if (latestWithdrawalDate > withdrawDate)
-                return Result<bool>.Failure("Ya existe un retiro de intereses más próximo a la fecha seleccionada.");
+                return Result<bool>.Failure("Ya existe un retiro más próximo a la fecha seleccionada.");
 
             var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(withdrawDate);
 

@@ -35,12 +35,10 @@
             btnCreate = new Button();
             txtFirstName = new TextBox();
             lblClientTitle = new Label();
-            txtSecondName = new TextBox();
             btnCancel = new Button();
             txtIdentification = new MaskedTextBox();
             lblIdentification = new Label();
             label1 = new Label();
-            label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             txtINSS = new MaskedTextBox();
@@ -82,7 +80,7 @@
             // txtLastName
             // 
             txtLastName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtLastName.Location = new Point(30, 295);
+            txtLastName.Location = new Point(30, 224);
             txtLastName.Name = "txtLastName";
             txtLastName.PlaceholderText = "Apellidos";
             txtLastName.Size = new Size(211, 31);
@@ -98,7 +96,7 @@
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCreate.ForeColor = Color.White;
-            btnCreate.Location = new Point(30, 475);
+            btnCreate.Location = new Point(30, 379);
             btnCreate.Margin = new Padding(0);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(170, 50);
@@ -112,7 +110,7 @@
             txtFirstName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             txtFirstName.Location = new Point(30, 155);
             txtFirstName.Name = "txtFirstName";
-            txtFirstName.PlaceholderText = "Primer nombre";
+            txtFirstName.PlaceholderText = "Nombres";
             txtFirstName.Size = new Size(211, 31);
             txtFirstName.TabIndex = 1;
             // 
@@ -128,15 +126,6 @@
             lblClientTitle.TabIndex = 5;
             lblClientTitle.Text = "Nuevo afiliado";
             // 
-            // txtSecondName
-            // 
-            txtSecondName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSecondName.Location = new Point(30, 224);
-            txtSecondName.Name = "txtSecondName";
-            txtSecondName.PlaceholderText = "Segundo nombre";
-            txtSecondName.Size = new Size(211, 31);
-            txtSecondName.TabIndex = 2;
-            // 
             // btnCancel
             // 
             btnCancel.Anchor = AnchorStyles.Top;
@@ -147,7 +136,7 @@
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(548, 475);
+            btnCancel.Location = new Point(550, 379);
             btnCancel.Margin = new Padding(0);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(170, 50);
@@ -181,22 +170,11 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.Control;
-            label1.Location = new Point(30, 267);
+            label1.Location = new Point(30, 196);
             label1.Name = "label1";
             label1.Size = new Size(86, 25);
             label1.TabIndex = 10;
             label1.Text = "Apellidos";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(30, 196);
-            label2.Name = "label2";
-            label2.Size = new Size(152, 25);
-            label2.TabIndex = 11;
-            label2.Text = "Segundo nombre";
             // 
             // label3
             // 
@@ -205,16 +183,16 @@
             label3.ForeColor = SystemColors.Control;
             label3.Location = new Point(30, 127);
             label3.Name = "label3";
-            label3.Size = new Size(131, 25);
+            label3.Size = new Size(86, 25);
             label3.TabIndex = 12;
-            label3.Text = "Primer nombre";
+            label3.Text = "Nombres";
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = SystemColors.Control;
-            label4.Location = new Point(30, 337);
+            label4.Location = new Point(30, 266);
             label4.Name = "label4";
             label4.Size = new Size(79, 25);
             label4.TabIndex = 13;
@@ -225,7 +203,7 @@
             txtINSS.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             txtINSS.HidePromptOnLeave = true;
             txtINSS.InsertKeyMode = InsertKeyMode.Insert;
-            txtINSS.Location = new Point(30, 365);
+            txtINSS.Location = new Point(30, 294);
             txtINSS.Mask = "999999999";
             txtINSS.Name = "txtINSS";
             txtINSS.PromptChar = ' ';
@@ -238,7 +216,7 @@
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label14.ForeColor = SystemColors.Control;
-            label14.Location = new Point(292, 267);
+            label14.Location = new Point(489, 127);
             label14.Name = "label14";
             label14.Size = new Size(85, 25);
             label14.TabIndex = 59;
@@ -247,16 +225,16 @@
             // txtAddress
             // 
             txtAddress.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtAddress.Location = new Point(292, 295);
+            txtAddress.Location = new Point(489, 155);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(231, 101);
+            txtAddress.Size = new Size(231, 100);
             txtAddress.TabIndex = 7;
             txtAddress.Text = "";
             // 
             // txtWorkArea
             // 
             txtWorkArea.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            txtWorkArea.Location = new Point(536, 155);
+            txtWorkArea.Location = new Point(292, 294);
             txtWorkArea.Name = "txtWorkArea";
             txtWorkArea.Size = new Size(150, 31);
             txtWorkArea.TabIndex = 8;
@@ -266,7 +244,7 @@
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label11.ForeColor = SystemColors.Control;
-            label11.Location = new Point(536, 127);
+            label11.Location = new Point(292, 266);
             label11.Name = "label11";
             label11.Size = new Size(48, 25);
             label11.TabIndex = 60;
@@ -300,7 +278,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
-            ClientSize = new Size(744, 553);
+            ClientSize = new Size(744, 453);
             Controls.Add(label13);
             Controls.Add(txtBaseIncome);
             Controls.Add(txtWorkArea);
@@ -310,12 +288,10 @@
             Controls.Add(txtINSS);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(lblIdentification);
             Controls.Add(txtIdentification);
             Controls.Add(btnCancel);
-            Controls.Add(txtSecondName);
             Controls.Add(txtLastName);
             Controls.Add(btnCreate);
             Controls.Add(txtFirstName);
@@ -343,7 +319,6 @@
         private Button btnCreate;
         private TextBox txtFirstName;
         private Label lblClientTitle;
-        private TextBox txtSecondName;
         private Button btnCancel;
         private MaskedTextBox txtIdentification;
         private Label lblIdentification;

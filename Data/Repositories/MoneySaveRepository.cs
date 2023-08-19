@@ -54,7 +54,7 @@ namespace Data.Repositories
                 .Select(c =>
                 new ClientToListDto
                 {
-                    FullName = $"{c.LastNames} {c.FirstName} {c.SecondName}",
+                    FullName = $"{c.LastNames} {c.FirstName}",
                     Identification = c.Identification,
                     INSS = c.INSS,
                     ClientID = c.ClientID
@@ -136,9 +136,7 @@ namespace Data.Repositories
 
             if (client != null)
             {
-                string secondName = client.SecondName != "" ? " " + client.SecondName : "";
-
-                fullName = client.LastNames + " " + client.FirstName + secondName ;
+                fullName = client.LastNames + " " + client.FirstName;
             }
 
             return fullName;
@@ -184,7 +182,7 @@ namespace Data.Repositories
             return savingAccountToCreate.SavingAccountID;
         }
 
-        public List<SavingAccountToListDto> GetSavingAccountsList(string INSS) 
+        public List<SavingAccountsDataModel> GetSavingAccountsList(string INSS) 
         {
             var query = _context.SavingAccounts.AsNoTracking()
                 .Include(sa => sa.Client).OrderBy(sa => sa.Client.INSS).AsQueryable();
@@ -195,30 +193,9 @@ namespace Data.Repositories
                 query = query.Where(q => EF.Functions.Like(q.Client.INSS, INSS));
             }   
 
-            var savingAccountsFromDB = query.ToList();
+            var savingAccountsData = query.ToList();
 
-            var savingAccounts = new List<SavingAccountToListDto>();
-
-            savingAccountsFromDB.ForEach(sa =>
-            {
-                string secondName = sa.Client.SecondName != "" ? " " + sa.Client.SecondName : "";
-
-                string fullName = sa.Client.LastNames + " " + sa.Client.FirstName + secondName ;
-
-                savingAccounts.Add(new SavingAccountToListDto
-                {
-                    Amount = sa.Amount.CordobaFormat(),
-                    INSS = sa.Client.INSS,
-                    AmountForInterests = sa.AmountForInterests.CordobaFormat(),
-                    IsActive = sa.IsActive,
-                    SavingAccountID = sa.SavingAccountID,
-                    ClientID = sa.ClientID,
-                    CreatedDate = sa.CreatedDate.ToShortDateString(),
-                    ClientFullName = fullName
-                });
-            });
-
-            return savingAccounts;
+            return savingAccountsData;
         }
 
         public SavingAccountsDataModel GetSavingAccountDetail(int savingAccountID)
@@ -436,7 +413,7 @@ namespace Data.Repositories
             var date = new DateTime(1800, 1, 1);
 
             var withdrawal = _context.SavingAccountWidthdrawals
-                .Where(saw => saw.SavingAccountID == savingAccountID && saw.WithDrawalType == WithDrawalType.Interests)
+                .Where(saw => saw.SavingAccountID == savingAccountID)
                 .OrderByDescending(w => w.CreatedDate)
                 .FirstOrDefault();
 

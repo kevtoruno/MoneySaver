@@ -12,7 +12,7 @@ namespace Service.Core.Validators
     {
         public ClientToCreateValidator()
         {
-            RuleFor(c => c.FirstName).NotEmpty().WithMessage("El primer nombre no puede estar vacío");
+            RuleFor(c => c.FirstName).NotEmpty().WithMessage("El nombre no puede estar vacío");
             RuleFor(c => c.LastNames).NotEmpty().WithMessage("Los apelidos no pueden estar vacío");
 
             RuleFor(c => c.INSS).NotEmpty().WithMessage("Ingrese número INSS")

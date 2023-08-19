@@ -44,7 +44,7 @@ namespace UI
             Application.Run(InitialMenu);
         }
 
-        public static InitialMenu InitialMenu { get; set; }
+        public static InitialMenu InitialMenu { get; private set; }
 
         public static IServiceProvider ServiceProvider { get; private set; }
         
@@ -55,11 +55,6 @@ namespace UI
                 .ConfigureServices((context, services) => {
                     services.AddInfrastructure(context.Configuration);
                     services.AddServiceLayer();
-                    services.AddTransient<FrmClientList>();
-                    services.AddTransient<FrmPeriodsList>();
-                    services.AddTransient<FrmSavingAccountList>();
-                    services.AddTransient<FrmLoansList>();
-                    //services.AddTransient<FrmSavingAccountAddDeposit>();
                 });
         }
 

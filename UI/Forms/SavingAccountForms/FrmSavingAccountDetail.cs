@@ -3,7 +3,6 @@ using Service.Core.Dtos;
 using Service.Core.Interfaces;
 using Service.Features.SavingAccounts;
 using Service.Handlers;
-using Service.Handlers.SavingAccountsHandlers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +28,7 @@ namespace UI.Forms.SavingAccountForms
 
         private void FrmSavingAccountDetail_Load(object sender, EventArgs e)
         {
-            LoadFormData();    
+            LoadFormData();
         }
 
         public void LoadFormData()
@@ -49,6 +48,7 @@ namespace UI.Forms.SavingAccountForms
             this.lblINSSData.Text = SavingAccountToDetailDto.INSS;
             this.lblIdentificationData.Text = SavingAccountToDetailDto.Identification;
             this.lblCreatedDateData.Text = SavingAccountToDetailDto.CreatedDate;
+            this.lblBeneficiaryData.Text = SavingAccountToDetailDto.Beneficiary;
 
             if (SavingAccountToDetailDto.IsActive)
                 this.lblStatusData.Text = "Activo";
@@ -138,7 +138,7 @@ namespace UI.Forms.SavingAccountForms
         {
             var mbOption = MessageBox.Show($"¿Está seguro que desea volver a activar el fondo de ahorro?.", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-            if(mbOption == DialogResult.Yes)
+            if (mbOption == DialogResult.Yes)
             {
                 ReActivateSavingAccount();
             }
@@ -151,7 +151,14 @@ namespace UI.Forms.SavingAccountForms
             if (result.ResourceCreated)
                 LoadFormData();
 
-            HandleResult(result, closeIfResourceCreated: false);     
+            HandleResult(result, closeIfResourceCreated: false);
+        }
+
+        private void btnEditBeneficiary_Click(object sender, EventArgs e)
+        {
+            var frmEditBeneficiary = new FrmSavingAccountEditBeneficiary(this, _selectedSavingAccountID);
+
+            frmEditBeneficiary.ShowDialog();
         }
     }
 }
