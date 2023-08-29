@@ -103,6 +103,7 @@
             // gridLoansList
             // 
             gridLoansList.AllowUserToAddRows = false;
+            gridLoansList.AllowUserToResizeRows = false;
             gridLoansList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             gridLoansList.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridLoansList.BorderStyle = BorderStyle.None;
@@ -129,6 +130,7 @@
             gridLoansList.EnableHeadersVisualStyles = false;
             gridLoansList.GridColor = Color.SteelBlue;
             gridLoansList.Location = new Point(9, 292);
+            gridLoansList.MultiSelect = false;
             gridLoansList.Name = "gridLoansList";
             gridLoansList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;

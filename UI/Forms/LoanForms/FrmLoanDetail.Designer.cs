@@ -28,18 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             gridInstallments = new DataGridView();
-            LoanInstallmentID = new DataGridViewTextBoxColumn();
-            SubPeriodName = new DataGridViewTextBoxColumn();
-            Amount = new DataGridViewTextBoxColumn();
-            DueAmountDisplay = new DataGridViewTextBoxColumn();
-            DueAmount = new DataGridViewTextBoxColumn();
-            IsPaid = new DataGridViewCheckBoxColumn();
-            DueDateDisplay = new DataGridViewTextBoxColumn();
-            DueDate = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
             label3 = new Label();
             lblAmountData = new Label();
@@ -63,6 +55,18 @@
             lblLoanAmountData = new Label();
             lblSavingAccTitle = new Label();
             btnPayInstallment = new Button();
+            btnExtraPayment = new Button();
+            LoanInstallmentID = new DataGridViewTextBoxColumn();
+            TransactionType = new DataGridViewTextBoxColumn();
+            IsPaid = new DataGridViewCheckBoxColumn();
+            DueAmount = new DataGridViewTextBoxColumn();
+            DueDate = new DataGridViewTextBoxColumn();
+            TransactionTypeString = new DataGridViewTextBoxColumn();
+            SubPeriodName = new DataGridViewTextBoxColumn();
+            Amount = new DataGridViewTextBoxColumn();
+            DueAmountDisplay = new DataGridViewTextBoxColumn();
+            DueDateDisplay = new DataGridViewTextBoxColumn();
+            DatePaidDisplay = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)gridInstallments).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -70,124 +74,53 @@
             // gridInstallments
             // 
             gridInstallments.AllowUserToAddRows = false;
+            gridInstallments.AllowUserToResizeRows = false;
             gridInstallments.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             gridInstallments.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridInstallments.BorderStyle = BorderStyle.None;
             gridInstallments.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = SystemColors.HotTrack;
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle10.ForeColor = Color.White;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            gridInstallments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            gridInstallments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridInstallments.ColumnHeadersHeight = 30;
             gridInstallments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            gridInstallments.Columns.AddRange(new DataGridViewColumn[] { LoanInstallmentID, SubPeriodName, Amount, DueAmountDisplay, DueAmount, IsPaid, DueDateDisplay, DueDate });
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle11.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle11.ForeColor = Color.Black;
-            dataGridViewCellStyle11.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle11.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
-            gridInstallments.DefaultCellStyle = dataGridViewCellStyle11;
+            gridInstallments.Columns.AddRange(new DataGridViewColumn[] { LoanInstallmentID, TransactionType, IsPaid, DueAmount, DueDate, TransactionTypeString, SubPeriodName, Amount, DueAmountDisplay, DueDateDisplay, DatePaidDisplay });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            gridInstallments.DefaultCellStyle = dataGridViewCellStyle2;
             gridInstallments.EnableHeadersVisualStyles = false;
             gridInstallments.GridColor = Color.SteelBlue;
             gridInstallments.Location = new Point(0, 326);
+            gridInstallments.MultiSelect = false;
             gridInstallments.Name = "gridInstallments";
             gridInstallments.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle12.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = Color.White;
-            dataGridViewCellStyle12.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
-            gridInstallments.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            gridInstallments.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             gridInstallments.RowHeadersVisible = false;
             gridInstallments.RowHeadersWidth = 51;
+            gridInstallments.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             gridInstallments.RowTemplate.Height = 29;
             gridInstallments.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridInstallments.Size = new Size(1080, 289);
             gridInstallments.TabIndex = 6;
             gridInstallments.CellFormatting += gridInstallments_CellFormatting;
-            // 
-            // LoanInstallmentID
-            // 
-            LoanInstallmentID.DataPropertyName = "LoanInstallmentID";
-            LoanInstallmentID.HeaderText = "LoanInstallmentID";
-            LoanInstallmentID.MinimumWidth = 6;
-            LoanInstallmentID.Name = "LoanInstallmentID";
-            LoanInstallmentID.Visible = false;
-            LoanInstallmentID.Width = 125;
-            // 
-            // SubPeriodName
-            // 
-            SubPeriodName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            SubPeriodName.DataPropertyName = "SubPeriodName";
-            SubPeriodName.FillWeight = 18.47356F;
-            SubPeriodName.HeaderText = "Sub período";
-            SubPeriodName.MinimumWidth = 6;
-            SubPeriodName.Name = "SubPeriodName";
-            SubPeriodName.ReadOnly = true;
-            // 
-            // Amount
-            // 
-            Amount.DataPropertyName = "Amount";
-            Amount.HeaderText = "Cantidad";
-            Amount.MinimumWidth = 6;
-            Amount.Name = "Amount";
-            Amount.Width = 125;
-            // 
-            // DueAmountDisplay
-            // 
-            DueAmountDisplay.DataPropertyName = "DueAmountDisplay";
-            DueAmountDisplay.HeaderText = "Pendiente";
-            DueAmountDisplay.MinimumWidth = 6;
-            DueAmountDisplay.Name = "DueAmountDisplay";
-            DueAmountDisplay.Width = 125;
-            // 
-            // DueAmount
-            // 
-            DueAmount.DataPropertyName = "DueAmount";
-            DueAmount.HeaderText = "DueAmount";
-            DueAmount.MinimumWidth = 6;
-            DueAmount.Name = "DueAmount";
-            DueAmount.Visible = false;
-            DueAmount.Width = 125;
-            // 
-            // IsPaid
-            // 
-            IsPaid.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            IsPaid.DataPropertyName = "IsPaid";
-            IsPaid.FillWeight = 12.3157082F;
-            IsPaid.HeaderText = "Pagado";
-            IsPaid.MinimumWidth = 6;
-            IsPaid.Name = "IsPaid";
-            IsPaid.ReadOnly = true;
-            IsPaid.Resizable = DataGridViewTriState.True;
-            IsPaid.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // DueDateDisplay
-            // 
-            DueDateDisplay.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            DueDateDisplay.DataPropertyName = "DueDateDisplay";
-            DueDateDisplay.FillWeight = 12.3157082F;
-            DueDateDisplay.HeaderText = "Fecha limite";
-            DueDateDisplay.MinimumWidth = 6;
-            DueDateDisplay.Name = "DueDateDisplay";
-            DueDateDisplay.ReadOnly = true;
-            // 
-            // DueDate
-            // 
-            DueDate.DataPropertyName = "DueDate";
-            DueDate.HeaderText = "DueDate";
-            DueDate.MinimumWidth = 6;
-            DueDate.Name = "DueDate";
-            DueDate.Visible = false;
-            DueDate.Width = 125;
+            gridInstallments.SelectionChanged += gridInstallments_SelectionChanged;
             // 
             // panel1
             // 
@@ -279,9 +212,9 @@
             lblDescriptionData.Location = new Point(226, 115);
             lblDescriptionData.MaximumSize = new Size(380, 80);
             lblDescriptionData.Name = "lblDescriptionData";
-            lblDescriptionData.Size = new Size(367, 69);
+            lblDescriptionData.Size = new Size(44, 23);
             lblDescriptionData.TabIndex = 39;
-            lblDescriptionData.Text = "Esto es la descripcion de un texto muy grande que pretende describir una descrpcion cuyo objetivo es describir el motivo del préstamo";
+            lblDescriptionData.Text = "desc";
             // 
             // label1
             // 
@@ -495,10 +428,147 @@
             btnPayInstallment.Location = new Point(12, 267);
             btnPayInstallment.Margin = new Padding(0);
             btnPayInstallment.Name = "btnPayInstallment";
-            btnPayInstallment.Size = new Size(157, 50);
+            btnPayInstallment.Size = new Size(141, 50);
             btnPayInstallment.TabIndex = 36;
             btnPayInstallment.Text = "Pagar cuota";
             btnPayInstallment.UseVisualStyleBackColor = false;
+            btnPayInstallment.Click += btnPayInstallment_Click;
+            // 
+            // btnExtraPayment
+            // 
+            btnExtraPayment.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExtraPayment.BackColor = Color.FromArgb(51, 178, 73);
+            btnExtraPayment.Cursor = Cursors.Hand;
+            btnExtraPayment.FlatAppearance.BorderColor = Color.ForestGreen;
+            btnExtraPayment.FlatAppearance.BorderSize = 0;
+            btnExtraPayment.FlatStyle = FlatStyle.Flat;
+            btnExtraPayment.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnExtraPayment.ForeColor = Color.White;
+            btnExtraPayment.Location = new Point(175, 267);
+            btnExtraPayment.Margin = new Padding(0);
+            btnExtraPayment.Name = "btnExtraPayment";
+            btnExtraPayment.Size = new Size(188, 50);
+            btnExtraPayment.TabIndex = 37;
+            btnExtraPayment.Text = "Pago extraordinario";
+            btnExtraPayment.UseVisualStyleBackColor = false;
+            btnExtraPayment.Click += btnExtraPayment_Click;
+            // 
+            // LoanInstallmentID
+            // 
+            LoanInstallmentID.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            LoanInstallmentID.DataPropertyName = "LoanInstallmentID";
+            LoanInstallmentID.FillWeight = 1F;
+            LoanInstallmentID.HeaderText = "LoanInstallmentID";
+            LoanInstallmentID.MinimumWidth = 2;
+            LoanInstallmentID.Name = "LoanInstallmentID";
+            LoanInstallmentID.Visible = false;
+            LoanInstallmentID.Width = 2;
+            // 
+            // TransactionType
+            // 
+            TransactionType.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            TransactionType.DataPropertyName = "TransactionType";
+            TransactionType.FillWeight = 1F;
+            TransactionType.HeaderText = "TransactionType";
+            TransactionType.MinimumWidth = 2;
+            TransactionType.Name = "TransactionType";
+            TransactionType.Visible = false;
+            TransactionType.Width = 6;
+            // 
+            // IsPaid
+            // 
+            IsPaid.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            IsPaid.DataPropertyName = "IsPaid";
+            IsPaid.FillWeight = 1F;
+            IsPaid.HeaderText = "¿Pagado?";
+            IsPaid.MinimumWidth = 2;
+            IsPaid.Name = "IsPaid";
+            IsPaid.ReadOnly = true;
+            IsPaid.Resizable = DataGridViewTriState.True;
+            IsPaid.SortMode = DataGridViewColumnSortMode.Automatic;
+            IsPaid.Visible = false;
+            IsPaid.Width = 6;
+            // 
+            // DueAmount
+            // 
+            DueAmount.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            DueAmount.DataPropertyName = "DueAmount";
+            DueAmount.FillWeight = 1F;
+            DueAmount.HeaderText = "DueAmount";
+            DueAmount.MinimumWidth = 2;
+            DueAmount.Name = "DueAmount";
+            DueAmount.ReadOnly = true;
+            DueAmount.Visible = false;
+            DueAmount.Width = 6;
+            // 
+            // DueDate
+            // 
+            DueDate.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            DueDate.DataPropertyName = "DueDate";
+            DueDate.FillWeight = 1F;
+            DueDate.HeaderText = "DueDate";
+            DueDate.MinimumWidth = 2;
+            DueDate.Name = "DueDate";
+            DueDate.Visible = false;
+            DueDate.Width = 2;
+            // 
+            // TransactionTypeString
+            // 
+            TransactionTypeString.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            TransactionTypeString.DataPropertyName = "TransactionTypeString";
+            TransactionTypeString.FillWeight = 180F;
+            TransactionTypeString.HeaderText = "Detalle";
+            TransactionTypeString.MinimumWidth = 6;
+            TransactionTypeString.Name = "TransactionTypeString";
+            // 
+            // SubPeriodName
+            // 
+            SubPeriodName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            SubPeriodName.DataPropertyName = "SubPeriodName";
+            SubPeriodName.FillWeight = 180F;
+            SubPeriodName.HeaderText = "Sub período";
+            SubPeriodName.MinimumWidth = 6;
+            SubPeriodName.Name = "SubPeriodName";
+            SubPeriodName.ReadOnly = true;
+            // 
+            // Amount
+            // 
+            Amount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Amount.DataPropertyName = "Amount";
+            Amount.FillWeight = 120F;
+            Amount.HeaderText = "Cantidad";
+            Amount.MinimumWidth = 6;
+            Amount.Name = "Amount";
+            Amount.ReadOnly = true;
+            // 
+            // DueAmountDisplay
+            // 
+            DueAmountDisplay.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DueAmountDisplay.DataPropertyName = "DueAmountDisplay";
+            DueAmountDisplay.FillWeight = 120F;
+            DueAmountDisplay.HeaderText = "Pendiente";
+            DueAmountDisplay.MinimumWidth = 6;
+            DueAmountDisplay.Name = "DueAmountDisplay";
+            DueAmountDisplay.ReadOnly = true;
+            // 
+            // DueDateDisplay
+            // 
+            DueDateDisplay.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DueDateDisplay.DataPropertyName = "DueDateDisplay";
+            DueDateDisplay.FillWeight = 120F;
+            DueDateDisplay.HeaderText = "Fecha limite";
+            DueDateDisplay.MinimumWidth = 6;
+            DueDateDisplay.Name = "DueDateDisplay";
+            DueDateDisplay.ReadOnly = true;
+            // 
+            // DatePaidDisplay
+            // 
+            DatePaidDisplay.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DatePaidDisplay.DataPropertyName = "DatePaidDisplay";
+            DatePaidDisplay.FillWeight = 120F;
+            DatePaidDisplay.HeaderText = "Fecha pagado";
+            DatePaidDisplay.MinimumWidth = 6;
+            DatePaidDisplay.Name = "DatePaidDisplay";
             // 
             // FrmLoanDetail
             // 
@@ -506,6 +576,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 615);
+            Controls.Add(btnExtraPayment);
             Controls.Add(btnPayInstallment);
             Controls.Add(lblSavingAccTitle);
             Controls.Add(panel1);
@@ -544,17 +615,22 @@
         private Label lblSavingAccTitle;
         private Label label2;
         private Label lblTermsData;
-        private DataGridViewTextBoxColumn LoanInstallmentID;
-        private DataGridViewTextBoxColumn SubPeriodName;
-        private DataGridViewTextBoxColumn Amount;
-        private DataGridViewTextBoxColumn DueAmountDisplay;
-        private DataGridViewTextBoxColumn DueAmount;
-        private DataGridViewCheckBoxColumn IsPaid;
-        private DataGridViewTextBoxColumn DueDateDisplay;
-        private DataGridViewTextBoxColumn DueDate;
         private Label label3;
         private Label label4;
         private Label lblAmountData;
         private Button btnPayInstallment;
+        private Button button1;
+        private Button btnExtraPayment;
+        private DataGridViewTextBoxColumn LoanInstallmentID;
+        private DataGridViewTextBoxColumn TransactionType;
+        private DataGridViewCheckBoxColumn IsPaid;
+        private DataGridViewTextBoxColumn DueAmount;
+        private DataGridViewTextBoxColumn DueDate;
+        private DataGridViewTextBoxColumn TransactionTypeString;
+        private DataGridViewTextBoxColumn SubPeriodName;
+        private DataGridViewTextBoxColumn Amount;
+        private DataGridViewTextBoxColumn DueAmountDisplay;
+        private DataGridViewTextBoxColumn DueDateDisplay;
+        private DataGridViewTextBoxColumn DatePaidDisplay;
     }
 }

@@ -16,7 +16,13 @@
     <Compile Update="Forms\LoanForms\FrmLoanDetail.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\LoanForms\FrmLoanExtraPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\LoanForms\FrmLoanNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\LoanForms\FrmLoanPayInstallment.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\LoanForms\FrmLoansList.cs">

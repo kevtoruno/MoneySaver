@@ -20,7 +20,7 @@ namespace UI.Forms.SavingAccountForms
 {
     public partial class FrmSavingAccountAddDeposit : BaseForm
     {
-        public int _savingAccountID;
+        private readonly int _savingAccountID;
         public FrmSavingAccountDetail _frmSavingAccountDetail;
 
         public FrmSavingAccountAddDeposit()

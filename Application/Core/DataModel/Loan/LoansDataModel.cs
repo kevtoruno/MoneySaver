@@ -52,5 +52,6 @@ namespace Service.Core.DataModel
         public bool IsCurrent { get; set; }
 
         public ICollection<LoanInstallmentsDataModel> LoanInstallments { get; set; }
+        public ICollection<LoanPaymentHistoryDataModel> LoanPaymentHistories { get; set; }
     }
 }

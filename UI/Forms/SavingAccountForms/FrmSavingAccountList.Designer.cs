@@ -97,6 +97,7 @@
             // gridSavingAccountsList
             // 
             gridSavingAccountsList.AllowUserToAddRows = false;
+            gridSavingAccountsList.AllowUserToResizeRows = false;
             gridSavingAccountsList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             gridSavingAccountsList.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridSavingAccountsList.BorderStyle = BorderStyle.None;
@@ -123,6 +124,7 @@
             gridSavingAccountsList.EnableHeadersVisualStyles = false;
             gridSavingAccountsList.GridColor = Color.SteelBlue;
             gridSavingAccountsList.Location = new Point(9, 292);
+            gridSavingAccountsList.MultiSelect = false;
             gridSavingAccountsList.Name = "gridSavingAccountsList";
             gridSavingAccountsList.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;

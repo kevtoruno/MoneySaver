@@ -6,6 +6,7 @@ using Service.Core;
 using Service.Core.DataModel;
 using Service.Core.Dtos.LoansDto;
 using Service.Core.Interfaces;
+using System.Reflection;
 
 namespace Data.Repositories
 {
@@ -31,7 +32,7 @@ namespace Data.Repositories
             return _context.LoanInterests.First(a => a.IsDefault);
         }
 
-        public bool SaveLoan(LoanDomain loanDomain)
+        public bool SaveLoan(LoanDomainCreator loanDomain)
         {
             _context.ChangeTracker.Clear();
             using var tran = _context.Database.BeginTransaction();
@@ -93,6 +94,10 @@ namespace Data.Repositories
         {
             return _context.Loans
                 .Include(l => l.Client)
+                .Include(l => l.LoanInstallments)
+                .ThenInclude(l => l.SubPeriod)
+                .Include(l => l.LoanPaymentHistories)
+                .ThenInclude(l => l.SubPeriod)
                 .First(l => l.LoanID == loanID);
         }
 
@@ -102,6 +107,43 @@ namespace Data.Repositories
                 .Include(a => a.SubPeriod.Period)
                 .Where(l => l.LoanID == loanID)
                 .ToList();
+        }
+
+        public LoanDomain GetLoanDomain(int loanID)
+        {
+            var loansData = _context.Loans
+                .AsNoTracking()
+                .Include(a => a.LoanInstallments)
+                .Include(a => a.LoanPaymentHistories)
+                .FirstOrDefault(l => l.LoanID == loanID) ?? throw new Exception("No se encontró un préstamo asociado.");
+
+            var loanDomain = _mapper.Map<LoanDomain>(loansData);
+
+            return loanDomain;
+        }
+
+        public bool UpdateLoan(LoanDomain loanDomain)
+        {
+            _context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+            try
+            {
+                var loanToUpdate = _mapper.Map<LoansDataModel>(loanDomain);
+                var companyToUpdate = _mapper.Map<CompaniesDataModel>(loanDomain.Company);
+
+                _context.Companies.Update(companyToUpdate);
+                _context.Loans.Update(loanToUpdate);
+                _context.SaveChanges();
+
+                tran.Commit();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                tran.Rollback();
+                throw new Exception("Error al actualizar préstamo");
+            }
         }
     }
 }

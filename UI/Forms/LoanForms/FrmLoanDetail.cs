@@ -57,12 +57,15 @@ namespace UI.Forms.LoanForms
             if (LoanToDetailDto.IsCurrent)
                 this.lblStatusData.Text = "Pendiente";
             else
+            {
                 this.lblStatusData.Text = "Pagado";
+                this.btnExtraPayment.Visible = false;
+            }
         }
 
         private void SetGridsData()
         {
-            var gridInstallmentsData = CreateBindingSource(LoanToDetailDto.Installments);
+            var gridInstallmentsData = CreateBindingSource(LoanToDetailDto.TransactionHistory);
 
             this.gridInstallments.AutoGenerateColumns = false;
             this.gridInstallments.DataSource = gridInstallmentsData;
@@ -71,6 +74,10 @@ namespace UI.Forms.LoanForms
         private void gridInstallments_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var currentRow = this.gridInstallments.Rows[e.RowIndex];
+            var transactionType = (LoanTransactionType)currentRow.Cells["TransactionType"].Value;
+
+            if (transactionType != LoanTransactionType.Installment)
+                return;
 
             var dueAmount = (decimal)currentRow.Cells["DueAmount"].Value;
             var dueDate = (DateTime)currentRow.Cells["DueDate"].Value;
@@ -92,6 +99,52 @@ namespace UI.Forms.LoanForms
 
             currentRow.DefaultCellStyle.BackColor = backColor;
             currentRow.DefaultCellStyle.ForeColor = foreColor;
+        }
+
+        private void btnPayInstallment_Click(object sender, EventArgs e)
+        {
+            if (this.gridInstallments.Rows.Count <= 0)
+                return;
+
+            if (this.gridInstallments.CurrentRow.Cells["LoanInstallmentID"].Value == null)
+            {
+                MessageBox.Show("Debe seleccionar una cuota.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            bool isPaid = (bool)this.gridInstallments.CurrentRow.Cells["IsPaid"].Value;
+            if (isPaid)
+            {
+                MessageBox.Show("Esta cuota ya está pagada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string installmentAmount = this.gridInstallments.CurrentRow.Cells["DueAmountDisplay"].Value.ToString() ?? "";
+
+            int selectedInstallmentID = (int)this.gridInstallments.CurrentRow.Cells["LoanInstallmentID"].Value;
+
+            var frmInstallment = new FrmLoanPayInstallment(_selectedLoanID, selectedInstallmentID, this, installmentAmount);
+            frmInstallment.ShowDialog();
+        }
+
+        private void gridInstallments_SelectionChanged(object sender, EventArgs e)
+        {
+            var transactionType = (LoanTransactionType)this.gridInstallments.CurrentRow.Cells["TransactionType"].Value;
+
+            if (transactionType == LoanTransactionType.Installment)
+            {
+                bool isPaid = (bool)this.gridInstallments.CurrentRow.Cells["IsPaid"].Value;
+
+                this.btnPayInstallment.Visible = !isPaid;
+            }
+            else
+                this.btnPayInstallment.Visible = false;
+        }
+
+        private void btnExtraPayment_Click(object sender, EventArgs e)
+        {
+            var frmInstallment = new FrmLoanExtraPayment(_selectedLoanID, this);
+            frmInstallment.ShowDialog();
         }
     }
 }

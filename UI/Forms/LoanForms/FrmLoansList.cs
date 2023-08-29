@@ -58,7 +58,7 @@ namespace UI.Forms.LoanForms
             {
                 MessageBox.Show("Debe seleccionar un préstamo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            } 
+            }
 
             int selectedLoanID = (int)this.gridLoansList.CurrentRow.Cells[0].Value;
 

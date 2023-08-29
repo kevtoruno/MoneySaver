@@ -13,9 +13,11 @@ namespace Service.Core.Interfaces
     {
         LoanInterestsDataModel GetDefaultLoanInterest();
         bool CheckIfClientHasAnotherLoan(int clientID);
-        bool SaveLoan(LoanDomain loanDomain);
+        bool SaveLoan(LoanDomainCreator loanDomain);
         List<LoansToListDto> GetLoansList(string INSSNo);
         LoansDataModel GetLoanDetail(int loanID);
         List<LoanInstallmentsDataModel> GetLoanInstallments(int loanID);
+        LoanDomain GetLoanDomain(int loanID);
+        bool UpdateLoan(LoanDomain loanDomain);
     }
 }

@@ -39,7 +39,7 @@ namespace Service.Features.Loans
 
                 var defaultLoanInterestDomain = _mapper.Map<LoanInterestsDomain>(DefaultLoanInterest);
 
-                var loanDomain = new LoanDomain(ClientID, loanToCreateDto.Description, loanToCreateDto.TotalTerms,
+                var loanDomain = new LoanDomainCreator(ClientID, loanToCreateDto.Description, loanToCreateDto.TotalTerms,
                     loanToCreateDto.LoanAmount, defaultLoanInterestDomain, loanToCreateDto.StartDate, EndDate
                     ,loanToCreateDto.GuarantorFullName, loanToCreateDto.GuarantorWorkArea, loanToCreateDto.GuarantorINSSNo,
                     loanToCreateDto.GuarantorBaseIncome, loanToCreateDto.GuarantorAddress, loanToCreateDto.CKCode, DefaultCompany);
@@ -69,7 +69,7 @@ namespace Service.Features.Loans
 
                 var defaultLoanInterestDomain = _mapper.Map<LoanInterestsDomain>(DefaultLoanInterest);
 
-                var loanDomain = new LoanDomain(ClientID, loanToCreateDto.Description, loanToCreateDto.TotalTerms,
+                var loanDomain = new LoanDomainCreator(ClientID, loanToCreateDto.Description, loanToCreateDto.TotalTerms,
                     loanToCreateDto.LoanAmount, defaultLoanInterestDomain, loanToCreateDto.StartDate, 
                     EndDate, loanToCreateDto.GuarantorFullName, loanToCreateDto.GuarantorWorkArea, 
                     loanToCreateDto.GuarantorINSSNo, loanToCreateDto.GuarantorBaseIncome, 

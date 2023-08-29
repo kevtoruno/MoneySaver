@@ -420,6 +420,7 @@
             // gridWidthdrawalsList
             // 
             gridWidthdrawalsList.AllowUserToAddRows = false;
+            gridWidthdrawalsList.AllowUserToResizeRows = false;
             gridWidthdrawalsList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             gridWidthdrawalsList.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridWidthdrawalsList.BorderStyle = BorderStyle.None;
