@@ -55,10 +55,14 @@ namespace UI.Forms.LoanForms
             this.lblAmountData.Text = LoanToDetailDto.Amount;
 
             if (LoanToDetailDto.IsCurrent)
+            {
                 this.lblStatusData.Text = "Pendiente";
+                this.lblStatusData.ForeColor = Color.Yellow;
+            }
             else
             {
                 this.lblStatusData.Text = "Pagado";
+                this.lblStatusData.ForeColor = Color.LawnGreen;
                 this.btnExtraPayment.Visible = false;
             }
         }

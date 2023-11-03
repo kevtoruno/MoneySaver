@@ -18,8 +18,8 @@ namespace Service.Core.Validators
             RuleFor(c => c.INSS).NotEmpty().WithMessage("Ingrese número INSS")
                 .MinimumLength(3).WithMessage("Número de INSS inválido");
 
-            RuleFor(c => c.Identification).NotEmpty().WithMessage("Ingrese la cédula")
-                .Length(14).WithMessage("Formato de cédula inválido.");   
+            /*RuleFor(c => c.Identification).NotEmpty().WithMessage("Ingrese la cédula")
+                .Length(14).WithMessage("Formato de cédula inválido.");   */
         }
     }
 }

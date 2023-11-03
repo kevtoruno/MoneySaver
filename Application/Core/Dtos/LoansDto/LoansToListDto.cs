@@ -18,5 +18,6 @@ namespace Service.Core.Dtos.LoansDto
         public DateTime EndDate { get; set; }
         public string EndDateToDisplay { get => EndDate.ToShortDateString(); }
         public bool IsCurrent { get; set; }
+        public string CKCode { get; set; }
     }
 }

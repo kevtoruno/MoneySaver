@@ -64,5 +64,19 @@ namespace UI.Forms.LoanForms
 
             Program.InitialMenu.OpenChildForm(new FrmLoanDetail(selectedLoanID));
         }
+
+        private void btnUploadMonthlyDeposits_Click(object sender, EventArgs e)
+        {
+            var monthlyPaymentsFrm = new FrmLoansMonthlyPayments(this);
+
+            monthlyPaymentsFrm.ShowDialog();
+        }
+
+        private void btnMassLoanCreator_Click(object sender, EventArgs e)
+        {
+            var loanMassCreatorFrm = new FrmLoansMassCreator(this);
+
+            loanMassCreatorFrm.ShowDialog();
+        }
     }
 }

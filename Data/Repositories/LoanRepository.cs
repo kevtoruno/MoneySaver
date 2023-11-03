@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.Persistence;
+using Domain;
 using Domain.Entities.Loans;
 using Microsoft.EntityFrameworkCore;
 using Service.Core;
@@ -23,8 +24,13 @@ namespace Data.Repositories
 
         public bool CheckIfClientHasAnotherLoan(int clientID)
         {
-            return _context.Loans.Any(a => a.ClientID == clientID && a.IsCurrent == true 
-            && a.DueAmount > 0);
+            return _context.Loans.Any(a => a.ClientID == clientID && a.IsCurrent == true
+                && a.DueAmount > 0);
+        }
+
+        public bool CheckIfLoanCKAlreadyExists(string CK)
+        {
+            return _context.Loans.Any(a => a.CKCode == CK);
         }
 
         public LoanInterestsDataModel GetDefaultLoanInterest()
@@ -50,10 +56,20 @@ namespace Data.Repositories
 
                 tran.Commit();
             }
+            catch (DbUpdateException ex)
+            {
+                tran.Rollback();
+                bool invalidCK = ex.InnerException != null ? ex.InnerException.Message.Contains("IX_Loans_CKCode") :false;
+
+                if (invalidCK)
+                    throw new Exception("Código CK duplicado");
+
+                throw ex;
+            }
             catch (Exception) 
             {
                 tran.Rollback();
-                throw;
+                throw new Exception("Error al crear el préstamo");
             }
 
             return true;
@@ -83,7 +99,8 @@ namespace Data.Repositories
                     EndDate = l.EndDate,
                     INSSNo = l.Client.INSS,
                     IsCurrent = l.IsCurrent,
-                    LoanID = l.LoanID
+                    LoanID = l.LoanID,
+                    CKCode = l.CKCode
                 });
             });
 
@@ -144,6 +161,112 @@ namespace Data.Repositories
                 tran.Rollback();
                 throw new Exception("Error al actualizar préstamo");
             }
+        }
+
+        public List<LoansDataModel> GetLoansWithInstallments()
+        {
+            var pendingLoans = _context.Loans
+                .AsNoTracking()
+                .Include(l => l.Client)
+                .Include(l => l.LoanInstallments)
+                .Where(l => l.IsCurrent == true)
+                .ToList();
+
+            return pendingLoans;
+        }
+
+        public bool PayLoanInstallments(List<LoanDomain> loansDomain, CompanyDomain defaultCompanyDomain)
+        {
+            _context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+            try
+            {
+                var defaultCompany = _mapper.Map<CompaniesDataModel>(defaultCompanyDomain);
+                var loansToUpdate = _mapper.Map<List<LoansDataModel>>(loansDomain);
+
+                _context.Loans.UpdateRange(loansToUpdate);
+                _context.SaveChanges();
+
+                _context.Companies.Update(defaultCompany);
+                _context.SaveChanges();
+
+                tran.Commit();
+            }
+            catch (Exception)
+            {
+                tran.Rollback();
+                return false;
+            }
+
+            return true;
+        }
+
+        public decimal GetTotalAmountLoanedForLastSixMonths(SubPeriodsDataModel subPeriod, int utilityMonths = 6)
+        {
+            var startDate = subPeriod.StartDate.AddMonths(-5).Date;
+            DateTime endDate = utilityMonths == 6 ? subPeriod.EndDate : subPeriod.EndDate.AddMonths(-1);
+
+            var totalAmountLoaned = _context.Loans
+                .Where(l => l.StartDate >= startDate && l.StartDate <= endDate)
+                .Sum(l => l.Amount);
+
+            return totalAmountLoaned;
+        }
+
+        public decimal GetTotalAmountRecoveredForLastSixMonths(SubPeriodsDataModel subPeriod, int utilityMonths = 6)
+        {
+            var startDate = subPeriod.StartDate.AddMonths(-5).Date;
+            DateTime endDate = utilityMonths == 6 ? subPeriod.EndDate : subPeriod.EndDate.AddMonths(-1);
+
+            var totalAmountRecovered = _context.LoanPaymentHistory
+                .Where(l => l.Date >= startDate && l.Date <= endDate)
+                .Sum(l => l.Amount);
+
+            return totalAmountRecovered;
+        }
+
+        public List<LoansDataModel> GetLoansByDates(DateTime periodStartDate, DateTime periodEndDate)
+        {
+            return _context.Loans
+                .Where(l => l.StartDate >= periodStartDate && l.StartDate <= periodEndDate)
+                .ToList();
+        }
+
+        public bool SaveLoan(List<LoanDomainCreator> loanDomain)
+        {
+            _context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+
+            try
+            {
+                var defaultCompany = _mapper.Map<CompaniesDataModel>(loanDomain.FirstOrDefault().Company);
+                var LoansToCreate = _mapper.Map<List<LoansDataModel>>(loanDomain);
+
+                _context.Loans.AddRange(LoansToCreate);
+                _context.SaveChanges();
+
+                _context.Companies.Update(defaultCompany);
+                _context.SaveChanges();
+
+                tran.Commit();
+            }
+            catch (DbUpdateException ex)
+            {
+                tran.Rollback();
+                bool invalidCK = ex.InnerException != null ? ex.InnerException.Message.Contains("IX_Loans_CKCode") :false;
+
+                if (invalidCK)
+                    throw new Exception("Código CK duplicado");
+
+                throw ex;
+            }
+            catch (Exception) 
+            {
+                tran.Rollback();
+                throw new Exception("Error al crear el préstamo");
+            }
+
+            return true;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Domain.Entities.Loans
 
         public void FullPay(DateTime date)
         {
-            if(DueAmount <= 0 || IsPaid == true)
+            if(DueAmount <= 0)
                 throw new InstallmentAlreadyPaidException();
 
             DueAmount = 0;

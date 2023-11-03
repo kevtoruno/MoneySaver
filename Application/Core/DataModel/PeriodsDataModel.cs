@@ -16,5 +16,6 @@ namespace Service.Core.DataModel
         public int Year { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public ICollection<SubPeriodsDataModel> SubPeriods { get; set; }
     }
 }

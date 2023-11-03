@@ -25,12 +25,19 @@ internal class LoansExtraPayment
     {
         try
         {
+            var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(extraPaymentDto.PayDate);
+
+            int subPeriodID = subPeriod != null ? subPeriod.SubPeriodID : 0;
+
+            if (subPeriodID <= 0)
+                return Result<bool>.Failure("No existe un subperiodo para la fecha seleccionada.");
+
             var defaultCompany = _moneySaverRepo.GetDefaultCompany();
 
             var loandDomain = _loansRepo.GetLoanDomain(extraPaymentDto.LoanID);
 
             loandDomain.Company = defaultCompany;
-            loandDomain.MakeExtraPayment(extraPaymentDto.Amount, extraPaymentDto.PayDate);
+            loandDomain.MakeExtraPayment(extraPaymentDto.Amount, extraPaymentDto.PayDate, subPeriodID);
 
             var result = _loansRepo.UpdateLoan(loandDomain);
 

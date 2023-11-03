@@ -33,8 +33,6 @@
             SubMenuAdminPanel = new Panel();
             panel7 = new Panel();
             btnMainPeriods = new Button();
-            panel5 = new Panel();
-            btnRangoPrestamos = new Button();
             panel4 = new Panel();
             btnAdmin = new Button();
             panel3 = new Panel();
@@ -80,8 +78,6 @@
             // 
             SubMenuAdminPanel.Controls.Add(panel7);
             SubMenuAdminPanel.Controls.Add(btnMainPeriods);
-            SubMenuAdminPanel.Controls.Add(panel5);
-            SubMenuAdminPanel.Controls.Add(btnRangoPrestamos);
             SubMenuAdminPanel.Location = new Point(27, 365);
             SubMenuAdminPanel.Name = "SubMenuAdminPanel";
             SubMenuAdminPanel.Size = new Size(190, 100);
@@ -91,7 +87,7 @@
             // panel7
             // 
             panel7.BackColor = Color.FromArgb(13, 93, 142);
-            panel7.Location = new Point(3, 44);
+            panel7.Location = new Point(3, 3);
             panel7.Name = "panel7";
             panel7.Size = new Size(10, 35);
             panel7.TabIndex = 11;
@@ -103,35 +99,13 @@
             btnMainPeriods.FlatStyle = FlatStyle.Flat;
             btnMainPeriods.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             btnMainPeriods.ForeColor = SystemColors.Control;
-            btnMainPeriods.Location = new Point(6, 44);
+            btnMainPeriods.Location = new Point(6, 3);
             btnMainPeriods.Name = "btnMainPeriods";
             btnMainPeriods.Size = new Size(184, 35);
             btnMainPeriods.TabIndex = 10;
             btnMainPeriods.Text = "Períodos";
             btnMainPeriods.UseVisualStyleBackColor = true;
             btnMainPeriods.Click += btnMainPeriods_Click;
-            // 
-            // panel5
-            // 
-            panel5.BackColor = Color.FromArgb(13, 93, 142);
-            panel5.Location = new Point(3, 3);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(10, 35);
-            panel5.TabIndex = 7;
-            // 
-            // btnRangoPrestamos
-            // 
-            btnRangoPrestamos.FlatAppearance.BorderSize = 0;
-            btnRangoPrestamos.FlatAppearance.MouseOverBackColor = Color.FromArgb(13, 93, 142);
-            btnRangoPrestamos.FlatStyle = FlatStyle.Flat;
-            btnRangoPrestamos.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
-            btnRangoPrestamos.ForeColor = SystemColors.Control;
-            btnRangoPrestamos.Location = new Point(6, 3);
-            btnRangoPrestamos.Name = "btnRangoPrestamos";
-            btnRangoPrestamos.Size = new Size(185, 35);
-            btnRangoPrestamos.TabIndex = 6;
-            btnRangoPrestamos.Text = "Intereses préstamos";
-            btnRangoPrestamos.UseVisualStyleBackColor = true;
             // 
             // panel4
             // 
@@ -340,8 +314,6 @@
         private Panel panel2;
         private Button btnControlAhorro;
         private Panel SubMenuAdminPanel;
-        private Panel panel5;
-        private Button btnRangoPrestamos;
         private Panel panel4;
         private Button btnAdmin;
         private Panel panel7;

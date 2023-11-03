@@ -9,8 +9,6 @@ using Domain.Entities;
 using Domain.Entities.SavingAccount;
 using Service.Core;
 using Domain;
-using System.Xml;
-using Domain.Entities.Loans;
 
 namespace Data.Repositories
 {
@@ -90,16 +88,16 @@ namespace Data.Repositories
 
                 tran.Commit();
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 tran.Rollback();
-            }      
+            }
         }
 
         public List<PeriodsToListDto> GetPeriodsList()
         {
             var periodsList = _context.Periods
-                .Select(p => new PeriodsToListDto 
+                .Select(p => new PeriodsToListDto
                 {
                     EndDate = p.EndDate,
                     StartDate = p.StartDate,
@@ -111,11 +109,11 @@ namespace Data.Repositories
             return periodsList;
         }
 
-        public List<SubPeriodsToListDto> GetSubPeriodsList(int periodID) 
+        public List<SubPeriodsToListDto> GetSubPeriodsList(int periodID)
         {
             var periodsList = _context.SubPeriods
                 .Where(sb => sb.PeriodID == periodID)
-                .Select(p => new SubPeriodsToListDto 
+                .Select(p => new SubPeriodsToListDto
                 {
                     EndDate = p.EndDate,
                     StartDate = p.StartDate,
@@ -142,7 +140,7 @@ namespace Data.Repositories
             return fullName;
         }
 
-        public int GetClientIDByINSSNo(string INSSNo) 
+        public int GetClientIDByINSSNo(string INSSNo)
         {
             int ClientID = 0;
 
@@ -154,7 +152,7 @@ namespace Data.Repositories
             return ClientID;
         }
 
-        public int CheckIfClientHasSavingAccount(int clientID) 
+        public int CheckIfClientHasSavingAccount(int clientID)
         {
             int hasSavingAccount = 0;
 
@@ -166,7 +164,7 @@ namespace Data.Repositories
                 if (savingAccount.IsActive)
                     hasSavingAccount = 1;
                 else
-                    hasSavingAccount = 2; 
+                    hasSavingAccount = 2;
             }
 
             return hasSavingAccount;
@@ -182,7 +180,7 @@ namespace Data.Repositories
             return savingAccountToCreate.SavingAccountID;
         }
 
-        public List<SavingAccountsDataModel> GetSavingAccountsList(string INSS) 
+        public List<SavingAccountsDataModel> GetSavingAccountsList(string INSS)
         {
             var query = _context.SavingAccounts.AsNoTracking()
                 .Include(sa => sa.Client).OrderBy(sa => sa.Client.INSS).AsQueryable();
@@ -191,7 +189,7 @@ namespace Data.Repositories
             {
                 INSS = "%" + INSS + "%";
                 query = query.Where(q => EF.Functions.Like(q.Client.INSS, INSS));
-            }   
+            }
 
             var savingAccountsData = query.ToList();
 
@@ -215,7 +213,7 @@ namespace Data.Repositories
 
             if (includeTransactionalHistory)
                 query = query.Include(q => q.Deposits).Include(q => q.Withdrawals);
-            
+
             var savingAccountData = query.First(a => a.SavingAccountID == savingAccountID);
 
             var savingAccountDomain = _mapper.Map<SavingAccountDomainAggregate>(savingAccountData);
@@ -227,7 +225,6 @@ namespace Data.Repositories
         public List<SavingAccountsDataModel> GetSavingAccountsWithDepositsForPeriodData(int periodID)
         {
             var savingAccountData = _context.SavingAccounts
-                .AsNoTracking()
                 .Include(sa => sa.Client)
                 .Include(sa => sa.Deposits.Where(dep => dep.SubPeriod.PeriodID == periodID))
                 .Where(sa => sa.IsActive == true)
@@ -236,7 +233,7 @@ namespace Data.Repositories
             return savingAccountData;
         }
 
-        public bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID) 
+        public bool CheckIfDepositExistsForSubPeriod(int subPeriodID, int savingAccountID)
         {
             return _context.SavingAccountDeposits
                 .Any(sa => sa.SubPeriodID == subPeriodID && sa.SavingAccountID == savingAccountID);
@@ -248,9 +245,9 @@ namespace Data.Repositories
                 .Include(sa => sa.SubPeriod.Period)
                 .Where(sa => sa.SavingAccountID == savingAccountID)
                 .ToList();
-        } 
+        }
 
-        public List<SavingAccountDepositsDataModel> GetSavingAccountDeposits(int savingAccountID) 
+        public List<SavingAccountDepositsDataModel> GetSavingAccountDeposits(int savingAccountID)
         {
             return _context.SavingAccountDeposits
                 .Include(sa => sa.SubPeriod.Period)
@@ -277,7 +274,7 @@ namespace Data.Repositories
 
                 tran.Commit();
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 tran.Rollback();
                 return false;
@@ -295,14 +292,14 @@ namespace Data.Repositories
             {
                 UpdateSavingAccountDomain(saDomain);
 
-                var defaultCompany =  _mapper.Map<CompaniesDataModel>(saDomain.Company);
+                var defaultCompany = _mapper.Map<CompaniesDataModel>(saDomain.Company);
 
                 _context.Companies.Update(defaultCompany);
                 _context.SaveChanges();
 
                 tran.Commit();
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 tran.Rollback();
                 return false;
@@ -313,7 +310,7 @@ namespace Data.Repositories
 
         public bool CheckIfInterestWithdrawExistsForSubPeriod(int subPeriodID, int savingAccountID)
         {
-            return _context.SavingAccountWidthdrawals.Any(saw => saw.SubPeriodID == subPeriodID && 
+            return _context.SavingAccountWidthdrawals.Any(saw => saw.SubPeriodID == subPeriodID &&
             saw.SavingAccountID == savingAccountID && saw.WithDrawalType == WithDrawalType.Interests);
         }
 
@@ -357,33 +354,33 @@ namespace Data.Repositories
             return clienToEdit;
         }
 
-        public bool AddDepositsToSavingAccounts(List<SavingAccountDomainAggregate> saDomainLst)
+        public bool AddDepositsToSavingAccounts(List<SavingAccountDomainAggregate> saDomainLst,
+            CompanyDomain company)
         {
             _context.ChangeTracker.Clear();
             using var tran = _context.Database.BeginTransaction();
             try
             {
-                var defaultCompany = _context.Companies.FirstOrDefault() ?? throw new Exception();
                 var savingAccountsToUpdate = _mapper.Map<List<SavingAccountsDataModel>>(saDomainLst);
 
-                decimal totalDepositAmount = savingAccountsToUpdate
-                    .SelectMany(sa => sa.Deposits.Where(dep => dep.SavingAccountDepositID == 0))
-                    .Sum(a => a.Amount);
-
+                var x = _context.ChangeTracker.Entries();
                 _context.SavingAccounts.UpdateRange(savingAccountsToUpdate);
                 _context.SaveChanges();
-     
-                defaultCompany.CurrentAmount += totalDepositAmount;
 
-                _context.Companies.Update(defaultCompany);
-                _context.SaveChanges();
+                if (company != null)
+                {
+                    var defaultCompany = _mapper.Map<CompaniesDataModel>(company);
+
+                    _context.Companies.Update(defaultCompany);
+                    _context.SaveChanges();
+                }
 
                 tran.Commit();
             }
-            catch (Exception) 
+            catch (Exception ex)
             {
                 tran.Rollback();
-                return false;
+                throw;
             }
 
             return true;
@@ -403,7 +400,7 @@ namespace Data.Repositories
             var subPeriod = _context.SubPeriods
                 .AsNoTracking()
                 .Include(sp => sp.Period)
-                .FirstOrDefault(sp => date.Date >= sp.StartDate.Date  && date.Date <= sp.EndDate.Date.Date);
+                .FirstOrDefault(sp => date.Date >= sp.StartDate.Date && date.Date <= sp.EndDate.Date.Date);
 
             return subPeriod;
         }
@@ -431,14 +428,14 @@ namespace Data.Repositories
             {
                 UpdateSavingAccountDomain(saDomain);
 
-                var defaultCompany =  _mapper.Map<CompaniesDataModel>(saDomain.Company);
+                var defaultCompany = _mapper.Map<CompaniesDataModel>(saDomain.Company);
 
                 _context.Companies.Update(defaultCompany);
                 _context.SaveChanges();
 
                 tran.Commit();
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 tran.Rollback();
                 return false;
@@ -458,7 +455,7 @@ namespace Data.Repositories
 
                 tran.Commit();
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 tran.Rollback();
                 return false;
@@ -473,5 +470,98 @@ namespace Data.Repositories
 
             _context.SavingAccounts.Update(savingAccountToUpdate);
         }
+
+        public PeriodsDataModel GetPeriodWithSubPeriods(int periodID)
+        {
+            var period = _context.Periods
+                .Include(p => p.SubPeriods)
+                .FirstOrDefault(p => p.PeriodID == periodID) ?? throw new Exception("El periodo no existe");
+
+            return period;
+        }
+
+        public Dictionary<int, decimal> GetSubPeriodsTotalIncome(List<int> subPeriodIds)
+        {
+            Dictionary<int, decimal> totalIncomeBySubPeriod = subPeriodIds
+                .ToDictionary(sp => sp, spv => decimal.Zero);
+
+            var groupedDepositsBySubPeriodIDs = _context.SavingAccountDeposits
+                .Where(sad => subPeriodIds.Contains(sad.SubPeriodID) && sad.DepositType == DepositType.Saving)
+                .Select(sad => new { sad.SubPeriodID, sad.Amount })
+                .ToList();
+
+            var groupedLoanPaymentsBySubPeriodId = _context.LoanPaymentHistory
+                .Where(lph => subPeriodIds.Contains(lph.SubPeriodID != null ? lph.SubPeriodID.Value : 0))
+                .Select(lph => new { SubPeriodID = lph.SubPeriodID != null ? lph.SubPeriodID.Value : 0, lph.Amount })
+                .ToList();
+
+            foreach (var totalDepositsIncomeBySubPeriodID in groupedDepositsBySubPeriodIDs.GroupBy(sad => sad.SubPeriodID))
+            {
+                totalIncomeBySubPeriod[totalDepositsIncomeBySubPeriodID.Key] += totalDepositsIncomeBySubPeriodID.Sum(gsp => gsp.Amount);
+            }
+
+            foreach (var totalLoanIncomeBySubPeriodID in groupedLoanPaymentsBySubPeriodId.GroupBy(sad => sad.SubPeriodID))
+            {
+                totalIncomeBySubPeriod[totalLoanIncomeBySubPeriodID.Key] += totalLoanIncomeBySubPeriodID.Sum(gsp => gsp.Amount);
+            }
+
+            return totalIncomeBySubPeriod;
+        }
+
+        public Dictionary<int, decimal> GetSubPeriodsWithdrawalsOutcome(List<int> subPeriodIds)
+        {
+            Dictionary<int, decimal> totalWithdrawalOutcomeBySubPeriod = subPeriodIds
+                .ToDictionary(sp => sp, spv => decimal.Zero);
+
+            var groupedWithdrawalsBySubPeriodIDs = _context.SavingAccountWidthdrawals
+                .Where(saw => subPeriodIds.Contains(saw.SubPeriodID != null ? saw.SubPeriodID.Value : 0))
+                .Select(saw => new { SubPeriodID = saw.SubPeriodID != null ? saw.SubPeriodID.Value : 0, saw.Amount })
+                .ToList()
+                .GroupBy(sad => sad.SubPeriodID);
+
+            foreach (var totalWithdrawalOutcomeBySubPeriodID in groupedWithdrawalsBySubPeriodIDs)
+            {
+                totalWithdrawalOutcomeBySubPeriod[totalWithdrawalOutcomeBySubPeriodID.Key] += totalWithdrawalOutcomeBySubPeriodID.Sum(gsp => gsp.Amount);
+            }
+
+            return totalWithdrawalOutcomeBySubPeriod;
+        }    
+
+        public SubPeriodsDataModel GetSubPeriod(int subPeriodID)
+        {
+            var subPeriod = _context.SubPeriods
+                .Include(sp => sp.Period)
+                .FirstOrDefault(sp => sp.SubPeriodID == subPeriodID) ??
+                throw new Exception("No existe subPeriodo asociado");
+
+            return subPeriod;
+        }
+
+        public decimal GetTotalDepositAmountForTheLastSixMonths(SubPeriodsDataModel subPeriod)
+        {
+            var startDate = subPeriod.StartDate.AddMonths(-5).Date;
+
+            var totalAmountLoaned = _context.SavingAccountDeposits
+                .Where(l => l.CreatedDate >= startDate && l.CreatedDate <= subPeriod.EndDate)
+                .Sum(l => l.Amount);
+
+            return totalAmountLoaned;
+        }
+
+        public void UpdateSubPeriod(SubPeriodDomain subPeriodDomain)
+        {
+            try
+            {
+                var subPeriodData = _mapper.Map<SubPeriodsDataModel>(subPeriodDomain);
+
+                _context.SubPeriods.Update(subPeriodData);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

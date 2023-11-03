@@ -45,6 +45,8 @@
             DueAmount = new DataGridViewTextBoxColumn();
             btnNewLoan = new Button();
             btnView = new Button();
+            btnUploadMonthlyDeposits = new Button();
+            btnMassLoanCreator = new Button();
             ((System.ComponentModel.ISupportInitialize)gridLoansList).BeginInit();
             SuspendLayout();
             // 
@@ -246,12 +248,48 @@
             btnView.UseVisualStyleBackColor = false;
             btnView.Click += btnView_Click;
             // 
+            // btnUploadMonthlyDeposits
+            // 
+            btnUploadMonthlyDeposits.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnUploadMonthlyDeposits.BackColor = Color.SteelBlue;
+            btnUploadMonthlyDeposits.Cursor = Cursors.Hand;
+            btnUploadMonthlyDeposits.FlatAppearance.BorderSize = 0;
+            btnUploadMonthlyDeposits.FlatStyle = FlatStyle.Flat;
+            btnUploadMonthlyDeposits.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnUploadMonthlyDeposits.ForeColor = SystemColors.Control;
+            btnUploadMonthlyDeposits.Location = new Point(871, 10);
+            btnUploadMonthlyDeposits.Name = "btnUploadMonthlyDeposits";
+            btnUploadMonthlyDeposits.Size = new Size(197, 72);
+            btnUploadMonthlyDeposits.TabIndex = 23;
+            btnUploadMonthlyDeposits.Text = "Ingresar pagos mensuales";
+            btnUploadMonthlyDeposits.UseVisualStyleBackColor = false;
+            btnUploadMonthlyDeposits.Click += btnUploadMonthlyDeposits_Click;
+            // 
+            // btnMassLoanCreator
+            // 
+            btnMassLoanCreator.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMassLoanCreator.BackColor = Color.SteelBlue;
+            btnMassLoanCreator.Cursor = Cursors.Hand;
+            btnMassLoanCreator.FlatAppearance.BorderSize = 0;
+            btnMassLoanCreator.FlatStyle = FlatStyle.Flat;
+            btnMassLoanCreator.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnMassLoanCreator.ForeColor = SystemColors.Control;
+            btnMassLoanCreator.Location = new Point(917, 100);
+            btnMassLoanCreator.Name = "btnMassLoanCreator";
+            btnMassLoanCreator.Size = new Size(151, 41);
+            btnMassLoanCreator.TabIndex = 24;
+            btnMassLoanCreator.Text = "Creador masivo";
+            btnMassLoanCreator.UseVisualStyleBackColor = false;
+            btnMassLoanCreator.Click += btnMassLoanCreator_Click;
+            // 
             // FrmLoansList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 650);
+            Controls.Add(btnMassLoanCreator);
+            Controls.Add(btnUploadMonthlyDeposits);
             Controls.Add(btnView);
             Controls.Add(btnNewLoan);
             Controls.Add(gridLoansList);
@@ -284,5 +322,7 @@
         private DataGridViewCheckBoxColumn IsCurrent;
         private DataGridViewTextBoxColumn LoanAmount;
         private DataGridViewTextBoxColumn DueAmount;
+        private Button btnUploadMonthlyDeposits;
+        private Button btnMassLoanCreator;
     }
 }

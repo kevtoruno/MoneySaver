@@ -37,7 +37,7 @@ namespace Service.Core.Mapping
                 .ForMember(dest => dest.TermAmount,
                 opt => opt.MapFrom(src => src.TermAmount.CordobaFormat()))
                 .ForMember(dest => dest.PaperCostAmount,
-                opt => opt.MapFrom(src => src.PaperCostAmount.CordobaFormat()));
+                opt => opt.MapFrom(src => src.PaperCost.CordobaFormat()));
 
             CreateMap<LoanInstallmentsDomain, LoanInstallmentsPreviewDto>()
                 .ForMember(dest => dest.DueDate,

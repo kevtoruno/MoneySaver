@@ -33,6 +33,9 @@ namespace Service.Mapping
             CreateMap<SavingAccountsDataModel, SavingAccountDomainAggregate>();
             CreateMap<CompaniesDataModel, CompanyDomain>();
             CreateMap<CompanyDomain, CompaniesDataModel>();     
+
+            CreateMap<SubPeriodsDataModel, SubPeriodDomain>();
+            CreateMap<SubPeriodDomain, SubPeriodsDataModel>();
         }
     }
 }

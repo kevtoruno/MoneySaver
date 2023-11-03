@@ -56,13 +56,19 @@ namespace Domain.Entities.Loans
             TermAmount = LoanAmount / TotalTerms;
             this.CreatedDate = DateTime.Now;
             this.IsCurrent = true;
-            this.PaperCostAmount = DefaultLoanInterest.LoanPaperCost;
+            this.PaperCost = DefaultLoanInterest.LoanPaperCost;
         }
 
         private void CreateLoanInstallments()
         {
+            int installCounter = 0;
             foreach (var subPeriod in SubPeriods.OrderBy(a => a.StartDate))
             {
+                installCounter++;
+
+                if (installCounter > TotalTerms)
+                    break;
+
                 DateTime dueDate = CalculateDueDateForPeriod(subPeriod.StartDate.Year, subPeriod.Month);
 
                 LoanInstallments.Add(new LoanInstallmentsDomain
@@ -75,6 +81,9 @@ namespace Domain.Entities.Loans
                     PeriodName = subPeriod.SubPeriodName,
                 });
             }
+
+            if (installCounter < TotalTerms)
+                throw new Exception("Error interno al crear cuotas, no existen subperíodos suficientes que cubran el rango del préstamo " + this.CKCode);
         }
 
         private DateTime CalculateDueDateForPeriod(int periodYear, int periodMonth)

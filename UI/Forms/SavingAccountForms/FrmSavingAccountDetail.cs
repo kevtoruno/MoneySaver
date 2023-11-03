@@ -160,5 +160,12 @@ namespace UI.Forms.SavingAccountForms
 
             frmEditBeneficiary.ShowDialog();
         }
+
+        private void btnExportData_Click(object sender, EventArgs e)
+        {
+            var reportFrm = new FrmSavingAccountReport(SavingAccountToDetailDto);
+
+            reportFrm.ShowDialog(); 
+        }
     }
 }

@@ -95,14 +95,23 @@ namespace Domain.Entities
                 DepositType = 0 //Saving
             });
 
-            AddInterestIfMonthJuneOrDecember(interestsAmount, depositDate, subPeriodID);
+            Company.AddCurrentAmount(depositAmount);
         }
 
-        private void AddInterestIfMonthJuneOrDecember(decimal interestsAmount, DateTime depositDate, 
-            int subPeriodID) 
+        public decimal AddInterestIfMonthJuneOrDecember(SubPeriodDomain subPeriod, DateTime depositDate) 
         {
+            decimal interestsAmount = 0;
+            DateTime startDate = subPeriod.StartDate.AddMonths(-5).Date;
+            DateTime endDate = subPeriod.EndDate;
+
             if (depositDate.Month == 6 || depositDate.Month == 12)
             {
+                decimal totalDepositAmountForLastSixMonths = Deposits
+                    .Where(d => d.CreatedDate >= startDate && d.CreatedDate <= endDate && d.DepositType == 0)
+                    .Sum(d => d.Amount);
+
+                interestsAmount = totalDepositAmountForLastSixMonths * subPeriod.SavingAccInterestRate;
+
                 Amount += interestsAmount;
                 AmountForInterests += interestsAmount;
 
@@ -111,11 +120,13 @@ namespace Domain.Entities
                     Amount = interestsAmount,
                     SavingAccountID = this.SavingAccountID,
                     CreatedDate = depositDate,
-                    SubPeriodID = subPeriodID,
+                    SubPeriodID = subPeriod.SubPeriodID,
                     SavingAccountDepositID = 0,
                     DepositType = 1 //Interests
                 });
             }
+
+            return interestsAmount;
         }
 
         public void FullWithdrawal(DateTime date, int subPeriodID)

@@ -144,7 +144,6 @@
             // 
             btnView.BackColor = Color.SteelBlue;
             btnView.Cursor = Cursors.Hand;
-            btnView.Enabled = false;
             btnView.FlatAppearance.BorderSize = 0;
             btnView.FlatStyle = FlatStyle.Flat;
             btnView.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -155,6 +154,7 @@
             btnView.TabIndex = 7;
             btnView.Text = "Ver";
             btnView.UseVisualStyleBackColor = false;
+            btnView.Click += btnView_Click;
             // 
             // lblLoansTitle
             // 

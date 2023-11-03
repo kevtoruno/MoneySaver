@@ -54,11 +54,17 @@ namespace Service.Core.Interfaces
         CompanyDomain GetDefaultCompany();
         ClientToCreateDto GetClient(int ClientID);
         List<SavingAccountsDataModel> GetSavingAccountsWithDepositsForPeriodData(int periodID);
-        bool AddDepositsToSavingAccounts(List<SavingAccountDomainAggregate> saDomainLst);
+        bool AddDepositsToSavingAccounts(List<SavingAccountDomainAggregate> saDomainLst, CompanyDomain company);
         void EditClient(ClientToCreateDto clientToEditDto);
         DateTime GetLatestWithdrawDateForSavingAccountID(int savingAccountID);
         bool FullWithdrawalSavingAccount(SavingAccountDomainAggregate saDomain);
 
         bool UpdateSavingAccount(SavingAccountDomainAggregate saDomain);
+        PeriodsDataModel GetPeriodWithSubPeriods(int periodID);
+        Dictionary<int, decimal> GetSubPeriodsTotalIncome(List<int> subPeriodIds);
+        Dictionary<int, decimal> GetSubPeriodsWithdrawalsOutcome(List<int> subPeriodIds);
+        SubPeriodsDataModel GetSubPeriod(int subPeriodID);
+        decimal GetTotalDepositAmountForTheLastSixMonths(SubPeriodsDataModel subPeriod);
+        void UpdateSubPeriod(SubPeriodDomain subPeriodDomain);
     }
 }

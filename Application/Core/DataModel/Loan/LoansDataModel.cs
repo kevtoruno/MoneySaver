@@ -38,7 +38,8 @@ namespace Service.Core.DataModel
         [Column(TypeName="money")]
         public decimal Interests { get; set; }
         /// <summary>
-        /// Sum of the loan amount asked for the client + interests.
+        /// Amount to give the customer to.
+        /// This amount equals LoanAmount - interests - papercost decreased.
         /// </summary>
         [Column(TypeName="money")]
         public decimal Amount { get; set; }
@@ -46,6 +47,8 @@ namespace Service.Core.DataModel
         public decimal DueAmount { get; set; }
         [Column(TypeName="money")]
         public decimal TermAmount { get; set; }
+        [Column(TypeName="money")]
+        public decimal PaperCost { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime CreatedDate { get; set; }

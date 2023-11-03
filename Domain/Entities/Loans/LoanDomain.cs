@@ -31,7 +31,7 @@ public class LoanDomain
     public DateTime EndDate { get; set; }
     public DateTime CreatedDate { get; set; }
     public bool IsCurrent { get; set; }
-    public decimal PaperCostAmount { get; set; }
+    public decimal PaperCost { get; set; }
 
     public string GuarantorFullName { get; set; }
     public string GuarantorWorkArea { get; set; }
@@ -47,7 +47,20 @@ public class LoanDomain
         
     }
 
-    public void MakeExtraPayment(decimal amount, DateTime payDate)
+    public void MakeExtraPayment(decimal amount, DateTime payDate, int subPeriodID)
+    {
+        ValidateAmount(amount);
+
+        CheckIfDateItsLatest(payDate);
+        PayPendingInstallmentsForAmount(amount, payDate);  
+        AddPaymentHistory(subPeriodID: subPeriodID, payDate, amount, isExtraPayment: true);
+        FinishLoanIfApplies();
+
+        Company.DecreaseFloatingAmount(amount);
+        Company.AddCurrentAmount(amount);
+    }
+
+    private void ValidateAmount(decimal amount)
     {
         if (amount > this.DueAmount)
             throw new AmountToPayHigherThanDueAmountException();
@@ -55,13 +68,8 @@ public class LoanDomain
         if (amount <= 0)
             throw new Exception("La cantidad a pagar no puede ser menor o igual a 0");
 
-        CheckIfDateItsLatest(payDate);
-        PayPendingInstallmentsForAmount(amount, payDate);  
-        AddPaymentHistory(subPeriodID: null, payDate, amount, isExtraPayment: true);
-        FinishLoanIfApplies();
-
-        Company.DecreaseFloatingAmount(amount);
-        Company.AddCurrentAmount(amount);
+        if (amount % this.TermAmount != 0)
+            throw new AmountIsNotMultipleWithTermAmount(this.TermAmount);
     }
 
     private void PayPendingInstallmentsForAmount(decimal amount, DateTime payDate)
@@ -87,9 +95,6 @@ public class LoanDomain
             ?? throw new Exception("No existe cuota");
 
         decimal paymentAmount = loanInstallmentToPay.DueAmount;
-
-        if (paymentAmount > this.DueAmount)
-            throw new AmountToPayHigherThanDueAmountException();
 
         CheckIfDateItsLatest(payDate);
 

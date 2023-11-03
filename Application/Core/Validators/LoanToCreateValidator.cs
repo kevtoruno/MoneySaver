@@ -33,8 +33,8 @@ namespace Service.Core.Validators
             RuleFor(c => c.TotalTerms).NotEmpty().WithMessage("Debes ingresar las cuotas")
                 .InclusiveBetween(1,10).WithMessage("Las cuotas no pueden ser mayor a 10");
 
-            RuleFor(c => c.CKCode).NotEmpty().WithMessage("Debes ingresar el código CK")
-                .Length(6, 9).WithMessage("Código CK invalido, debe estar entre 6 y 9 digitos.");
+            /*RuleFor(c => c.CKCode).NotEmpty().WithMessage("Debes ingresar el código CK")
+                .Length(4, 7).WithMessage("Código CK invalido, debe estar entre 4 y 7 digitos.");*/
 
             RuleFor(c => c.INSSNo).NotEmpty().WithMessage("Ingrese número INSS")
                 .MinimumLength(3).WithMessage("Número de INSS inválido");

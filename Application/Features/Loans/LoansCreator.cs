@@ -94,7 +94,7 @@ namespace Service.Features.Loans
         {
             try
             {
-                var loansToCreateValidator = new LoanToCreateValidator(validateGuarantor: true);
+                var loansToCreateValidator = new LoanToCreateValidator(validateGuarantor: false);
                 var dtoValidationErros = loansToCreateValidator.Validate(loanToCreateDto).Errors;
 
                 if (dtoValidationErros.Count > 0)
@@ -109,6 +109,11 @@ namespace Service.Features.Loans
 
                 if (doClientHasAnotherLoan == true)
                     return Result<bool>.Failure("Este trabajador tiene actualmente un préstamo pendiente");
+
+                bool doCKCodeExists = _loansRepo.CheckIfLoanCKAlreadyExists(loanToCreateDto.CKCode);
+
+                if (doCKCodeExists == true)
+                    return Result<bool>.Failure("Ya existe un préstamo con este código CK.");
 
                 EndDate = CalculateEndDateForLoan(loanToCreateDto.StartDate, loanToCreateDto.TotalTerms);
 
@@ -125,7 +130,7 @@ namespace Service.Features.Loans
                 DefaultCompany = _moneySaverRepo.GetDefaultCompany();
 
                 if (loanToCreateDto.LoanAmount > DefaultCompany.CurrentAmount)
-                    return Result<bool>.Failure("No existen fondos suficientes para realizar el préstamo");
+                    return Result<bool>.Failure("No existen fondos suficientes para realizar el préstamo.");
 
                 return Result<bool>.Success(true);
             }

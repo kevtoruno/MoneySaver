@@ -3,6 +3,7 @@ using Service.Core.Dtos.SavingAccountsDto;
 using Service.Core;
 using Domain.Entities;
 using AutoMapper;
+using Domain;
 
 namespace Service.Features.SavingAccounts
 {
@@ -12,6 +13,7 @@ namespace Service.Features.SavingAccounts
         private readonly IMapper _mapper;
         private int SubPeriodID = 0;
         private string CreatedMessage = "Se han procesado todas las cotizaciones exitosamente";
+        private CompanyDomain companyDomain;
         public SavingAccountMonthlyDepositsCreator(IMoneySaverRepository moneySaverRepo, IMapper mapper)
         {
             _moneySaverRepo = moneySaverRepo;
@@ -30,9 +32,6 @@ namespace Service.Features.SavingAccounts
 
             SubPeriodID = monthlyDepositsPreviewGenerator.SubPeriodID;
 
-            if (monthlyDepositsPreviewGenerator.PeriodID <= 0)
-                return Result<bool>.Failure("Debe seleccionar un período");
-
             var savingAccountIDs = depositsForPreview.Where(a => a.IsValid).Select(a => a.SavingAccountID).ToList();
 
             if (savingAccountIDs.Count == 0)
@@ -47,10 +46,15 @@ namespace Service.Features.SavingAccounts
             if (savingAccountIDs.Count != depositsForPreview.Count)
                 CreatedMessage = "Algunas cotizaciones no fueron procesadas.";
 
+            companyDomain = _moneySaverRepo.GetDefaultCompany();
+
             AddDepositToDomain(savingAccountsDomain, depositsForPreview);
             RemoveUnnecesaryDepositsDataFromDomain(savingAccountsDomain);
 
-            _moneySaverRepo.AddDepositsToSavingAccounts(savingAccountsDomain);
+            var dbResult = _moneySaverRepo.AddDepositsToSavingAccounts(savingAccountsDomain, companyDomain);
+
+            if (dbResult == false)
+                return Result<bool>.Failure("Hubo un error al guardar en base de datos.");
 
             return Result<bool>.Created(true, CreatedMessage);
         }
@@ -60,6 +64,7 @@ namespace Service.Features.SavingAccounts
         {
             saDomainList.ForEach(saD =>
             {
+                saD.Company = companyDomain;
                 var depositData = depositsForPreview.FirstOrDefault(data => data.SavingAccountID == saD.SavingAccountID);
 
                 if (depositData != null)

@@ -285,6 +285,9 @@ namespace SQLServerMigrations.Migrations
                     b.Property<int>("LoanInterestID")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("PaperCost")
+                        .HasColumnType("money");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -470,6 +473,12 @@ namespace SQLServerMigrations.Migrations
                     b.Property<int>("PeriodID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("SavingAccInterestProcessed")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("SavingAccInterestRate")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -535,7 +544,7 @@ namespace SQLServerMigrations.Migrations
             modelBuilder.Entity("Service.Core.DataModel.LoanPaymentHistoryDataModel", b =>
                 {
                     b.HasOne("Service.Core.DataModel.LoansDataModel", "Loan")
-                        .WithMany()
+                        .WithMany("LoanPaymentHistories")
                         .HasForeignKey("LoanID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -629,7 +638,7 @@ namespace SQLServerMigrations.Migrations
             modelBuilder.Entity("Service.Core.DataModel.SubPeriodsDataModel", b =>
                 {
                     b.HasOne("Service.Core.DataModel.PeriodsDataModel", "Period")
-                        .WithMany()
+                        .WithMany("SubPeriods")
                         .HasForeignKey("PeriodID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -640,6 +649,13 @@ namespace SQLServerMigrations.Migrations
             modelBuilder.Entity("Service.Core.DataModel.LoansDataModel", b =>
                 {
                     b.Navigation("LoanInstallments");
+
+                    b.Navigation("LoanPaymentHistories");
+                });
+
+            modelBuilder.Entity("Service.Core.DataModel.PeriodsDataModel", b =>
+                {
+                    b.Navigation("SubPeriods");
                 });
 
             modelBuilder.Entity("Service.Core.DataModel.SavingAccountsDataModel", b =>

@@ -140,7 +140,7 @@
             txtINSS.Mask = "9999999999";
             txtINSS.Name = "txtINSS";
             txtINSS.Size = new Size(125, 31);
-            txtINSS.TabIndex = 18;
+            txtINSS.TabIndex = 1;
             txtINSS.ValidatingType = typeof(int);
             // 
             // txtDescription
@@ -150,7 +150,7 @@
             txtDescription.Location = new Point(27, 303);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(250, 73);
-            txtDescription.TabIndex = 20;
+            txtDescription.TabIndex = 3;
             txtDescription.Text = "";
             // 
             // label1
@@ -174,7 +174,7 @@
             txtInstallments.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             txtInstallments.Name = "txtInstallments";
             txtInstallments.Size = new Size(107, 31);
-            txtInstallments.TabIndex = 22;
+            txtInstallments.TabIndex = 5;
             txtInstallments.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // label2
@@ -207,11 +207,11 @@
             txtLoanAmount.DecimalPlaces = 2;
             txtLoanAmount.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             txtLoanAmount.Location = new Point(299, 165);
-            txtLoanAmount.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
+            txtLoanAmount.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
             txtLoanAmount.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             txtLoanAmount.Name = "txtLoanAmount";
             txtLoanAmount.Size = new Size(164, 31);
-            txtLoanAmount.TabIndex = 25;
+            txtLoanAmount.TabIndex = 4;
             txtLoanAmount.Value = new decimal(new int[] { 1000, 0, 0, 0 });
             // 
             // dtStartDate
@@ -222,7 +222,7 @@
             dtStartDate.Location = new Point(299, 303);
             dtStartDate.Name = "dtStartDate";
             dtStartDate.Size = new Size(172, 31);
-            dtStartDate.TabIndex = 27;
+            dtStartDate.TabIndex = 6;
             // 
             // label5
             // 
@@ -534,7 +534,7 @@
             txtGurantorAddress.Location = new Point(294, 138);
             txtGurantorAddress.Name = "txtGurantorAddress";
             txtGurantorAddress.Size = new Size(292, 101);
-            txtGurantorAddress.TabIndex = 56;
+            txtGurantorAddress.TabIndex = 11;
             txtGurantorAddress.Text = "";
             // 
             // label13
@@ -559,7 +559,7 @@
             txtGuarantorBaseIncome.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             txtGuarantorBaseIncome.Name = "txtGuarantorBaseIncome";
             txtGuarantorBaseIncome.Size = new Size(164, 31);
-            txtGuarantorBaseIncome.TabIndex = 54;
+            txtGuarantorBaseIncome.TabIndex = 10;
             txtGuarantorBaseIncome.Value = new decimal(new int[] { 1000, 0, 0, 0 });
             // 
             // label12
@@ -582,7 +582,7 @@
             txtGuarantorINSS.Mask = "9999999999";
             txtGuarantorINSS.Name = "txtGuarantorINSS";
             txtGuarantorINSS.Size = new Size(125, 31);
-            txtGuarantorINSS.TabIndex = 52;
+            txtGuarantorINSS.TabIndex = 9;
             txtGuarantorINSS.ValidatingType = typeof(int);
             // 
             // txtGuarantorWorkArea
@@ -590,7 +590,7 @@
             txtGuarantorWorkArea.Location = new Point(24, 138);
             txtGuarantorWorkArea.Name = "txtGuarantorWorkArea";
             txtGuarantorWorkArea.Size = new Size(196, 31);
-            txtGuarantorWorkArea.TabIndex = 51;
+            txtGuarantorWorkArea.TabIndex = 8;
             // 
             // label11
             // 
@@ -609,7 +609,7 @@
             txtGuarantorFullName.Location = new Point(24, 62);
             txtGuarantorFullName.Name = "txtGuarantorFullName";
             txtGuarantorFullName.Size = new Size(236, 31);
-            txtGuarantorFullName.TabIndex = 49;
+            txtGuarantorFullName.TabIndex = 7;
             // 
             // label10
             // 
@@ -642,7 +642,7 @@
             txtCKCode.Mask = "9999999";
             txtCKCode.Name = "txtCKCode";
             txtCKCode.Size = new Size(97, 31);
-            txtCKCode.TabIndex = 49;
+            txtCKCode.TabIndex = 2;
             txtCKCode.ValidatingType = typeof(int);
             // 
             // FrmLoanNew

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Core.Dtos
 {
-    public class MonthlyDepositsFromPDFDto
+    public class MonthlyAmountsFromPDFDto
     {
         public string INSSNo { get; set; }
         public decimal Amount { get; set; }

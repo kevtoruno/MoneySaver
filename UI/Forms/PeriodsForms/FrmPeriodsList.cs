@@ -42,5 +42,20 @@ namespace UI.Forms.PeriodsForms
         {
             LoadGridData();
         }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            if (this.gridPeriodsList.Rows.Count <= 0)
+                return;
+
+            if (this.gridPeriodsList.CurrentRow.Cells[0].Value == null)
+            {
+                MessageBox.Show("Debe seleccionar un período.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int selectedPeriodID = (int)this.gridPeriodsList.CurrentRow.Cells[0].Value;
+            Program.InitialMenu.OpenChildForm(new FrmPeriodToDetail(selectedPeriodID));
+        }
     }
 }

@@ -51,9 +51,12 @@ namespace Domain.Entities
     public class SubPeriodDomain 
     {
         public int SubPeriodID { get; set; }
-        public int Month { get; set; }  
+        public int Month { get; set; }
+        public int PeriodID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public decimal SavingAccInterestRate { get; set; }
+        public bool SavingAccInterestProcessed { get; set; }
         public string SubPeriodName
         {
             get

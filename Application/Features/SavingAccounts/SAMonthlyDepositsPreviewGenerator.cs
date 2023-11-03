@@ -17,7 +17,7 @@ namespace Service.Features.SavingAccounts
     {
         private readonly IMoneySaverRepository _moneySaverRepo;
         private List<MonthlyDepositsForPreviewDto> DepositsForPreviewDtos;
-        private List<MonthlyDepositsFromPDFDto> DepositsDataFromPDF;
+        private List<MonthlyAmountsFromPDFDto> DepositsDataFromPDF;
         public List<SavingAccountsDataModel> SavingAccountsWithDepositsData { get; private set; }
         public int SubPeriodID { get; private set; }
         public int PeriodID { get; set; }
@@ -25,7 +25,7 @@ namespace Service.Features.SavingAccounts
         {
             _moneySaverRepo = moneySaverRepo;
             DepositsForPreviewDtos = new List<MonthlyDepositsForPreviewDto>();
-            DepositsDataFromPDF = new List<MonthlyDepositsFromPDFDto>();
+            DepositsDataFromPDF = new List<MonthlyAmountsFromPDFDto>();
             SavingAccountsWithDepositsData = new List<SavingAccountsDataModel>();
         }
 
@@ -41,7 +41,9 @@ namespace Service.Features.SavingAccounts
                 if (SubPeriodID == 0)
                     return Result<List<MonthlyDepositsForPreviewDto>>.Failure("No existe un subperiodo para la fecha seleccionada.");
 
-                SetDepositsDataFromPDF(path, date);
+                var monthlyAmountsFromPDFExtractor = new MonthlyAmountsPDFExtractor();
+
+                DepositsDataFromPDF = monthlyAmountsFromPDFExtractor.GetMonthlyAmountsFromPDFDto(path,date);
 
                 SavingAccountsWithDepositsData = _moneySaverRepo.GetSavingAccountsWithDepositsForPeriodData(PeriodID);
 
@@ -49,83 +51,16 @@ namespace Service.Features.SavingAccounts
 
                 return Result<List<MonthlyDepositsForPreviewDto>>.Success(DepositsForPreviewDtos.OrderBy(a => a.IsValid).ThenBy(a => a.INSSNo).ToList());
             }
-            catch (FormatException ex)
+            catch (ServiceValidationException ex)
             {
                 return Result<List<MonthlyDepositsForPreviewDto>>.Failure(ex.Message);
             }   
 
             catch (Exception ex)
             {
+                Helper.SendErrorToText(ex);
                 return Result<List<MonthlyDepositsForPreviewDto>>.Failure(ex.Message);
             }  
-        }
-
-        private void SetDepositsDataFromPDF(string path, DateTime date)
-        {
-            try
-            {
-                var pdfDocument = new PdfDocument(new PdfReader(path));
-
-                StringBuilder processed = new StringBuilder();
-
-                var monthlyDepositGenerator = new MonthlyDepositsDtoGenerator();
-
-                if (pdfDocument.GetNumberOfPages() <= 0)
-                    throw new FormatException("Archivo PDF invalido");
-
-                bool isPDFDateValid = CheckIfPDFDateIsValid(pdfDocument, date);
-
-                if (isPDFDateValid == false)
-                    throw new FormatException("La fecha seleccionada no coincide con la fecha del archivo PDF");
-
-                for (int i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
-                {
-                    var page = pdfDocument.GetPage(i);
-
-                    string textPage = PdfTextExtractor.GetTextFromPage(page);
-                    processed.Append(textPage);
-
-                    monthlyDepositGenerator.ProcessTextPage(textPage);
-                }
-
-                DepositsDataFromPDF = monthlyDepositGenerator.MonthlyDeposits;
-            }
-            catch (FormatException ex)
-            {
-                throw ex;
-            }
-            catch (Exception)
-            {
-                throw new Exception("La estructura del archivo PDF no es valida.");
-            }
-        }
-
-        private bool CheckIfPDFDateIsValid(PdfDocument pdfDocument,  DateTime date)
-        {
-            try
-            {
-                bool isDateValid = false;
-
-                string firstPage = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(1));
-
-                var splittedLinesFromPage = firstPage.Split('\n');
-
-                var dateData = splittedLinesFromPage[3];
-
-                string dateString = dateData.Remove(0,7);
-
-                var dateFromPDF = DateTime.Parse(dateString);
-
-                if (date.Month == dateFromPDF.Month && date.Year == dateFromPDF.Year)
-                    isDateValid = true;
-
-                return isDateValid;
-            }
-            catch (Exception)
-            {
-                throw; /*If there was a parsing error during this validation... 
-                              *let's just ignore the validation itself. In the end this validation is more of a bonus.*/
-            }   
         }
 
         private void SetDepositsForPreviewDtos(DateTime depositDate)

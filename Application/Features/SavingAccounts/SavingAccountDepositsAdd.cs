@@ -42,6 +42,7 @@ namespace Service.Features.SavingAccounts
 
                 var SADomain = _moneySaverRepo.GetSavingAccountDomain(sADepositToCreateDto.SavingAccountID);
 
+                SADomain.Company = _moneySaverRepo.GetDefaultCompany();
                 SADomain.AddDeposit(sADepositToCreateDto.Amount, sADepositToCreateDto.CreatedDate, SubPeriodID, sADepositToCreateDto.InterestsAmount);
 
                 var result = _moneySaverRepo.AddDepositToSavingAccount(SADomain);

@@ -28,10 +28,22 @@
     <Compile Update="Forms\LoanForms\FrmLoansList.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\LoanForms\FrmLoansMassCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\LoanForms\FrmLoansMonthlyPayments.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\PeriodsForms\FrmPeriodNew.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\PeriodsForms\FrmPeriodsList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\PeriodsForms\FrmPeriodToDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\PeriodsForms\FrnSubPeriodCalculateInterestsForSavingAcc.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SavingAccountForms\FrmSavingAccountAddDeposit.cs">
@@ -49,6 +61,9 @@
     <Compile Update="Forms\SavingAccountForms\FrmSavingAccountList.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\SavingAccountForms\FrmSavingAccountReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SavingAccountForms\FrmSavingAccountsMontlyDeposit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,5 +73,10 @@
     <Compile Update="InitialMenu.cs">
       <SubType>Form</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Reports\DataSet1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
 </Project>
