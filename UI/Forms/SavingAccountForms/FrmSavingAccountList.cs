@@ -38,7 +38,7 @@ namespace UI.Forms
             }
             else
             {
-                var savingAccountData = Mediator.Send(new GetSavingAccountListQuery { INSSNo = this.txtINSS.Text });
+                var savingAccountData = Mediator.Send(new GetSavingAccountListQuery { INSSNo = Program.SavingAccountsSearchFilter });
 
                 var bindingSource = CreateBindingSource(savingAccountData.Result);
 
@@ -49,11 +49,17 @@ namespace UI.Forms
 
         private void FrmSavingAccountList_Load(object sender, EventArgs e)
         {
-            LoadGridData();
+            this.txtINSS.Text = Program.SavingAccountsSearchFilter;
+
+            if (Program.SavingAccountsSearchFilter != "")
+            {
+                LoadGridData();
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            Program.SavingAccountsSearchFilter = this.txtINSS.Text;
             LoadGridData();
         }
 

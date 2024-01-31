@@ -54,7 +54,7 @@ namespace Domain.Entities.Loans
             Interests = LoanAmount * (DefaultLoanInterest.InterestRate / 100);
             Amount = LoanAmount - Interests - DefaultLoanInterest.LoanPaperCost;
             TermAmount = LoanAmount / TotalTerms;
-            this.CreatedDate = DateTime.Now;
+            this.CreatedDate = StartDate.AddMonths(-1);
             this.IsCurrent = true;
             this.PaperCost = DefaultLoanInterest.LoanPaperCost;
         }

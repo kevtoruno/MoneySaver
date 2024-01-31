@@ -156,7 +156,7 @@
             gridPreview.RowHeadersVisible = false;
             gridPreview.RowHeadersWidth = 51;
             gridPreview.RowTemplate.Height = 29;
-            gridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridPreview.SelectionMode = DataGridViewSelectionMode.CellSelect;
             gridPreview.Size = new Size(1132, 441);
             gridPreview.TabIndex = 59;
             gridPreview.CellFormatting += gridPreview_CellFormatting;

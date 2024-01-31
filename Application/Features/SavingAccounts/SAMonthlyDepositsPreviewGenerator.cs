@@ -49,7 +49,7 @@ namespace Service.Features.SavingAccounts
 
                 SetDepositsForPreviewDtos(date);
 
-                return Result<List<MonthlyDepositsForPreviewDto>>.Success(DepositsForPreviewDtos.OrderBy(a => a.IsValid).ThenBy(a => a.INSSNo).ToList());
+                return Result<List<MonthlyDepositsForPreviewDto>>.Success(DepositsForPreviewDtos.OrderBy(a => a.IsValid).ThenBy(a => a.ErrorMessage).ThenBy(a => a.INSSNo).ToList());
             }
             catch (ServiceValidationException ex)
             {

@@ -94,7 +94,7 @@ namespace Service.Features.Loans
         {
             try
             {
-                var loansToCreateValidator = new LoanToCreateValidator(validateGuarantor: false);
+                var loansToCreateValidator = new LoanToCreateValidator(validateGuarantor: true);
                 var dtoValidationErros = loansToCreateValidator.Validate(loanToCreateDto).Errors;
 
                 if (dtoValidationErros.Count > 0)

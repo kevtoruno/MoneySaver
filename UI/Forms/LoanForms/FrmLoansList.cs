@@ -31,17 +31,23 @@ namespace UI.Forms.LoanForms
 
         private void FrmLoansList_Load(object sender, EventArgs e)
         {
-            LoadGridData();
+            this.txtINSS.Text = Program.LoanSearchFilter;
+
+            if (Program.LoanSearchFilter != "")
+            {
+                LoadGridData();
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            Program.LoanSearchFilter = this.txtINSS.Text;
             LoadGridData();
         }
 
         public void LoadGridData()
         {
-            var loansData = Mediator.Send(new GetLoanToListQuery { INSS = this.txtINSS.Text }).Result;
+            var loansData = Mediator.Send(new GetLoanToListQuery { INSS = Program.LoanSearchFilter }).Result;
 
             var bindingSource = CreateBindingSource(loansData);
 

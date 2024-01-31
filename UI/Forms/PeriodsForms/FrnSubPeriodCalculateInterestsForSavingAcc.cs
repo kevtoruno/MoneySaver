@@ -45,10 +45,10 @@ namespace UI.Forms.PeriodsForms
 
         private void SetLabelsData()
         {
-            this.lblTotalAmountLoanedData.Text = _subPeriodInterestsCalculationDto.TotalAmountLoaned.CordobaFormat();
-            this.lblTotalAmountRecoveredData.Text = _subPeriodInterestsCalculationDto.TotalAmountRecovered.CordobaFormat();
+            this.lblTotalAmountLoanedData.Text = _subPeriodInterestsCalculationDto.TotalLoansAmount.CordobaFormat();
+            this.lblTotalAmountRecoveredData.Text = _subPeriodInterestsCalculationDto.TotalExpensesAmount.CordobaFormat();
             this.lblTotalDepositsAmountData.Text = _subPeriodInterestsCalculationDto.TotalDepositAmount.CordobaFormat();
-            this.lblInterestFactorData.Text = _subPeriodInterestsCalculationDto.SavingAccInterestRateDisplay.ToString() + " %";
+            this.lblInterestFactorData.Text = _subPeriodInterestsCalculationDto.SavingAccInterestRateDisplay.ToString("0.00") + " %";
         }
 
         private void btnPreview_Click(object sender, EventArgs e)
@@ -57,7 +57,7 @@ namespace UI.Forms.PeriodsForms
             {
                 SubPeriodID = _subPeriodID,
                 UtilityMonths = Convert.ToInt32(this.txtUtilityMonths.Value),
-                DepositDate = dtDepositDate.Value       
+                DepositDate = dtDepositDate.Value
             }).Result;
 
             if (result.IsSucess)
@@ -69,6 +69,10 @@ namespace UI.Forms.PeriodsForms
             }
             else
             {
+                if (result.Value != null)
+                    _subPeriodInterestsCalculationDto = result.Value;
+
+                SetLabelsData();
                 HandleResult(result);
             }
         }
@@ -92,7 +96,7 @@ namespace UI.Forms.PeriodsForms
             {
                 SubPeriodID = _subPeriodID,
                 UtilityMonths = Convert.ToInt32(this.txtUtilityMonths.Value),
-                DepositDate = dtDepositDate.Value.Date    
+                DepositDate = dtDepositDate.Value.Date
             }).Result;
 
             HandleResult(result);
@@ -101,6 +105,11 @@ namespace UI.Forms.PeriodsForms
             {
                 Program.InitialMenu.OpenChildForm(_frmPeriodToDetail);
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

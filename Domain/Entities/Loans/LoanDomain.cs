@@ -27,6 +27,12 @@ public class LoanDomain
     public decimal Amount { get; set; }
     public decimal DueAmount {  get => LoanInstallments.Sum(i => i.DueAmount); }
     public decimal TermAmount { get; set; }
+
+    /// <summary>
+    /// Amount minus interests included.
+    /// This amount equals LoanAmount - interests.
+    /// </summary>
+    public decimal BaseAmount { get => LoanAmount - Interests; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public DateTime CreatedDate { get; set; }
@@ -68,8 +74,8 @@ public class LoanDomain
         if (amount <= 0)
             throw new Exception("La cantidad a pagar no puede ser menor o igual a 0");
 
-        if (amount % this.TermAmount != 0)
-            throw new AmountIsNotMultipleWithTermAmount(this.TermAmount);
+        /*if (amount % this.TermAmount != 0)
+            throw new AmountIsNotMultipleWithTermAmount(this.TermAmount);*/
     }
 
     private void PayPendingInstallmentsForAmount(decimal amount, DateTime payDate)
@@ -89,23 +95,29 @@ public class LoanDomain
         }
     }
 
-    public void PayInstallment(int installmentID, int subPeriodID, DateTime payDate)
+    public void PayInstallment(int installmentID, int subPeriodID, DateTime payDate, decimal payAmount = 0)
     {
         var loanInstallmentToPay = LoanInstallments.FirstOrDefault(l => l.LoanInstallmentID == installmentID) 
             ?? throw new Exception("No existe cuota");
 
-        decimal paymentAmount = loanInstallmentToPay.DueAmount;
+        decimal installmentDueAmount = loanInstallmentToPay.DueAmount;
 
         CheckIfDateItsLatest(payDate);
 
-        loanInstallmentToPay.FullPay(payDate);   
+        int nonDecimalPayAmount = (int) payAmount;
+        int nonDecimalInstallmentDueAmount = (int)installmentDueAmount;
 
-        AddPaymentHistory(subPeriodID, payDate, paymentAmount);
+        if (payAmount == 0 || nonDecimalPayAmount == nonDecimalInstallmentDueAmount)
+        {
+            loanInstallmentToPay.FullPay(payDate);   
 
-        FinishLoanIfApplies();
+            AddPaymentHistory(subPeriodID, payDate, installmentDueAmount);
 
-        Company.DecreaseFloatingAmount(paymentAmount);
-        Company.AddCurrentAmount(paymentAmount);
+            FinishLoanIfApplies();
+
+            Company.DecreaseFloatingAmount(installmentDueAmount);
+            Company.AddCurrentAmount(installmentDueAmount);
+        }
     }
 
     private void AddPaymentHistory(int? subPeriodID, DateTime payDate, decimal amount, bool isExtraPayment = false) 
@@ -133,11 +145,11 @@ public class LoanDomain
         var latestPaymentDate = LoanPaymentHistories
             .OrderByDescending(x => x.Date).FirstOrDefault();
 
-        if (latestPaymentDate != null)
+        /*if (latestPaymentDate != null)
         {
             if (latestPaymentDate.Date >= payDate)
                 throw new Exception("La fecha seleccionada debe ser mayor a la fecha del ultimo pago realizado.");
-        }
+        }*/
     }
 }
 

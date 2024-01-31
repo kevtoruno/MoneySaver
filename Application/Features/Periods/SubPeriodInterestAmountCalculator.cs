@@ -46,13 +46,13 @@ namespace Service.Features.Periods
                 if (depositDateWithinSubPeriodRange == false)
                     return Result<SubPeriodInterestsCalculationDto>.Failure("La fecha seleccionada debe de estar dentro del rango del subperiodo.");
 
-                SetDtoBaseData(spData, utilityMonths);
+                SetDtoUtilityAmountData(spData, utilityMonths);
                 SubPInterestCalcDto.InterestAmountCalculatedForSavingAccounts = new List<InterestAmountCalculatedForSADto>();
 
                 CalculateAndSetInterestRate();
 
                 if (SubPeriod.SavingAccInterestRate <= 0)
-                    return Result<SubPeriodInterestsCalculationDto>.Failure("El resultado para el factor interes es del 0%, no se puede previsualizar.");
+                    return Result<SubPeriodInterestsCalculationDto>.FailureWithResult("El resultado para el factor interes es del 0%, no se puede previsualizar.", SubPInterestCalcDto);
 
                 SetInterestAmountCalculatedForSA(depositDate);
                 return Result<SubPeriodInterestsCalculationDto>.Success(SubPInterestCalcDto);
@@ -76,13 +76,15 @@ namespace Service.Features.Periods
 
         private void CalculateAndSetInterestRate()
         {
-            decimal profitAmount = SubPInterestCalcDto.TotalAmountRecovered - SubPInterestCalcDto.TotalAmountLoaned;
-            decimal interestRate = 0.3426M;
+            decimal profitAmount = SubPInterestCalcDto.TotalLoansAmount - SubPInterestCalcDto.TotalExpensesAmount;
+            decimal interestRate = 0;
 
             if (profitAmount > 0)
             {
                 interestRate = profitAmount / SubPInterestCalcDto.TotalDepositAmount;
             }
+
+            //interestRate = (decimal)0.3968; //This is to force Dec 2023 calculation
 
             SubPeriod.SavingAccInterestRate = interestRate;
             SubPInterestCalcDto.SavingAccInterestRate = interestRate;
@@ -92,7 +94,7 @@ namespace Service.Features.Periods
         {
             var savingAccData = _moneySaverRepo.GetSavingAccountsWithDepositsForPeriodData(SubPeriod.PeriodID);
 
-            SavingAccounts = _mapper.Map<List<SavingAccountDomainAggregate>>(savingAccData);
+            SavingAccounts = _mapper.Map<List<SavingAccountDomainAggregate>>(savingAccData.OrderBy(sa => sa.Client.INSS));
 
             DateTime startDate = SubPeriod.StartDate.AddMonths(-5).Date;
             DateTime endDate = SubPeriod.EndDate;
@@ -132,7 +134,7 @@ namespace Service.Features.Periods
             {
                 var subPeriodDataM = _moneySaverRepo.GetSubPeriod(subPeriodID);
 
-                SetDtoBaseData(subPeriodDataM);
+                SetDtoUtilityAmountData(subPeriodDataM);
 
                 return Result<SubPeriodInterestsCalculationDto>.Success(SubPInterestCalcDto);
             }
@@ -143,14 +145,16 @@ namespace Service.Features.Periods
             
         }
 
-        private void SetDtoBaseData(SubPeriodsDataModel subPeriodDataM, int utilityMonths = 6)
+        private void SetDtoUtilityAmountData(SubPeriodsDataModel subPeriodDataM, int utilityMonths = 6)
         {
+            var totalLoansAmountsValues = _loansRepo.GetTotalLoansAmountsForPeriodOfTime(subPeriodDataM, utilityMonths);
+
             SubPInterestCalcDto.SubPeriodID = subPeriodDataM.SubPeriodID;
             SubPInterestCalcDto.PeriodID = subPeriodDataM.PeriodID;
             SubPInterestCalcDto.PeriodYear = subPeriodDataM.Period.Year;
             SubPInterestCalcDto.SubPeriodName = $"{subPeriodDataM.StartDate.ToString("MMMM")} - {subPeriodDataM.Period.Year}";
-            SubPInterestCalcDto.TotalAmountLoaned = _loansRepo.GetTotalAmountLoanedForLastSixMonths(subPeriodDataM, utilityMonths);
-            SubPInterestCalcDto.TotalAmountRecovered = _loansRepo.GetTotalAmountRecoveredForLastSixMonths(subPeriodDataM, utilityMonths);
+            SubPInterestCalcDto.TotalLoansAmount = totalLoansAmountsValues.TotalLoansAmount;
+            SubPInterestCalcDto.TotalExpensesAmount = totalLoansAmountsValues.TotalLoansExpensesAmount;
             SubPInterestCalcDto.SavingAccInterestProcessed =    subPeriodDataM.SavingAccInterestProcessed;
             SubPInterestCalcDto.SavingAccInterestRate = subPeriodDataM.SavingAccInterestRate;
             SubPInterestCalcDto.TotalDepositAmount = _moneySaverRepo.GetTotalDepositAmountForTheLastSixMonths(subPeriodDataM);

@@ -14,6 +14,7 @@ namespace Service.Handlers.LoansHandlers;
 
 public class CreateMonthlyLoansPaymentsCommand : IRequest<Result<bool>>
 {
+    public DateTime SubPeriodDate { get; set; }
     public DateTime Date { get; set; }
     public string Path { get; set; }
 }
@@ -35,7 +36,7 @@ internal class CreateMonthlyLoansPaymentsHandler : IRequestHandler<CreateMonthly
     {
         var paymentsCreator = new LoansMonthlyPaymentCreator(_moneySaverRepo, _loansRepo, _mapper);
 
-        var result = paymentsCreator.CreateMonthlyPayments(request.Path, request.Date);
+        var result = paymentsCreator.CreateMonthlyPayments(request.Path, request.Date, request.SubPeriodDate);
 
         return Task.FromResult(result);
     }

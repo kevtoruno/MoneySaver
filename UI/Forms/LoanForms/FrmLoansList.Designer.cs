@@ -280,6 +280,7 @@
             btnMassLoanCreator.TabIndex = 24;
             btnMassLoanCreator.Text = "Creador masivo";
             btnMassLoanCreator.UseVisualStyleBackColor = false;
+            btnMassLoanCreator.Visible = false;
             btnMassLoanCreator.Click += btnMassLoanCreator_Click;
             // 
             // FrmLoansList

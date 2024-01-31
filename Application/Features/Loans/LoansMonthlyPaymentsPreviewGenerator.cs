@@ -24,6 +24,7 @@ namespace Service.Features.Loans
         private List<MonthlyAmountsFromPDFDto> PaymentDataFromPDF;
         private List<LoansDataModel> loansData;
         private List<LoanInstallmentsDataModel> PendingInstallmentsForSubPeriod;
+        private MonthlyLoanPaymentsForPreviewViewModel ViewModel;
         public int SubPeriodID { get; private set; }
         public List<LoansDataModel> LoansData { get => loansData; }
         public LoansMonthlyPaymentsPreviewGenerator(IMoneySaverRepository moneySaverRepo,
@@ -37,16 +38,16 @@ namespace Service.Features.Loans
             PaymentsForPreviewDtos = new List<MonthlyLoanPaymentsForPreviewDto>();
         }
 
-        public Result<List<MonthlyLoanPaymentsForPreviewDto>> GenerateMonthlyPaymentsForPreview(string path, DateTime date)
+        public Result<MonthlyLoanPaymentsForPreviewViewModel> GenerateMonthlyPaymentsForPreview(string path, DateTime date, DateTime subPeriodDate)
         {
             try
             {
-                var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(date);
+                var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(subPeriodDate);
 
                 SubPeriodID = subPeriod != null ? subPeriod.SubPeriodID : 0; 
 
                 if (SubPeriodID == 0)
-                    return Result<List<MonthlyLoanPaymentsForPreviewDto>>.Failure("No existe un subperiodo para la fecha seleccionada.");
+                    return Result<MonthlyLoanPaymentsForPreviewViewModel>.Failure("No existe un subperiodo para la fecha seleccionada.");
 
                 var monthlyAmountsFromPDFExtractor = new MonthlyAmountsPDFExtractor();
 
@@ -61,18 +62,26 @@ namespace Service.Features.Loans
                 SetInstallmentsForPreview();
                 AddNonExistingPDFPaymentsNotFoundInDatabase(date);
 
-                return Result<List<MonthlyLoanPaymentsForPreviewDto>>.Success(PaymentsForPreviewDtos.OrderBy(a => a.IsValid).ThenBy(a => a.INSSNo).ToList());
+                PaymentsForPreviewDtos = PaymentsForPreviewDtos
+                    .OrderBy(a => a.IsValid)
+                    .ThenBy(a => a.ErrorMessage)
+                    .ThenBy(a => a.INSSNo)
+                    .ToList();
+
+                SetViewModel();
+
+                return Result<MonthlyLoanPaymentsForPreviewViewModel>.Success(ViewModel);
             }
             catch (FormatException ex)
             {
                 Helper.SendErrorToText(ex);
-                return Result<List<MonthlyLoanPaymentsForPreviewDto>>.Failure(ex.Message);
+                return Result<MonthlyLoanPaymentsForPreviewViewModel>.Failure(ex.Message);
             }   
 
             catch (Exception ex)
             {
                 Helper.SendErrorToText(ex);
-                return Result<List<MonthlyLoanPaymentsForPreviewDto>>.Failure(ex.Message);
+                return Result<MonthlyLoanPaymentsForPreviewViewModel>.Failure(ex.Message);
             }  
         }
 
@@ -95,29 +104,73 @@ namespace Service.Features.Loans
 
                 SetValidPaymentPreviewIfExistsOnPDFData(paymentPreview);
 
-                PaymentsForPreviewDtos.Add(paymentPreview);
+                bool alreadyExistingInvalidPayment = PaymentsForPreviewDtos.Any(p => p.IsValid == false
+                && (int) p.PendingAmount == (int) paymentPreview.PendingAmount && 
+                (int) p.PaymentAmount == (int) paymentPreview.PaymentAmount);
+
+                if (alreadyExistingInvalidPayment == false)
+                {
+                    PaymentsForPreviewDtos.Add(paymentPreview);
+                }
+
             }
         }
 
         private void SetValidPaymentPreviewIfExistsOnPDFData(MonthlyLoanPaymentsForPreviewDto paymentPreview)
         {
-            var paymentDataFromPDF = PaymentDataFromPDF.FirstOrDefault(p => p.INSSNo == paymentPreview.INSSNo);
+            var paymentsDataFromPDF = PaymentDataFromPDF.Where(p => p.INSSNo == paymentPreview.INSSNo).ToList();
 
-            if (paymentDataFromPDF == null)
+            if (paymentsDataFromPDF.Count == 0)
             {
                 paymentPreview.IsValid = false;
                 paymentPreview.ErrorMessage = "No existe un pago en el PDF para este préstamo";
             }
             else
-            {   
-                paymentPreview.IsValid = true;
-                paymentPreview.PaymentAmount = paymentDataFromPDF.Amount;
+            {
+                foreach (var paymentDataFromPDF in paymentsDataFromPDF)
+                {
+                    int nonDPendingAmount = (int)paymentPreview.PendingAmount;
+                    int nonDPaymentAmount = (int)paymentDataFromPDF.Amount;
 
-                //Porque PDFAmount +1? Por si cualquier posible error decimal
-                //que exista entre lo que viene en el PDF y lo que está en BD.
-                if (paymentPreview.PendingAmount > (paymentDataFromPDF.Amount + 1))
-                    paymentPreview.ErrorMessage = "Pago parcial";                
+                    paymentPreview.PaymentAmount = paymentDataFromPDF.Amount;
+
+                    if (nonDPendingAmount == nonDPaymentAmount)
+                    {
+                        paymentPreview.IsValid = true;
+
+                        if (paymentsDataFromPDF.Count > 1)
+                            paymentPreview.ErrorMessage = $"Existen {paymentsDataFromPDF.Count} pagos diferentes en el PDF";
+                    }
+                    else
+                        AddPaymentAmountDifferentThanPendingAmount(paymentPreview, nonDPaymentAmount);
+                }
             }
+        }
+
+        private void AddPaymentAmountDifferentThanPendingAmount(MonthlyLoanPaymentsForPreviewDto paymentPreview,
+            int nonDPaymentAmount)
+        {
+            int nonDPendingAmount = (int) paymentPreview.PendingAmount;
+            string errorMessage = "";
+
+            if (nonDPendingAmount > nonDPaymentAmount)
+                errorMessage = "El pago es menor a lo que está pendiente";
+            else if (nonDPaymentAmount > nonDPendingAmount)
+                errorMessage = "El pago es mayor a lo que está pendiente";
+
+            var notFoundPaymentPreview = new MonthlyLoanPaymentsForPreviewDto
+            {
+                PendingAmount = paymentPreview.PendingAmount,
+                ClientFullName = paymentPreview.ClientFullName,
+                IsValid = false,
+                Date = paymentPreview.Date,
+                ErrorMessage = errorMessage,
+                INSSNo = paymentPreview.INSSNo,
+                PaymentAmount = nonDPaymentAmount,
+                LoanInstallmentID = 0
+            };
+
+            PaymentsForPreviewDtos.Add(notFoundPaymentPreview);
         }
 
         private void AddNonExistingPDFPaymentsNotFoundInDatabase(DateTime date)
@@ -134,7 +187,7 @@ namespace Service.Features.Loans
                     ClientFullName = "",
                     IsValid = false,
                     Date = date,
-                    ErrorMessage = "No existe un préstamo asociado.",
+                    ErrorMessage = "No existe una cuota pendiente.",
                     INSSNo = pli.INSSNo,
                     PaymentAmount = pli.Amount,
                     LoanInstallmentID = 0
@@ -142,6 +195,23 @@ namespace Service.Features.Loans
 
                 PaymentsForPreviewDtos.Add(notFoundPaymentPreview);
             });
+        }
+
+        private void SetViewModel()
+        {
+            ViewModel = new MonthlyLoanPaymentsForPreviewViewModel();
+
+            ViewModel.MonthlyPaymentsForPreview = PaymentsForPreviewDtos;
+            ViewModel.TotalClientsFromPDF = PaymentDataFromPDF.Count;
+            ViewModel.TotalPaymentAmountFromPDF = PaymentDataFromPDF.Sum(p => p.Amount).CordobaFormat();
+            ViewModel.ValidPaymentsForProcessing = PaymentsForPreviewDtos.Where(p => p.IsValid).Count();
+
+            ViewModel.TotalPendingAmountForSubperiod = PendingInstallmentsForSubPeriod.Sum(a => a.Amount).CordobaFormat();
+
+            //Pagos existentes en el PDF pero no validos.
+            ViewModel.NotValidPaymentsForProcessing = PaymentsForPreviewDtos 
+                .Where(p => p.IsValid == false && p.ErrorMessage != "No existe un pago en el PDF para este préstamo")
+                .Count();
         }
     }
 }

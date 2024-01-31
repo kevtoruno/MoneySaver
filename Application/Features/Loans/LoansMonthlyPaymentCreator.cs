@@ -31,17 +31,17 @@ namespace Service.Features.Loans
             _loansRepo = loansRepo;
         }
 
-        public Result<bool> CreateMonthlyPayments(string path, DateTime date)
+        public Result<bool> CreateMonthlyPayments(string path, DateTime date, DateTime subPeriodDate)
         {
             try
             {
                 var loansPaymentsPreviewGenerator = new LoansMonthlyPaymentsPreviewGenerator(_moneySaverRepo, _loansRepo);
-                var loanPaymentsForPreview = loansPaymentsPreviewGenerator.GenerateMonthlyPaymentsForPreview(path, date);
+                var loanPaymentsForPreview = loansPaymentsPreviewGenerator.GenerateMonthlyPaymentsForPreview(path, date, subPeriodDate);
 
                 if (loanPaymentsForPreview.IsSucess == false)
                     return Result<bool>.Failure(loanPaymentsForPreview.ErrorMessage);
 
-                PaymentsFromPreview = loanPaymentsForPreview.Value;
+                PaymentsFromPreview = loanPaymentsForPreview.Value.MonthlyPaymentsForPreview;
                 SubPeriodID = loansPaymentsPreviewGenerator.SubPeriodID;
                 companyDomain = _moneySaverRepo.GetDefaultCompany();
 
@@ -88,7 +88,7 @@ namespace Service.Features.Loans
                 if (paymentData != null)
                 {
                     ld.Company = companyDomain; 
-                    ld.PayInstallment(paymentData.LoanInstallmentID, SubPeriodID, paymentDate);
+                    ld.PayInstallment(paymentData.LoanInstallmentID, SubPeriodID, paymentDate, paymentData.PaymentAmount);
                 }
             });
         }

@@ -26,7 +26,6 @@ namespace UI.Forms.LoanForms
             InitializeComponent();
             _frmLoansList = frmLoansList;
             LoanToCreateDto = new LoanToCreateDto();
-            this.dtStartDate.Value = new DateTime(2023, 8, 1); //DELETE THIS, ONLY FOR INSERTING LOANS DATA
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

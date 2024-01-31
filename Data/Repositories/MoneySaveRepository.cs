@@ -542,7 +542,9 @@ namespace Data.Repositories
             var startDate = subPeriod.StartDate.AddMonths(-5).Date;
 
             var totalAmountLoaned = _context.SavingAccountDeposits
-                .Where(l => l.CreatedDate >= startDate && l.CreatedDate <= subPeriod.EndDate)
+                .Include(sa => sa.SavingAccount)
+                .Where(sad => sad.CreatedDate >= startDate && sad.CreatedDate <= subPeriod.EndDate 
+                    && sad.SavingAccount.IsActive == true && sad.DepositType == DepositType.Saving)
                 .Sum(l => l.Amount);
 
             return totalAmountLoaned;

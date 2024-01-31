@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             lblSavingAccTitle = new Label();
             panel1 = new Panel();
+            label2 = new Label();
+            dtDepositDate = new DateTimePicker();
             lblUtilityMonths = new Label();
             txtUtilityMonths = new NumericUpDown();
             lblTotalDepositsAmount = new Label();
@@ -51,10 +53,7 @@
             TotalDepositAmountDisplay = new DataGridViewTextBoxColumn();
             InterestGeneratedAmountDisplay = new DataGridViewTextBoxColumn();
             btnCreate = new Button();
-            btnCancel = new Button();
             btnBackToPeriod = new Button();
-            label2 = new Label();
-            dtDepositDate = new DateTimePicker();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtUtilityMonths).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridInterestFactorPreview).BeginInit();
@@ -96,9 +95,32 @@
             panel1.Size = new Size(1076, 139);
             panel1.TabIndex = 34;
             // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.ForeColor = SystemColors.Control;
+            label2.Location = new Point(545, 60);
+            label2.Name = "label2";
+            label2.Size = new Size(62, 25);
+            label2.TabIndex = 43;
+            label2.Text = "Fecha ";
+            // 
+            // dtDepositDate
+            // 
+            dtDepositDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            dtDepositDate.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dtDepositDate.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dtDepositDate.Format = DateTimePickerFormat.Short;
+            dtDepositDate.Location = new Point(504, 88);
+            dtDepositDate.Name = "dtDepositDate";
+            dtDepositDate.Size = new Size(157, 31);
+            dtDepositDate.TabIndex = 42;
+            // 
             // lblUtilityMonths
             // 
-            lblUtilityMonths.Anchor = AnchorStyles.None;
+            lblUtilityMonths.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblUtilityMonths.AutoSize = true;
             lblUtilityMonths.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblUtilityMonths.ForeColor = SystemColors.Control;
@@ -110,7 +132,7 @@
             // 
             // txtUtilityMonths
             // 
-            txtUtilityMonths.Anchor = AnchorStyles.None;
+            txtUtilityMonths.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             txtUtilityMonths.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             txtUtilityMonths.Location = new Point(681, 88);
             txtUtilityMonths.Maximum = new decimal(new int[] { 6, 0, 0, 0 });
@@ -122,11 +144,11 @@
             // 
             // lblTotalDepositsAmount
             // 
-            lblTotalDepositsAmount.Anchor = AnchorStyles.Right;
+            lblTotalDepositsAmount.Anchor = AnchorStyles.Left;
             lblTotalDepositsAmount.AutoSize = true;
             lblTotalDepositsAmount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalDepositsAmount.ForeColor = Color.White;
-            lblTotalDepositsAmount.Location = new Point(57, 91);
+            lblTotalDepositsAmount.Location = new Point(14, 90);
             lblTotalDepositsAmount.Name = "lblTotalDepositsAmount";
             lblTotalDepositsAmount.Size = new Size(151, 28);
             lblTotalDepositsAmount.TabIndex = 38;
@@ -134,11 +156,11 @@
             // 
             // lblTotalDepositsAmountData
             // 
-            lblTotalDepositsAmountData.Anchor = AnchorStyles.Right;
+            lblTotalDepositsAmountData.Anchor = AnchorStyles.Left;
             lblTotalDepositsAmountData.AutoSize = true;
             lblTotalDepositsAmountData.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalDepositsAmountData.ForeColor = Color.LawnGreen;
-            lblTotalDepositsAmountData.Location = new Point(232, 91);
+            lblTotalDepositsAmountData.Location = new Point(254, 91);
             lblTotalDepositsAmountData.Name = "lblTotalDepositsAmountData";
             lblTotalDepositsAmountData.Size = new Size(60, 28);
             lblTotalDepositsAmountData.TabIndex = 39;
@@ -158,18 +180,19 @@
             // 
             // lblTotalAmountRecovered
             // 
-            lblTotalAmountRecovered.Anchor = AnchorStyles.Right;
+            lblTotalAmountRecovered.Anchor = AnchorStyles.Left;
             lblTotalAmountRecovered.AutoSize = true;
             lblTotalAmountRecovered.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalAmountRecovered.ForeColor = Color.White;
-            lblTotalAmountRecovered.Location = new Point(31, 52);
+            lblTotalAmountRecovered.Location = new Point(14, 52);
             lblTotalAmountRecovered.Name = "lblTotalAmountRecovered";
-            lblTotalAmountRecovered.Size = new Size(177, 28);
+            lblTotalAmountRecovered.Size = new Size(229, 28);
             lblTotalAmountRecovered.TabIndex = 27;
-            lblTotalAmountRecovered.Text = "Total recuperado:";
+            lblTotalAmountRecovered.Text = "Total salida préstamos:";
             // 
             // btnPreview
             // 
+            btnPreview.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnPreview.BackColor = Color.FromArgb(51, 178, 73);
             btnPreview.Cursor = Cursors.Hand;
             btnPreview.FlatAppearance.BorderSize = 0;
@@ -198,23 +221,23 @@
             // 
             // lblTotalAmountLoaned
             // 
-            lblTotalAmountLoaned.Anchor = AnchorStyles.Right;
+            lblTotalAmountLoaned.Anchor = AnchorStyles.Left;
             lblTotalAmountLoaned.AutoSize = true;
             lblTotalAmountLoaned.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalAmountLoaned.ForeColor = Color.White;
-            lblTotalAmountLoaned.Location = new Point(55, 15);
+            lblTotalAmountLoaned.Location = new Point(14, 15);
             lblTotalAmountLoaned.Name = "lblTotalAmountLoaned";
-            lblTotalAmountLoaned.Size = new Size(153, 28);
+            lblTotalAmountLoaned.Size = new Size(168, 28);
             lblTotalAmountLoaned.TabIndex = 34;
-            lblTotalAmountLoaned.Text = "Total préstado:";
+            lblTotalAmountLoaned.Text = "Total préstamos:";
             // 
             // lblTotalAmountRecoveredData
             // 
-            lblTotalAmountRecoveredData.Anchor = AnchorStyles.Right;
+            lblTotalAmountRecoveredData.Anchor = AnchorStyles.Left;
             lblTotalAmountRecoveredData.AutoSize = true;
             lblTotalAmountRecoveredData.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalAmountRecoveredData.ForeColor = Color.LawnGreen;
-            lblTotalAmountRecoveredData.Location = new Point(232, 52);
+            lblTotalAmountRecoveredData.Location = new Point(254, 52);
             lblTotalAmountRecoveredData.Name = "lblTotalAmountRecoveredData";
             lblTotalAmountRecoveredData.Size = new Size(60, 28);
             lblTotalAmountRecoveredData.TabIndex = 28;
@@ -222,11 +245,11 @@
             // 
             // lblTotalAmountLoanedData
             // 
-            lblTotalAmountLoanedData.Anchor = AnchorStyles.Right;
+            lblTotalAmountLoanedData.Anchor = AnchorStyles.Left;
             lblTotalAmountLoanedData.AutoSize = true;
             lblTotalAmountLoanedData.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotalAmountLoanedData.ForeColor = Color.LawnGreen;
-            lblTotalAmountLoanedData.Location = new Point(232, 15);
+            lblTotalAmountLoanedData.Location = new Point(254, 15);
             lblTotalAmountLoanedData.Name = "lblTotalAmountLoanedData";
             lblTotalAmountLoanedData.Size = new Size(60, 28);
             lblTotalAmountLoanedData.TabIndex = 35;
@@ -240,43 +263,43 @@
             gridInterestFactorPreview.BackgroundColor = Color.FromArgb(45, 66, 91);
             gridInterestFactorPreview.BorderStyle = BorderStyle.None;
             gridInterestFactorPreview.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.HotTrack;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            gridInterestFactorPreview.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.HotTrack;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            gridInterestFactorPreview.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             gridInterestFactorPreview.ColumnHeadersHeight = 30;
             gridInterestFactorPreview.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridInterestFactorPreview.Columns.AddRange(new DataGridViewColumn[] { SavingAccountID, INSSNo, ClientFullName, TotalDepositAmountDisplay, InterestGeneratedAmountDisplay });
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle5.SelectionForeColor = Color.White;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            gridInterestFactorPreview.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            gridInterestFactorPreview.DefaultCellStyle = dataGridViewCellStyle2;
             gridInterestFactorPreview.EnableHeadersVisualStyles = false;
             gridInterestFactorPreview.GridColor = Color.SteelBlue;
-            gridInterestFactorPreview.Location = new Point(0, 238);
+            gridInterestFactorPreview.Location = new Point(0, 219);
             gridInterestFactorPreview.Name = "gridInterestFactorPreview";
             gridInterestFactorPreview.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(45, 66, 91);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.SteelBlue;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            gridInterestFactorPreview.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 66, 91);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.SteelBlue;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            gridInterestFactorPreview.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             gridInterestFactorPreview.RowHeadersVisible = false;
             gridInterestFactorPreview.RowHeadersWidth = 51;
             gridInterestFactorPreview.RowTemplate.Height = 29;
             gridInterestFactorPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridInterestFactorPreview.Size = new Size(1076, 315);
+            gridInterestFactorPreview.Size = new Size(1076, 334);
             gridInterestFactorPreview.TabIndex = 36;
             // 
             // SavingAccountID
@@ -328,7 +351,7 @@
             // 
             // btnCreate
             // 
-            btnCreate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCreate.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnCreate.BackColor = Color.FromArgb(51, 178, 73);
             btnCreate.Cursor = Cursors.Hand;
             btnCreate.FlatAppearance.BorderColor = Color.ForestGreen;
@@ -346,27 +369,9 @@
             btnCreate.Visible = false;
             btnCreate.Click += btnCreate_Click;
             // 
-            // btnCancel
-            // 
-            btnCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCancel.BackColor = Color.Crimson;
-            btnCancel.Cursor = Cursors.Hand;
-            btnCancel.FlatAppearance.BorderColor = Color.ForestGreen;
-            btnCancel.FlatAppearance.BorderSize = 0;
-            btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(913, 556);
-            btnCancel.Margin = new Padding(0);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(163, 50);
-            btnCancel.TabIndex = 39;
-            btnCancel.Text = "Cancelar";
-            btnCancel.UseVisualStyleBackColor = false;
-            // 
             // btnBackToPeriod
             // 
-            btnBackToPeriod.Anchor = AnchorStyles.None;
+            btnBackToPeriod.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnBackToPeriod.BackColor = Color.SteelBlue;
             btnBackToPeriod.Cursor = Cursors.Hand;
             btnBackToPeriod.FlatAppearance.BorderColor = Color.ForestGreen;
@@ -374,37 +379,14 @@
             btnBackToPeriod.FlatStyle = FlatStyle.Flat;
             btnBackToPeriod.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnBackToPeriod.ForeColor = Color.White;
-            btnBackToPeriod.Location = new Point(9, 16);
+            btnBackToPeriod.Location = new Point(894, 556);
             btnBackToPeriod.Margin = new Padding(0);
             btnBackToPeriod.Name = "btnBackToPeriod";
-            btnBackToPeriod.Size = new Size(139, 43);
+            btnBackToPeriod.Size = new Size(177, 50);
             btnBackToPeriod.TabIndex = 51;
             btnBackToPeriod.Text = "Período";
             btnBackToPeriod.UseVisualStyleBackColor = false;
             btnBackToPeriod.Click += btnBackToPeriod_Click;
-            // 
-            // label2
-            // 
-            label2.Anchor = AnchorStyles.None;
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(545, 60);
-            label2.Name = "label2";
-            label2.Size = new Size(62, 25);
-            label2.TabIndex = 43;
-            label2.Text = "Fecha ";
-            // 
-            // dtDepositDate
-            // 
-            dtDepositDate.Anchor = AnchorStyles.None;
-            dtDepositDate.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dtDepositDate.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            dtDepositDate.Format = DateTimePickerFormat.Short;
-            dtDepositDate.Location = new Point(504, 88);
-            dtDepositDate.Name = "dtDepositDate";
-            dtDepositDate.Size = new Size(157, 31);
-            dtDepositDate.TabIndex = 42;
             // 
             // FrmSubPeriodCalculateInterestsForSavingAcc
             // 
@@ -413,7 +395,6 @@
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 615);
             Controls.Add(btnBackToPeriod);
-            Controls.Add(btnCancel);
             Controls.Add(btnCreate);
             Controls.Add(gridInterestFactorPreview);
             Controls.Add(panel1);

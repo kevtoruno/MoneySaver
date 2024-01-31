@@ -27,6 +27,7 @@ namespace Service.Core.Dtos.LoansDto
         public string TermAmount { get; set; }
         public string TotalTerms { get; set; }
         public bool IsCurrent { get; set; }
+        public string CKCode { get; set; }
         public List<LoanTransactionsDto> TransactionHistory { get; set; }
 
         public LoanToDetailDto()

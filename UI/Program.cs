@@ -21,6 +21,8 @@ namespace UI
     {
         public static int CompanyID;
         public static IConfiguration Configuration;
+        public static string LoanSearchFilter = "";
+        public static string SavingAccountsSearchFilter = "";
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>

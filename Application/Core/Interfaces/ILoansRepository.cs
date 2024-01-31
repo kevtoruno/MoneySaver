@@ -2,6 +2,7 @@
 using Domain.Entities.Loans;
 using Service.Core.DataModel;
 using Service.Core.Dtos.LoansDto;
+using Service.DatabaseDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +28,7 @@ namespace Service.Core.Interfaces
         decimal GetTotalAmountRecoveredForLastSixMonths(SubPeriodsDataModel subPeriod, int utilityMonths = 6);
         List<LoansDataModel> GetLoansByDates(DateTime periodStartDate, DateTime periodEndDate);
         bool SaveLoan(List<LoanDomainCreator> loanDomain);
+        LoanAmountValuesForPeriodOfTime GetTotalLoansAmountsForPeriodOfTime(SubPeriodsDataModel subPeriod,
+            int utilityMonths = 6);
     }
 }

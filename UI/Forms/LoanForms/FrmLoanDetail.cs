@@ -53,6 +53,7 @@ namespace UI.Forms.LoanForms
             this.lblPendingAmountData.Text = LoanToDetailDto.DueAmount;
             this.lblTermsData.Text = LoanToDetailDto.TotalTerms;
             this.lblAmountData.Text = LoanToDetailDto.Amount;
+            this.lblSavingAccTitle.Text = "Préstamo CK: " + LoanToDetailDto.CKCode;
 
             if (LoanToDetailDto.IsCurrent)
             {

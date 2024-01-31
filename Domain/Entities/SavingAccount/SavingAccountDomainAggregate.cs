@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.DomainExceptions;
 using Domain.DomainExceptions.SavingAccountExceptions;
+using System.Net.Http.Headers;
 
 namespace Domain.Entities
 {
@@ -48,6 +49,26 @@ namespace Domain.Entities
             Company = new CompanyDomain();
         }
         
+        public void RollbackPreviousInterestWithdrawal(int saWithdrawalID)
+        {
+            var withdrawalToRollback = Withdrawals.FirstOrDefault(w => w.SavingAccountWithdrawalID == saWithdrawalID) 
+                ?? throw new Exception("No se encontró retiro de intereses.");
+
+            CheckIfWithdrawalIsLatest(withdrawalToRollback.SavingAccountWithdrawalID);
+            
+
+        }
+
+        private void CheckIfWithdrawalIsLatest(int withdrawalToRollBackID)
+        {
+            var latestWithdrawalDate = Withdrawals.OrderByDescending(w => w.CreatedDate).First().SavingAccountWithdrawalID;
+
+            bool isItLatest = latestWithdrawalDate == withdrawalToRollBackID;
+
+            if (isItLatest == false)
+                throw new Exception("Unicamente puede eliminar el retiro de intereses mas reciente.");
+        }
+
         public void WithdrawInterests(DateTime withdrawDate, int subPeriodID)
         {
             if (this.IsActive == false)

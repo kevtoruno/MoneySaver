@@ -56,6 +56,8 @@
             btnFileUpload = new Button();
             lblTotalPendingAmount = new Label();
             lblTotalPendingAmountData = new Label();
+            label4 = new Label();
+            dtSubPeriodDate = new DateTimePicker();
             BarraTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnCerrar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridPreview).BeginInit();
@@ -178,7 +180,7 @@
             gridPreview.RowHeadersVisible = false;
             gridPreview.RowHeadersWidth = 51;
             gridPreview.RowTemplate.Height = 29;
-            gridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridPreview.SelectionMode = DataGridViewSelectionMode.CellSelect;
             gridPreview.Size = new Size(1132, 376);
             gridPreview.TabIndex = 40;
             gridPreview.CellFormatting += gridPreview_CellFormatting;
@@ -260,7 +262,7 @@
             lblFileName.AutoSize = true;
             lblFileName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblFileName.ForeColor = Color.White;
-            lblFileName.Location = new Point(289, 117);
+            lblFileName.Location = new Point(413, 113);
             lblFileName.Name = "lblFileName";
             lblFileName.Size = new Size(82, 25);
             lblFileName.TabIndex = 55;
@@ -343,11 +345,11 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(92, 117);
+            label2.Location = new Point(206, 113);
             label2.Name = "label2";
-            label2.Size = new Size(62, 25);
+            label2.Size = new Size(104, 25);
             label2.TabIndex = 49;
-            label2.Text = "Fecha ";
+            label2.Text = "Fecha pago";
             // 
             // dtDateCreated
             // 
@@ -355,7 +357,7 @@
             dtDateCreated.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             dtDateCreated.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             dtDateCreated.Format = DateTimePickerFormat.Short;
-            dtDateCreated.Location = new Point(51, 145);
+            dtDateCreated.Location = new Point(206, 141);
             dtDateCreated.Name = "dtDateCreated";
             dtDateCreated.Size = new Size(157, 31);
             dtDateCreated.TabIndex = 48;
@@ -369,7 +371,7 @@
             btnFileUpload.FlatStyle = FlatStyle.Flat;
             btnFileUpload.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnFileUpload.ForeColor = SystemColors.Control;
-            btnFileUpload.Location = new Point(258, 145);
+            btnFileUpload.Location = new Point(413, 141);
             btnFileUpload.Name = "btnFileUpload";
             btnFileUpload.Size = new Size(137, 45);
             btnFileUpload.TabIndex = 47;
@@ -402,12 +404,38 @@
             lblTotalPendingAmountData.Text = "$$$$";
             lblTotalPendingAmountData.Visible = false;
             // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.None;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = SystemColors.Control;
+            label4.Location = new Point(28, 113);
+            label4.Name = "label4";
+            label4.Size = new Size(110, 25);
+            label4.TabIndex = 59;
+            label4.Text = "Mes a pagar";
+            // 
+            // dtSubPeriodDate
+            // 
+            dtSubPeriodDate.Anchor = AnchorStyles.None;
+            dtSubPeriodDate.CalendarFont = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dtSubPeriodDate.CustomFormat = "MM/yyyy";
+            dtSubPeriodDate.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            dtSubPeriodDate.Format = DateTimePickerFormat.Custom;
+            dtSubPeriodDate.Location = new Point(28, 141);
+            dtSubPeriodDate.Name = "dtSubPeriodDate";
+            dtSubPeriodDate.Size = new Size(144, 31);
+            dtSubPeriodDate.TabIndex = 58;
+            // 
             // FrmLoansMonthlyPayments
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1156, 742);
+            Controls.Add(label4);
+            Controls.Add(dtSubPeriodDate);
             Controls.Add(lblTotalPendingAmount);
             Controls.Add(lblTotalPendingAmountData);
             Controls.Add(lblFileName);
@@ -467,5 +495,8 @@
         private Label lblTotalPendingAmountData;
         private DataGridViewTextBoxColumn PendingAmountDisplay;
         private DataGridViewTextBoxColumn PaymentAmountDisplay;
+        private Label label4;
+        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dtSubPeriodDate;
     }
 }

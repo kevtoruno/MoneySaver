@@ -46,7 +46,6 @@ namespace UI.Forms
         private void gridClientList_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             btnDelete.Enabled = true;
-            btnView.Enabled = true;
         }
 
         private void btnView_Click(object sender, EventArgs e)

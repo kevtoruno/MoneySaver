@@ -80,10 +80,10 @@ namespace UI.Forms.PeriodsForms
         private void btnCreate_Click(object sender, EventArgs e)
         {
             var result = Mediator.Send(
-                new CreatePeriodCommand 
-                { 
-                    Year = Convert.ToInt32(this.txtYear.Text), 
-                    CompanyID = Program.CompanyID 
+                new CreatePeriodCommand
+                {
+                    Year = Convert.ToInt32(this.txtYear.Text),
+                    CompanyID = Program.CompanyID
                 }).Result;
 
             if (result.ResourceCreated)

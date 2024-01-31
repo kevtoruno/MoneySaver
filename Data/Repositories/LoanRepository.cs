@@ -7,6 +7,7 @@ using Service.Core;
 using Service.Core.DataModel;
 using Service.Core.Dtos.LoansDto;
 using Service.Core.Interfaces;
+using Service.DatabaseDtos;
 using System.Reflection;
 
 namespace Data.Repositories
@@ -201,14 +202,33 @@ namespace Data.Repositories
             return true;
         }
 
+        public LoanAmountValuesForPeriodOfTime GetTotalLoansAmountsForPeriodOfTime(SubPeriodsDataModel subPeriod, 
+            int utilityMonths = 6)
+        {
+            var startDate = subPeriod.StartDate.AddMonths(-5).Date;
+            DateTime endDate = utilityMonths == 6 ? subPeriod.EndDate : subPeriod.EndDate.AddMonths(-1);
+
+            var loanAmountValues = _context.Loans
+                .Where(l => l.CreatedDate.Date >= startDate && l.CreatedDate.Date <= endDate)
+                .GroupBy(l => 1)
+                .Select(l => new LoanAmountValuesForPeriodOfTime
+                {
+                    TotalLoansAmount = l.Sum(a => a.LoanAmount),
+                    TotalLoansExpensesAmount = l.Sum(a => a.BaseAmount)
+                })
+                .First();
+
+            return loanAmountValues;
+        }
+
         public decimal GetTotalAmountLoanedForLastSixMonths(SubPeriodsDataModel subPeriod, int utilityMonths = 6)
         {
             var startDate = subPeriod.StartDate.AddMonths(-5).Date;
             DateTime endDate = utilityMonths == 6 ? subPeriod.EndDate : subPeriod.EndDate.AddMonths(-1);
 
             var totalAmountLoaned = _context.Loans
-                .Where(l => l.StartDate >= startDate && l.StartDate <= endDate)
-                .Sum(l => l.Amount);
+                .Where(l => l.CreatedDate.Date >= startDate && l.CreatedDate.Date <= endDate)
+                .Sum(l => l.LoanAmount);
 
             return totalAmountLoaned;
         }

@@ -15,8 +15,8 @@ namespace Service.Core.Dtos.PeriodsDto
         public bool SavingAccInterestProcessed { get; set; }
         public decimal SavingAccInterestRate { get; set; }
         public decimal SavingAccInterestRateDisplay { get => SavingAccInterestRate * 100; }
-        public decimal TotalAmountLoaned { get; set; }
-        public decimal TotalAmountRecovered { get; set; }
+        public decimal TotalLoansAmount { get; set; }
+        public decimal TotalExpensesAmount { get; set; }
         public decimal TotalDepositAmount { get; set; }
         public List<InterestAmountCalculatedForSADto> InterestAmountCalculatedForSavingAccounts { get; set; }
         public SubPeriodInterestsCalculationDto()

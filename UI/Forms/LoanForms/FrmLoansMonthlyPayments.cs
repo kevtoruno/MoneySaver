@@ -56,8 +56,8 @@ namespace UI.Forms.LoanForms
 
                 string fileName = openFileDialog.SafeFileName;
 
-                if (fileName.Length > 32)
-                    fileName = fileName.Substring(0, 31) + "...";
+                /*if (fileName.Length > 32)
+                    fileName = fileName.Substring(0, 31) + "...";*/
 
                 this.lblFileName.Text = fileName;
                 this.lblFileName.Visible = true;
@@ -75,6 +75,7 @@ namespace UI.Forms.LoanForms
             var previewResult = Mediator.Send(new GenerateMonthlyLoanPaymentsPreviewQuery
             {
                 Date = dtDateCreated.Value,
+                SubPeriodDate = dtSubPeriodDate.Value,
                 Path = filePath
             });
 
@@ -87,21 +88,21 @@ namespace UI.Forms.LoanForms
                 HandleResult(previewResult.Result);
         }
 
-        private void SetPreviewDataInScreen(List<MonthlyLoanPaymentsForPreviewDto> monthlyLoanPaymentsForPreview)
+        private void SetPreviewDataInScreen(MonthlyLoanPaymentsForPreviewViewModel monthlyLoanPaymentsForPreview)
         {
             lblClientsCount.Visible = true;
-            string totalClients = $"{monthlyLoanPaymentsForPreview.Count()} afiliados encontrados";
-            string validClients = $" ({monthlyLoanPaymentsForPreview.Where(a => a.IsValid).Count()} validos a procesar)";
-            string notValidClients = $" ({monthlyLoanPaymentsForPreview.Where(a => a.IsValid == false).Count()} invalidos)";
+            string totalClients = $"{monthlyLoanPaymentsForPreview.TotalClientsFromPDF} afiliados en PDF";
+            string validClients = $" ({monthlyLoanPaymentsForPreview.ValidPaymentsForProcessing} validos a procesar)";
+            string notValidClients = $" ({monthlyLoanPaymentsForPreview.NotValidPaymentsForProcessing} invalidos)";
             lblClientsCount.Text = totalClients + validClients + notValidClients;
 
             lblTotalPDFAmountData.Visible = true;
-            lblTotalPDFAmountData.Text = monthlyLoanPaymentsForPreview.Sum(a => a.PaymentAmount).CordobaFormat();
+            lblTotalPDFAmountData.Text = monthlyLoanPaymentsForPreview.TotalPaymentAmountFromPDF;
 
             lblTotalPendingAmountData.Visible = true;
-            lblTotalPendingAmountData.Text = monthlyLoanPaymentsForPreview.Where(a => a.IsValid).Sum(a => a.PendingAmount).CordobaFormat();
+            lblTotalPendingAmountData.Text = monthlyLoanPaymentsForPreview.TotalPendingAmountForSubperiod;
 
-            SetGridData(monthlyLoanPaymentsForPreview);
+            SetGridData(monthlyLoanPaymentsForPreview.MonthlyPaymentsForPreview);
         }
 
         private void SetGridData(List<MonthlyLoanPaymentsForPreviewDto> monthlyLoanPaymentsForPreview)
@@ -137,7 +138,7 @@ namespace UI.Forms.LoanForms
                 return;
             }
 
-            var result = Mediator.Send(new CreateMonthlyLoansPaymentsCommand { Date = dtDateCreated.Value.Date, Path = filePath }).Result;
+            var result = Mediator.Send(new CreateMonthlyLoansPaymentsCommand { SubPeriodDate = dtSubPeriodDate.Value, Date = dtDateCreated.Value.Date, Path = filePath }).Result;
 
             if (result.ResourceCreated)
                 _frmLoansList.LoadGridData();

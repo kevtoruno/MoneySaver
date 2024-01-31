@@ -16,6 +16,8 @@ namespace Service.Core
         public string CreatedMessage { get; private set; } = "";
         public static Result<T> Success(T value) => new Result<T> { IsSucess = true, Value = value };
 
+        public static Result<T> FailureWithResult (string errorMessage, T value) => new Result<T> { IsSucess = false, ErrorMessage = errorMessage, Value = value };
+
         public static Result<T> Failure(string errorMessage) => new Result<T> { IsSucess = false, ErrorMessage = errorMessage };
 
         public static Result<T> Created(T value, string createdMessage) => new Result<T> { ResourceCreated = true, Value = value, CreatedMessage = createdMessage };

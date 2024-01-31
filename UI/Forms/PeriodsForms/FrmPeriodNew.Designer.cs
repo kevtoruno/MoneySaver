@@ -120,7 +120,7 @@
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(542, 471);
+            btnCancel.Location = new Point(602, 493);
             btnCancel.Margin = new Padding(0);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(170, 50);
@@ -139,7 +139,7 @@
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             btnCreate.ForeColor = Color.White;
-            btnCreate.Location = new Point(38, 471);
+            btnCreate.Location = new Point(12, 493);
             btnCreate.Margin = new Padding(0);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(170, 50);
@@ -211,7 +211,7 @@
             gridPreview.RowHeadersWidth = 51;
             gridPreview.RowTemplate.Height = 29;
             gridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridPreview.Size = new Size(741, 206);
+            gridPreview.Size = new Size(741, 311);
             gridPreview.TabIndex = 19;
             gridPreview.CellContentClick += gridPreview_CellContentClick;
             // 

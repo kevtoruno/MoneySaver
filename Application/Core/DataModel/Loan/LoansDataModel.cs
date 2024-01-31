@@ -43,6 +43,13 @@ namespace Service.Core.DataModel
         /// </summary>
         [Column(TypeName="money")]
         public decimal Amount { get; set; }
+
+        /// <summary>
+        /// Amount minus interests included.
+        /// This amount equals LoanAmount - interests.
+        /// </summary>
+        [Column(TypeName="money")]
+        public decimal BaseAmount { get; set; }
         [Column(TypeName="money")]
         public decimal DueAmount { get; set; }
         [Column(TypeName="money")]
