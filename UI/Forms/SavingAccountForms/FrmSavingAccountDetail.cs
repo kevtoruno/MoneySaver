@@ -65,6 +65,7 @@ namespace UI.Forms.SavingAccountForms
         {
             if (SavingAccountToDetailDto.IsActive == false)
             {
+                this.btnRevertInterestsWithdrawal.Visible = false;
                 this.btnDeposit.Visible = false;
                 this.btnWithdrawInsterest.Visible = false;
                 this.btnFinishSavingAccount.Text = "Re activar fondo.";
@@ -165,7 +166,42 @@ namespace UI.Forms.SavingAccountForms
         {
             var reportFrm = new FrmSavingAccountReport(SavingAccountToDetailDto);
 
-            reportFrm.ShowDialog(); 
+            reportFrm.ShowDialog();
+        }
+
+        private void btnRevertInterestsWithdrawal_Click(object sender, EventArgs e)
+        {
+            var mbOption = MessageBox.Show($"¿Está seguro que desea deshacer el retiro de intereses?.", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (mbOption == DialogResult.Yes)
+            {
+                RollbackInterestWithdrawal();
+            }
+        }
+
+        private void RollbackInterestWithdrawal()
+        {
+            int selectedSavingAccountWithdrawalID = (int)this.gridWidthdrawalsList.CurrentRow.Cells[0].Value;
+            var result = Mediator.Send(new RollbackInterestWithdrawalCommand
+            {
+                SavingAccountID = _selectedSavingAccountID,
+                SavingAccountWithdrawalID = selectedSavingAccountWithdrawalID
+            }).Result;
+
+            if (result.ResourceCreated)
+                LoadFormData();
+
+            HandleResult(result, closeIfResourceCreated: false);
+        }
+
+        private void gridWidthdrawalsList_SelectionChanged(object sender, EventArgs e)
+        {
+            var historyType = (int)this.gridWidthdrawalsList.CurrentRow.Cells["HistoryType"].Value;
+
+            if (historyType == 1)
+                this.btnRevertInterestsWithdrawal.Visible = true;
+            else
+                this.btnRevertInterestsWithdrawal.Visible = false;
         }
     }
 }

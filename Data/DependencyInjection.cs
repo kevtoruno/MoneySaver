@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Service.Core.Interfaces;
 using System.Reflection;
 using Data.Persistence;
+using Service.Core.Interfaces.UnitsOfWork;
+using Data.UnitsOfWork;
 
 namespace Data
 {
@@ -32,6 +34,8 @@ namespace Data
 
             services.AddTransient<IMoneySaverRepository, MoneySaveRepository>();
             services.AddTransient<ILoansRepository, LoanRepository>();
+            services.AddTransient<ISavingAccountUnitOfWork, SavingAccountUnitOfWork>();
+
             return services;
         }
     }

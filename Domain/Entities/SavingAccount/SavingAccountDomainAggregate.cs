@@ -49,24 +49,32 @@ namespace Domain.Entities
             Company = new CompanyDomain();
         }
         
-        public void RollbackPreviousInterestWithdrawal(int saWithdrawalID)
+        public void RollbackInterestWithdrawal(int saWithdrawalID)
         {
             var withdrawalToRollback = Withdrawals.FirstOrDefault(w => w.SavingAccountWithdrawalID == saWithdrawalID) 
-                ?? throw new Exception("No se encontró retiro de intereses.");
+                ?? throw new BaseDomainException("No se encontró retiro de intereses.");
 
-            CheckIfWithdrawalIsLatest(withdrawalToRollback.SavingAccountWithdrawalID);
-            
+            CheckIfWithdrawalIsLatest(withdrawalToRollback);
 
+            Company.AddCurrentAmount(withdrawalToRollback.Amount);
+
+            this.Amount += withdrawalToRollback.Amount;
+            this.AmountForInterests += withdrawalToRollback.Amount;
+     
+            Withdrawals.Remove(withdrawalToRollback);
         }
 
-        private void CheckIfWithdrawalIsLatest(int withdrawalToRollBackID)
+        private void CheckIfWithdrawalIsLatest(SavingAccountWithdrawsDomain saWithdrawal)
         {
-            var latestWithdrawalDate = Withdrawals.OrderByDescending(w => w.CreatedDate).First().SavingAccountWithdrawalID;
+            bool isItLatest = false;
 
-            bool isItLatest = latestWithdrawalDate == withdrawalToRollBackID;
+            var latestDeposit = Deposits.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
 
+            if (latestDeposit == null || saWithdrawal.CreatedDate > latestDeposit.CreatedDate)
+                isItLatest = true;
+            
             if (isItLatest == false)
-                throw new Exception("Unicamente puede eliminar el retiro de intereses mas reciente.");
+                throw new WithdrawalIsNotTheLatest();
         }
 
         public void WithdrawInterests(DateTime withdrawDate, int subPeriodID)
