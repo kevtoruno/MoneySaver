@@ -76,6 +76,16 @@ namespace Data.Repositories
             return true;
         }
 
+        public List<LoansDataModel> GetActiveLoansList()
+        {
+            var activeLoans = _context.Loans.AsNoTracking()
+                .Include(sa => sa.Client)
+                .Where(l => l.IsCurrent)
+                .ToList();
+
+            return activeLoans;
+        }
+
         public List<LoansToListDto> GetLoansList(string INSSNo)
         {
             var loansToListDto = new List<LoansToListDto>();
@@ -83,11 +93,14 @@ namespace Data.Repositories
                 .Include(sa => sa.Client).OrderBy(sa => sa.IsCurrent).AsQueryable();
 
             if (INSSNo.Length > 0)
-                query = query.Where(q => q.Client.INSS == INSSNo);
+            {
+                INSSNo = "%" + INSSNo + "%";
+                query = query.Where(q => EF.Functions.Like(q.Client.INSS, INSSNo));
+            }
 
-            var loansFromDB = query.ToList();
+            var loansFromDB = query.OrderByDescending(l => l.IsCurrent).ToList();
 
-            loansFromDB.ForEach(l =>
+            loansFromDB.ToList().ForEach(l =>
             {
                 string fullName = l.Client.LastNames + " " + l.Client.FirstName;
 

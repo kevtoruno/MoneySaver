@@ -183,7 +183,7 @@ namespace Data.Repositories
         public List<SavingAccountsDataModel> GetSavingAccountsList(string INSS)
         {
             var query = _context.SavingAccounts.AsNoTracking()
-                .Include(sa => sa.Client).OrderBy(sa => sa.Client.INSS).AsQueryable();
+                .Include(sa => sa.Client).OrderByDescending(sa => sa.IsActive).ThenBy(sa => sa.Client.INSS).AsQueryable();
 
             if (INSS.Length > 0)
             {

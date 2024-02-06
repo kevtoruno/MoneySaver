@@ -43,6 +43,7 @@
             txtINSS = new MaskedTextBox();
             btnEdit = new Button();
             btnDelete = new Button();
+            btnGenerateCurrentSummaryReport = new Button();
             ((System.ComponentModel.ISupportInitialize)gridClientList).BeginInit();
             SuspendLayout();
             // 
@@ -232,12 +233,29 @@
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Visible = false;
             // 
+            // btnGenerateCurrentSummaryReport
+            // 
+            btnGenerateCurrentSummaryReport.BackColor = Color.SteelBlue;
+            btnGenerateCurrentSummaryReport.Cursor = Cursors.Hand;
+            btnGenerateCurrentSummaryReport.FlatAppearance.BorderSize = 0;
+            btnGenerateCurrentSummaryReport.FlatStyle = FlatStyle.Flat;
+            btnGenerateCurrentSummaryReport.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnGenerateCurrentSummaryReport.ForeColor = SystemColors.Control;
+            btnGenerateCurrentSummaryReport.Location = new Point(920, 10);
+            btnGenerateCurrentSummaryReport.Name = "btnGenerateCurrentSummaryReport";
+            btnGenerateCurrentSummaryReport.Size = new Size(148, 69);
+            btnGenerateCurrentSummaryReport.TabIndex = 19;
+            btnGenerateCurrentSummaryReport.Text = "Generar desglose actual";
+            btnGenerateCurrentSummaryReport.UseVisualStyleBackColor = false;
+            btnGenerateCurrentSummaryReport.Click += button2_Click;
+            // 
             // FrmClientList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 650);
+            Controls.Add(btnGenerateCurrentSummaryReport);
             Controls.Add(btnEdit);
             Controls.Add(btnSearch);
             Controls.Add(label4);
@@ -272,5 +290,6 @@
         private MaskedTextBox txtINSS;
         private Button btnEdit;
         private Button btnDelete;
+        private Button btnGenerateCurrentSummaryReport;
     }
 }

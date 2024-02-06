@@ -84,5 +84,11 @@ namespace UI.Forms
             var frmClientNew = new FrmClientNew(this, selectedClientID);
             frmClientNew.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var frmReport = new FrmAllClientsCurrentSummary();
+            frmReport.ShowDialog();
+        }
     }
 }

@@ -72,13 +72,13 @@ namespace Data.UnitsOfWork
 
         private void UpdateSavingAccountDomain(SavingAccountDomainAggregate saDomain)
         {
-            DisplayStates(_context.ChangeTracker.Entries());
+            //DisplayStates(_context.ChangeTracker.Entries());
             //_mapper.Map(saDomain, SavingAccountsDataModelForUpdate);
 
             savingAccountMapper.MapDomainToDataModel(saDomain, SavingAccountsDataModelForUpdate);
 
             _context.SavingAccounts.Update(SavingAccountsDataModelForUpdate);
-            DisplayStates(_context.ChangeTracker.Entries());
+            //DisplayStates(_context.ChangeTracker.Entries());
         }
 
         private static void DisplayStates(IEnumerable<EntityEntry> entries)

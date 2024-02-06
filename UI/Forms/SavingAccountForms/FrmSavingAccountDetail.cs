@@ -198,7 +198,7 @@ namespace UI.Forms.SavingAccountForms
         {
             var historyType = (int)this.gridWidthdrawalsList.CurrentRow.Cells["HistoryType"].Value;
 
-            if (historyType == 1)
+            if (historyType == 1 && SavingAccountToDetailDto.IsActive == true)
                 this.btnRevertInterestsWithdrawal.Visible = true;
             else
                 this.btnRevertInterestsWithdrawal.Visible = false;

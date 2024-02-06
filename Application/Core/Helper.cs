@@ -11,6 +11,11 @@ namespace Service.Core
 {
     public static class Helper
     {
+        public static string MoneyFormat(this decimal amount)
+        {
+            return String.Format("{0:#,##0.00}", amount);
+        } 
+
         public static string CordobaFormat(this decimal amount)
         {
             return "C$ "+ String.Format("{0:#,##0.00}", amount);

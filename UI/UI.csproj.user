@@ -7,6 +7,9 @@
     <Compile Update="BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\ClientsForms\FrmAllClientsCurrentSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\ClientsForms\FrmClientList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +78,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Reports\AllClientsCurrentSummary\AllClientsSummaryDataset.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Update="Reports\DataSet1.xsd">
       <SubType>Designer</SubType>
     </None>

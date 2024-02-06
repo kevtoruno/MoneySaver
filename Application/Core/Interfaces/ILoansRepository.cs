@@ -17,6 +17,7 @@ namespace Service.Core.Interfaces
         bool CheckIfClientHasAnotherLoan(int clientID);
         bool SaveLoan(LoanDomainCreator loanDomain);
         List<LoansToListDto> GetLoansList(string INSSNo);
+        List<LoansDataModel> GetActiveLoansList();
         LoansDataModel GetLoanDetail(int loanID);
         List<LoanInstallmentsDataModel> GetLoanInstallments(int loanID);
         LoanDomain GetLoanDomain(int loanID);
