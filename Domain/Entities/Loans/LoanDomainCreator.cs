@@ -39,8 +39,8 @@ namespace Domain.Entities.Loans
             {
                 SubPeriods = subPeriods;
                 SetBaseLoanValues();
-                Company.DecreaseCurrentAmount(LoanAmount);
-                Company.AddFloatingAmount(LoanAmount);
+                Company.DecreaseCurrentAmount(Amount);
+                Company.AddFloatingAmount(Amount);
                 CreateLoanInstallments();  
             }
             catch (Exception)

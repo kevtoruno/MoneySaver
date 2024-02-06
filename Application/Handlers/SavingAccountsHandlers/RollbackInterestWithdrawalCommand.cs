@@ -19,12 +19,10 @@ public class RollbackInterestWithdrawalCommand : IRequest<Result<bool>>
 
 internal class RollbackInterestWithdrawalHandler : IRequestHandler<RollbackInterestWithdrawalCommand, Result<bool>>
 {
-    private readonly IMoneySaverRepository _moneySaverRepo;
     private readonly ISavingAccountUnitOfWork _savingAccountUnitOfWork;
 
     public RollbackInterestWithdrawalHandler(ISavingAccountUnitOfWork savingAccountUnitOfWork)
     {
-        //_moneySaverRepo = moneySaverRepo;
         _savingAccountUnitOfWork = savingAccountUnitOfWork;
     }
 

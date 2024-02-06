@@ -30,5 +30,7 @@ namespace Service.Core.Interfaces
         bool SaveLoan(List<LoanDomainCreator> loanDomain);
         LoanAmountValuesForPeriodOfTime GetTotalLoansAmountsForPeriodOfTime(SubPeriodsDataModel subPeriod,
             int utilityMonths = 6);
+
+        bool DeleteLoan(int loanID);
     }
 }

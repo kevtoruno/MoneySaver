@@ -256,7 +256,6 @@ namespace Data.Repositories
         {
             _context.ChangeTracker.Clear();
             using var tran = _context.Database.BeginTransaction();
-
             try
             {
                 var defaultCompany = _mapper.Map<CompaniesDataModel>(loanDomain.FirstOrDefault().Company);
@@ -287,6 +286,40 @@ namespace Data.Repositories
             }
 
             return true;
+        }
+
+        public bool DeleteLoan(int loanID)
+        {
+            using var tran = _context.Database.BeginTransaction();
+            try
+            {
+                var loanToDelete = _context.Loans
+                    .Include(l => l.LoanInstallments)
+                    .Include(l => l.LoanPaymentHistories)
+                    .FirstOrDefault(l => l.LoanID == loanID) ?? throw new NullReferenceException("No se encontró préstamo");
+
+                if (loanToDelete.LoanPaymentHistories.Count() > 0)
+                    throw new Exception("No se puede eliminar préstamo con pagos realizados.");
+       
+                var companyData = _context.Companies.First();
+                var company = _mapper.Map<CompanyDomain>(companyData);
+                
+                company.AddCurrentAmount(loanToDelete.Amount);
+                company.DecreaseFloatingAmount(loanToDelete.Amount);
+
+                _context.Remove(loanToDelete);
+
+                var result = _context.SaveChanges();
+
+                tran.Commit();
+
+                return result > 0;
+            }
+            catch (Exception ex) 
+            {
+                tran.Rollback();
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

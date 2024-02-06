@@ -2,6 +2,7 @@
 using Service.Core.Interfaces;
 using Service.Features.Loans;
 using Service.Features.SavingAccounts;
+using Service.Handlers;
 using Service.Handlers.LoansHandlers;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,44 @@ namespace UI.Forms.LoanForms
             var loanMassCreatorFrm = new FrmLoansMassCreator(this);
 
             loanMassCreatorFrm.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (this.gridLoansList.Rows.Count <= 0)
+                return;
+
+            if (this.gridLoansList.CurrentRow.Cells[0].Value == null)
+            {
+                MessageBox.Show("Debe seleccionar un préstamo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int selectedLoanID = (int)this.gridLoansList.CurrentRow.Cells[0].Value;
+
+            var mbOption = MessageBox.Show($"¿Está seguro que desea eliminar el préstamo?.", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (mbOption == DialogResult.Yes)
+            {
+                DeleteLoan(selectedLoanID);
+            }
+
+        }
+
+        private void DeleteLoan(int selectedLoanID)
+        {
+            var result = Mediator.Send(new DeleteLoanCommand
+            {
+                LoanID = selectedLoanID
+            }).Result;
+
+            if (result.ResourceCreated)
+            {
+                MessageBox.Show("Préstamo eliminado correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadGridData();
+            }
+            else
+                MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

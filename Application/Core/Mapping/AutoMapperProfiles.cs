@@ -12,6 +12,7 @@ using Service.Core.Dtos.LoansDto;
 using Service.Core;
 using Domain.Entities.SavingAccount;
 using Domain;
+using iText.Forms.Xfdf;
 
 namespace Service.Mapping
 {
@@ -24,18 +25,25 @@ namespace Service.Mapping
             CreateMap<PeriodToCreateDto, PeriodsDataModel>();
             CreateMap<SubPeriodsToCreateDto, SubPeriodsDataModel>();
             CreateMap<SavingAccountToCreateDto, SavingAccountsDataModel>();
-            CreateMap<SavingAccountDomainAggregate,  SavingAccountsDataModel>();
+            
             CreateMap<SavingAccountDomainCreator,  SavingAccountsDataModel>();
-            CreateMap<SavingAccountDepositDomain,  SavingAccountDepositsDataModel>();
-            CreateMap<SavingAccountDepositsDataModel, SavingAccountDepositDomain>();
-            CreateMap<SavingAccountWithdrawsDomain, SavingAccountWidthdrawalsDataModel>();
-            CreateMap<SavingAccountWidthdrawalsDataModel, SavingAccountWithdrawsDomain>();
-            CreateMap<SavingAccountsDataModel, SavingAccountDomainAggregate>();
+
+            CreateMap<SavingAccountDepositDomain, SavingAccountDepositsDataModel>();
+
+            CreateMap<SavingAccountDepositsDataModel, SavingAccountDepositDomain>().MapOnlyIfChanged();
+
+            CreateMap<SavingAccountWithdrawsDomain, SavingAccountWidthdrawalsDataModel>().MapOnlyIfChanged();
+            CreateMap<SavingAccountWidthdrawalsDataModel, SavingAccountWithdrawsDomain>().MapOnlyIfChanged();
+
+            CreateMap<SavingAccountDomainAggregate,  SavingAccountsDataModel>().MapOnlyIfChanged();
+            CreateMap<SavingAccountsDataModel, SavingAccountDomainAggregate>().MapOnlyIfChanged();
+
             CreateMap<CompaniesDataModel, CompanyDomain>();
             CreateMap<CompanyDomain, CompaniesDataModel>();     
 
             CreateMap<SubPeriodsDataModel, SubPeriodDomain>();
             CreateMap<SubPeriodDomain, SubPeriodsDataModel>();
-        }
+
+        }   
     }
 }

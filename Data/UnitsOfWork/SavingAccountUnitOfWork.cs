@@ -3,13 +3,17 @@ using Data.Persistence;
 using Domain;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Service.Core.DataModel;
 using Service.Core.Interfaces.UnitsOfWork;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.Core;
+using Service.Core.Mapping;
 
 namespace Data.UnitsOfWork
 {
@@ -19,11 +23,12 @@ namespace Data.UnitsOfWork
         private readonly IMapper _mapper;
 
         private SavingAccountsDataModel SavingAccountsDataModelForUpdate = new SavingAccountsDataModel();
-
+        private SavingAccountMapping savingAccountMapper;
         public SavingAccountUnitOfWork(MoneySaverContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
+            savingAccountMapper = new SavingAccountMapping(mapper);
         }
 
         public SavingAccountDomainAggregate GetSavingAccountDomain(int savingAccountID, bool includeTransactionalHistory = false)
@@ -66,10 +71,23 @@ namespace Data.UnitsOfWork
         }
 
         private void UpdateSavingAccountDomain(SavingAccountDomainAggregate saDomain)
-        {           
-            _mapper.Map(saDomain, SavingAccountsDataModelForUpdate);
+        {
+            DisplayStates(_context.ChangeTracker.Entries());
+            //_mapper.Map(saDomain, SavingAccountsDataModelForUpdate);
+
+            savingAccountMapper.MapDomainToDataModel(saDomain, SavingAccountsDataModelForUpdate);
 
             _context.SavingAccounts.Update(SavingAccountsDataModelForUpdate);
+            DisplayStates(_context.ChangeTracker.Entries());
+        }
+
+        private static void DisplayStates(IEnumerable<EntityEntry> entries)
+        {
+            foreach (var entry in entries)
+            {
+                Debug.WriteLine($"Entity: {entry.Entity.GetType().Name}, " +
+                    $"State: {entry.State.ToString()} ");
+            }
         }
 
         private CompanyDomain GetDefaultCompany()
