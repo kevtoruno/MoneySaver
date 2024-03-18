@@ -102,17 +102,17 @@ namespace Service.Features.Periods
             foreach (var savingAcc in SavingAccounts)
             {
                 bool interestAlreadyExists = savingAcc.Deposits
-                    .Any(d => d.SubPeriodID == SubPeriod.SubPeriodID && d.DepositType == 1);
+                    .Any(d => d.SubPeriodID == SubPeriod.SubPeriodID && d.DepositType == DomainDepositType.Interests);
 
                 if (interestAlreadyExists)
                     continue;
 
                 var clientData = savingAccData.First(a => a.SavingAccountID == savingAcc.SavingAccountID).Client;
 
-                decimal interestsGeneratedAmount = savingAcc.AddInterestIfMonthJuneOrDecember(SubPeriod,depositDate);
+                decimal interestsGeneratedAmount = savingAcc.AddInterestsBasedOnInterestRate(SubPeriod,depositDate);
 
                 decimal depositAmountForLastSixMonths = savingAcc.Deposits
-                    .Where(d => d.CreatedDate >= startDate && d.CreatedDate <= endDate && d.DepositType == 0)
+                    .Where(d => d.CreatedDate >= startDate && d.CreatedDate <= endDate && d.DepositType == DomainDepositType.Saving)
                     .Sum(d => d.Amount);
 
                 var interestAmountCalculatedForSA = new InterestAmountCalculatedForSADto

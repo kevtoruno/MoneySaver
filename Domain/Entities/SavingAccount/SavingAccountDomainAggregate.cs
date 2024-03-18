@@ -49,7 +49,65 @@ namespace Domain.Entities
             Company = new CompanyDomain();
         }
         
-        public void RollbackInterestWithdrawal(int saWithdrawalID)
+        public void RollbackRecord(int recordID, int recordType)
+        {
+            if (recordType == 0)
+                RollbackSavingsDeposit(recordID);
+            else if (recordType == 1)
+                RollbackInterestWithdrawal(recordID);
+            else if (recordType == 3)
+                RollbackInterestsDeposit(recordID);
+        }
+
+        private void RollbackInterestsDeposit(int saInterestDepositID)
+        {
+            var interestsDepositToRollback = Deposits.FirstOrDefault(w => w.SavingAccountDepositID == saInterestDepositID) 
+                ?? throw new BaseDomainException("No se encontró el registro de intereses.");
+
+            CheckIfDepositIsLatest(interestsDepositToRollback);
+
+            this.Amount -= interestsDepositToRollback.Amount;
+            this.AmountForInterests -= interestsDepositToRollback.Amount;
+
+            Deposits.Remove(interestsDepositToRollback);
+        }
+
+        private void RollbackSavingsDeposit(int saDepositID)
+        {
+            var depositToRollback = Deposits.FirstOrDefault(w => w.SavingAccountDepositID == saDepositID) 
+                ?? throw new BaseDomainException("No se encontró el deposito de ahorro.");
+
+            CheckIfDepositIsLatest(depositToRollback);
+
+            Company.DecreaseCurrentAmount(depositToRollback.Amount);
+
+            this.Amount -= depositToRollback.Amount;
+     
+            Deposits.Remove(depositToRollback);
+        }
+
+        private void CheckIfDepositIsLatest(SavingAccountDepositDomain saDepositDomain)
+        {
+            bool isItLatest = true;
+
+            var latestDeposit = Deposits
+                .Where(dep => dep.SavingAccountDepositID != saDepositDomain.SavingAccountDepositID)
+                .OrderByDescending(a => a.CreatedDate)
+                .FirstOrDefault();
+
+            var latestWithdrawal = Withdrawals.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+      
+            if (latestDeposit != null && latestDeposit.CreatedDate.Date >= saDepositDomain.CreatedDate.Date)
+                isItLatest = false;
+
+            if (latestWithdrawal != null && latestWithdrawal.CreatedDate.Date > saDepositDomain.CreatedDate.Date)
+                isItLatest = false;
+
+            if (isItLatest == false)
+                throw new BaseDomainException("El deposito a eliminar debe ser el registro mas reciente.");
+        }
+
+        private void RollbackInterestWithdrawal(int saWithdrawalID)
         {
             var withdrawalToRollback = Withdrawals.FirstOrDefault(w => w.SavingAccountWithdrawalID == saWithdrawalID) 
                 ?? throw new BaseDomainException("No se encontró retiro de intereses.");
@@ -70,7 +128,7 @@ namespace Domain.Entities
 
             var latestDeposit = Deposits.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
 
-            if (latestDeposit == null || saWithdrawal.CreatedDate > latestDeposit.CreatedDate)
+            if (latestDeposit == null || saWithdrawal.CreatedDate.Date >= latestDeposit.CreatedDate.Date)
                 isItLatest = true;
             
             if (isItLatest == false)
@@ -99,7 +157,7 @@ namespace Domain.Entities
                 SavingAccountID = this.SavingAccountID,
                 CreatedDate = withdrawDate,
                 SubPeriodID = subPeriodID,
-                WithDrawalType = 0 //Interests
+                WithDrawalType = WithdrawalType.Interests
             });
      
             this.Amount -= AmountForInterests;
@@ -121,13 +179,33 @@ namespace Domain.Entities
                 CreatedDate = depositDate,
                 SubPeriodID = subPeriodID,
                 SavingAccountDepositID = 0,
-                DepositType = 0 //Saving
+                DepositType = DomainDepositType.Saving
             });
 
             Company.AddCurrentAmount(depositAmount);
+            AddInterestsAmount(subPeriodID, depositDate, interestsAmount);
         }
 
-        public decimal AddInterestIfMonthJuneOrDecember(SubPeriodDomain subPeriod, DateTime depositDate) 
+        private void AddInterestsAmount(int subPeriodID, DateTime depositDate, decimal interestsAmount) 
+        {
+            if (depositDate.Month == 6 || depositDate.Month == 12)
+            {
+                Amount += interestsAmount;
+                AmountForInterests += interestsAmount;
+
+                Deposits.Add(new SavingAccountDepositDomain
+                {
+                    Amount = interestsAmount,
+                    SavingAccountID = this.SavingAccountID,
+                    CreatedDate = depositDate,
+                    SubPeriodID = subPeriodID,
+                    SavingAccountDepositID = 0,
+                    DepositType = DomainDepositType.Interests //Interests
+                });
+            }
+        }
+
+        public decimal AddInterestsBasedOnInterestRate(SubPeriodDomain subPeriod, DateTime depositDate) 
         {
             decimal interestsAmount = 0;
             DateTime startDate = subPeriod.StartDate.AddMonths(-5).Date;
@@ -136,7 +214,7 @@ namespace Domain.Entities
             if (depositDate.Month == 6 || depositDate.Month == 12)
             {
                 decimal totalDepositAmountForLastSixMonths = Deposits
-                    .Where(d => d.CreatedDate >= startDate && d.CreatedDate <= endDate && d.DepositType == 0)
+                    .Where(d => d.CreatedDate >= startDate && d.CreatedDate <= endDate && d.DepositType == DomainDepositType.Saving)
                     .Sum(d => d.Amount);
 
                 interestsAmount = totalDepositAmountForLastSixMonths * subPeriod.SavingAccInterestRate;
@@ -151,7 +229,7 @@ namespace Domain.Entities
                     CreatedDate = depositDate,
                     SubPeriodID = subPeriod.SubPeriodID,
                     SavingAccountDepositID = 0,
-                    DepositType = 1 //Interests
+                    DepositType = DomainDepositType.Interests
                 });
             }
 
@@ -168,7 +246,7 @@ namespace Domain.Entities
                 SavingAccountID = this.SavingAccountID,
                 CreatedDate = date,
                 SubPeriodID = subPeriodID,
-                WithDrawalType = 1 //FullWithdrawal
+                WithDrawalType = WithdrawalType.CloseAccount
             });
             
             Company.DecreaseCurrentAmount(this.Amount);
@@ -220,7 +298,7 @@ namespace Domain.Entities
         public int SubPeriodID { get; set; }
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int DepositType { get; set; }
+        public DomainDepositType DepositType { get; set; }
     }
 
     public class SavingAccountWithdrawsDomain
@@ -230,6 +308,18 @@ namespace Domain.Entities
         public int SubPeriodID { get; set; }
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int WithDrawalType { get; set; } //Interests 0, Close account 1
+        public WithdrawalType WithDrawalType { get; set; }
+    }
+
+    public enum WithdrawalType
+    {
+        Interests= 0,
+        CloseAccount = 1
+    }
+
+    public enum DomainDepositType
+    {
+        Saving = 0,
+        Interests = 1
     }
 }

@@ -171,7 +171,7 @@ namespace UI.Forms.SavingAccountForms
 
         private void btnRevertInterestsWithdrawal_Click(object sender, EventArgs e)
         {
-            var mbOption = MessageBox.Show($"¿Está seguro que desea deshacer el retiro de intereses?.", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            var mbOption = MessageBox.Show($"¿Está seguro que desea deshacer el registro seleccionado?.", "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
             if (mbOption == DialogResult.Yes)
             {
@@ -182,10 +182,13 @@ namespace UI.Forms.SavingAccountForms
         private void RollbackInterestWithdrawal()
         {
             int selectedSavingAccountWithdrawalID = (int)this.gridWidthdrawalsList.CurrentRow.Cells[0].Value;
-            var result = Mediator.Send(new RollbackInterestWithdrawalCommand
+            int recordType = (int)this.gridWidthdrawalsList.CurrentRow.Cells[2].Value;
+
+            var result = Mediator.Send(new SavingAccountRollbackRecordCommand
             {
                 SavingAccountID = _selectedSavingAccountID,
-                SavingAccountWithdrawalID = selectedSavingAccountWithdrawalID
+                SavingAccountWithdrawalID = selectedSavingAccountWithdrawalID,
+                RecordType = recordType
             }).Result;
 
             if (result.ResourceCreated)
@@ -198,7 +201,7 @@ namespace UI.Forms.SavingAccountForms
         {
             var historyType = (int)this.gridWidthdrawalsList.CurrentRow.Cells["HistoryType"].Value;
 
-            if (historyType == 1 && SavingAccountToDetailDto.IsActive == true)
+            if ((historyType == 1 || historyType == 0 || historyType ==3) && SavingAccountToDetailDto.IsActive == true)
                 this.btnRevertInterestsWithdrawal.Visible = true;
             else
                 this.btnRevertInterestsWithdrawal.Visible = false;

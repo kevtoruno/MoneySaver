@@ -25,23 +25,10 @@ namespace Service.Core.Mapping
             MapBaseSavingAccountValues(saDomain, saDataModel); 
             
             AddNewWithdrawals(saDomain, saDataModel);   
-
             RemoveDeletedWithdrawals(saDomain, saDataModel);
-        }
 
-        private void RemoveDeletedWithdrawals(SavingAccountDomainAggregate saDomain, 
-            SavingAccountsDataModel saDataModel)
-        {
-            foreach (var withdrawalDataModel in saDataModel.Withdrawals)
-            {
-                bool withdrawalExists = saDomain.Withdrawals
-                    .Any(wdom => wdom.SavingAccountWithdrawalID == withdrawalDataModel.SavingAccountWithdrawalID);
-
-                if (withdrawalExists == false)
-                {
-                    saDataModel.Withdrawals.Remove(withdrawalDataModel);
-                }
-            }
+            AddNewDeposits(saDomain, saDataModel);
+            RemoveDeletedDepoists(saDomain, saDataModel);
         }
 
         private void MapBaseSavingAccountValues(SavingAccountDomainAggregate saDomain, 
@@ -60,6 +47,21 @@ namespace Service.Core.Mapping
             saDataModel.IsActive = saDomain.IsActive;
         }
 
+        private void RemoveDeletedWithdrawals(SavingAccountDomainAggregate saDomain, 
+            SavingAccountsDataModel saDataModel)
+        {
+            foreach (var withdrawalDataModel in saDataModel.Withdrawals)
+            {
+                bool withdrawalExists = saDomain.Withdrawals
+                    .Any(wdom => wdom.SavingAccountWithdrawalID == withdrawalDataModel.SavingAccountWithdrawalID);
+
+                if (withdrawalExists == false)
+                {
+                    saDataModel.Withdrawals.Remove(withdrawalDataModel);
+                }
+            }
+        }
+
         private void AddNewWithdrawals(SavingAccountDomainAggregate saDomain, 
             SavingAccountsDataModel saDataModel)
         {
@@ -75,6 +77,38 @@ namespace Service.Core.Mapping
                     saDataModel.Withdrawals.Add(withdrawalDataModel);
                 }
             } 
+        }
+
+        private void AddNewDeposits(SavingAccountDomainAggregate saDomain, 
+            SavingAccountsDataModel saDataModel)
+        {
+            foreach (var depositDomain in saDomain.Deposits)
+            {
+                bool depositExists = saDataModel.Deposits
+                    .Any(sdm => sdm.SavingAccountDepositID == depositDomain.SavingAccountDepositID);
+
+                if (depositExists == false)
+                {
+                    var depositDataModel = _mapper.Map<SavingAccountDepositsDataModel>(depositDomain);
+
+                    saDataModel.Deposits.Add(depositDataModel);
+                }
+            } 
+        }
+
+        private void RemoveDeletedDepoists(SavingAccountDomainAggregate saDomain, 
+            SavingAccountsDataModel saDataModel)
+        {
+            foreach (var depositDataModel in saDataModel.Deposits)
+            {
+                bool depositExists = saDomain.Deposits
+                    .Any(wdom => wdom.SavingAccountDepositID == depositDataModel.SavingAccountDepositID);
+
+                if (depositExists == false)
+                {
+                    saDataModel.Deposits.Remove(depositDataModel);
+                }
+            }
         }
     }
 }

@@ -67,6 +67,7 @@
             lblSavingAccTitle = new Label();
             btnPayInstallment = new Button();
             btnExtraPayment = new Button();
+            btnDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)gridInstallments).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -570,12 +571,29 @@
             btnExtraPayment.UseVisualStyleBackColor = false;
             btnExtraPayment.Click += btnExtraPayment_Click;
             // 
+            // btnDelete
+            // 
+            btnDelete.BackColor = Color.Crimson;
+            btnDelete.Cursor = Cursors.Hand;
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnDelete.ForeColor = SystemColors.Control;
+            btnDelete.Location = new Point(953, 270);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(115, 50);
+            btnDelete.TabIndex = 38;
+            btnDelete.Text = "Eliminar";
+            btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // FrmLoanDetail
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 615);
+            Controls.Add(btnDelete);
             Controls.Add(btnExtraPayment);
             Controls.Add(btnPayInstallment);
             Controls.Add(lblSavingAccTitle);
@@ -632,5 +650,6 @@
         private DataGridViewTextBoxColumn DueAmountDisplay;
         private DataGridViewTextBoxColumn DueDateDisplay;
         private DataGridViewTextBoxColumn DatePaidDisplay;
+        private Button btnDelete;
     }
 }

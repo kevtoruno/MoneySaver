@@ -10,29 +10,29 @@ using System.Threading.Tasks;
 
 namespace Service.Features.SavingAccounts
 {
-    public class SavingAccountRollbackInterestWithdrawal
+    public class SavingAccountRollbackRecord
     {
         private readonly ISavingAccountUnitOfWork _savingAccountUnitOfWork;
 
-        public SavingAccountRollbackInterestWithdrawal(ISavingAccountUnitOfWork savingAccountUnitOfWork)
+        public SavingAccountRollbackRecord(ISavingAccountUnitOfWork savingAccountUnitOfWork)
         {
             _savingAccountUnitOfWork = savingAccountUnitOfWork;
         }
 
-        public Result<bool> RollbackInterestWithdrawal(int savingAccountID,int savingAccountWithdrawalID)
+        public Result<bool> RollbackInterestWithdrawal(int savingAccountID,int recordID, int recordType)
         {
             try
             {
                 var SADomain = _savingAccountUnitOfWork.GetSavingAccountDomain(savingAccountID, includeTransactionalHistory: true);
-
-                SADomain.RollbackInterestWithdrawal(savingAccountWithdrawalID);
+                
+                SADomain.RollbackRecord(recordID, recordType); 
 
                 bool dbResult = _savingAccountUnitOfWork.UpdateSavingAccount(SADomain);
 
                 if (dbResult)
-                    return Result<bool>.Created(true, "Se ha anulado el retiro de intereses.");
+                    return Result<bool>.Created(true, "Se ha anulado el registro seleccionado.");
 
-                return Result<bool>.Failure("Hubo un error al anular el retiro de intereses.");
+                return Result<bool>.Failure("Hubo un error al anular el registro seleccionado.");
             }
             catch (BaseDomainException ex)
             {

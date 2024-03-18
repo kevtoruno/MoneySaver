@@ -57,9 +57,6 @@
             lblSavingAccTitle = new Label();
             btnDeposit = new Button();
             gridWidthdrawalsList = new DataGridView();
-            btnEditBeneficiary = new Button();
-            btnExportData = new Button();
-            btnRevertInterestsWithdrawal = new Button();
             SavingAccountHistoryID = new DataGridViewTextBoxColumn();
             SubPeriodName = new DataGridViewTextBoxColumn();
             HistoryType = new DataGridViewTextBoxColumn();
@@ -67,6 +64,9 @@
             AmountDisplay = new DataGridViewTextBoxColumn();
             CreatedDate = new DataGridViewTextBoxColumn();
             TotalDisplay = new DataGridViewTextBoxColumn();
+            btnEditBeneficiary = new Button();
+            btnExportData = new Button();
+            btnRevertInterestsWithdrawal = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridWidthdrawalsList).BeginInit();
             SuspendLayout();
@@ -469,57 +469,6 @@
             gridWidthdrawalsList.CellFormatting += gridWidthdrawalsList_CellFormatting;
             gridWidthdrawalsList.SelectionChanged += gridWidthdrawalsList_SelectionChanged;
             // 
-            // btnEditBeneficiary
-            // 
-            btnEditBeneficiary.BackColor = Color.SteelBlue;
-            btnEditBeneficiary.Cursor = Cursors.Hand;
-            btnEditBeneficiary.FlatAppearance.BorderSize = 0;
-            btnEditBeneficiary.FlatStyle = FlatStyle.Flat;
-            btnEditBeneficiary.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnEditBeneficiary.ForeColor = Color.White;
-            btnEditBeneficiary.Location = new Point(138, 270);
-            btnEditBeneficiary.Name = "btnEditBeneficiary";
-            btnEditBeneficiary.Size = new Size(129, 50);
-            btnEditBeneficiary.TabIndex = 34;
-            btnEditBeneficiary.Text = "Beneficiario";
-            btnEditBeneficiary.UseVisualStyleBackColor = false;
-            btnEditBeneficiary.Click += btnEditBeneficiary_Click;
-            // 
-            // btnExportData
-            // 
-            btnExportData.BackColor = Color.SteelBlue;
-            btnExportData.Cursor = Cursors.Hand;
-            btnExportData.FlatAppearance.BorderSize = 0;
-            btnExportData.FlatStyle = FlatStyle.System;
-            btnExportData.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnExportData.ForeColor = Color.White;
-            btnExportData.Location = new Point(970, 12);
-            btnExportData.Name = "btnExportData";
-            btnExportData.Size = new Size(101, 33);
-            btnExportData.TabIndex = 35;
-            btnExportData.Text = "Exportar";
-            btnExportData.UseVisualStyleBackColor = false;
-            btnExportData.Click += btnExportData_Click;
-            // 
-            // btnRevertInterestsWithdrawal
-            // 
-            btnRevertInterestsWithdrawal.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRevertInterestsWithdrawal.BackColor = Color.Crimson;
-            btnRevertInterestsWithdrawal.Cursor = Cursors.Hand;
-            btnRevertInterestsWithdrawal.FlatAppearance.BorderColor = Color.ForestGreen;
-            btnRevertInterestsWithdrawal.FlatAppearance.BorderSize = 0;
-            btnRevertInterestsWithdrawal.FlatStyle = FlatStyle.Flat;
-            btnRevertInterestsWithdrawal.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
-            btnRevertInterestsWithdrawal.ForeColor = Color.White;
-            btnRevertInterestsWithdrawal.Location = new Point(578, 270);
-            btnRevertInterestsWithdrawal.Margin = new Padding(0);
-            btnRevertInterestsWithdrawal.Name = "btnRevertInterestsWithdrawal";
-            btnRevertInterestsWithdrawal.Size = new Size(131, 50);
-            btnRevertInterestsWithdrawal.TabIndex = 36;
-            btnRevertInterestsWithdrawal.Text = "Revertir";
-            btnRevertInterestsWithdrawal.UseVisualStyleBackColor = false;
-            btnRevertInterestsWithdrawal.Click += btnRevertInterestsWithdrawal_Click;
-            // 
             // SavingAccountHistoryID
             // 
             SavingAccountHistoryID.DataPropertyName = "SavingAccountHistoryID";
@@ -582,6 +531,57 @@
             TotalDisplay.HeaderText = "Total";
             TotalDisplay.MinimumWidth = 6;
             TotalDisplay.Name = "TotalDisplay";
+            // 
+            // btnEditBeneficiary
+            // 
+            btnEditBeneficiary.BackColor = Color.SteelBlue;
+            btnEditBeneficiary.Cursor = Cursors.Hand;
+            btnEditBeneficiary.FlatAppearance.BorderSize = 0;
+            btnEditBeneficiary.FlatStyle = FlatStyle.Flat;
+            btnEditBeneficiary.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnEditBeneficiary.ForeColor = Color.White;
+            btnEditBeneficiary.Location = new Point(138, 270);
+            btnEditBeneficiary.Name = "btnEditBeneficiary";
+            btnEditBeneficiary.Size = new Size(129, 50);
+            btnEditBeneficiary.TabIndex = 34;
+            btnEditBeneficiary.Text = "Beneficiario";
+            btnEditBeneficiary.UseVisualStyleBackColor = false;
+            btnEditBeneficiary.Click += btnEditBeneficiary_Click;
+            // 
+            // btnExportData
+            // 
+            btnExportData.BackColor = Color.SteelBlue;
+            btnExportData.Cursor = Cursors.Hand;
+            btnExportData.FlatAppearance.BorderSize = 0;
+            btnExportData.FlatStyle = FlatStyle.System;
+            btnExportData.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnExportData.ForeColor = Color.White;
+            btnExportData.Location = new Point(970, 12);
+            btnExportData.Name = "btnExportData";
+            btnExportData.Size = new Size(101, 33);
+            btnExportData.TabIndex = 35;
+            btnExportData.Text = "Exportar";
+            btnExportData.UseVisualStyleBackColor = false;
+            btnExportData.Click += btnExportData_Click;
+            // 
+            // btnRevertInterestsWithdrawal
+            // 
+            btnRevertInterestsWithdrawal.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRevertInterestsWithdrawal.BackColor = Color.Crimson;
+            btnRevertInterestsWithdrawal.Cursor = Cursors.Hand;
+            btnRevertInterestsWithdrawal.FlatAppearance.BorderColor = Color.ForestGreen;
+            btnRevertInterestsWithdrawal.FlatAppearance.BorderSize = 0;
+            btnRevertInterestsWithdrawal.FlatStyle = FlatStyle.Flat;
+            btnRevertInterestsWithdrawal.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnRevertInterestsWithdrawal.ForeColor = Color.White;
+            btnRevertInterestsWithdrawal.Location = new Point(578, 270);
+            btnRevertInterestsWithdrawal.Margin = new Padding(0);
+            btnRevertInterestsWithdrawal.Name = "btnRevertInterestsWithdrawal";
+            btnRevertInterestsWithdrawal.Size = new Size(131, 50);
+            btnRevertInterestsWithdrawal.TabIndex = 36;
+            btnRevertInterestsWithdrawal.Text = "Revertir";
+            btnRevertInterestsWithdrawal.UseVisualStyleBackColor = false;
+            btnRevertInterestsWithdrawal.Click += btnRevertInterestsWithdrawal_Click;
             // 
             // FrmSavingAccountDetail
             // 

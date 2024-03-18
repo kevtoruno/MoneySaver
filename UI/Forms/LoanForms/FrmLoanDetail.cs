@@ -2,6 +2,7 @@
 using Data.Repositories;
 using Service.Core.Dtos;
 using Service.Core.Dtos.LoansDto;
+using Service.Core.Dtos.PeriodsDto;
 using Service.Core.Interfaces;
 using Service.Features.Loans;
 using Service.Features.SavingAccounts;
@@ -16,6 +17,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Forms.PeriodsForms;
 
 namespace UI.Forms.LoanForms
 {
@@ -40,6 +42,11 @@ namespace UI.Forms.LoanForms
             LoanToDetailDto = Mediator.Send(new GetLoanDetailQuery { SelectedLoanID = _selectedLoanID }).Result;
             SetLabelsData();
             SetGridsData();
+
+            if (this.LoanToDetailDto.IsCurrent == false)
+            {
+                this.btnDelete.Visible = false;
+            }
         }
 
         private void SetLabelsData()
@@ -150,6 +157,34 @@ namespace UI.Forms.LoanForms
         {
             var frmInstallment = new FrmLoanExtraPayment(_selectedLoanID, this);
             frmInstallment.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var mbOption = MessageBox.Show($"¿Está seguro que desea eliminar el préstamo?.", 
+                "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (mbOption == DialogResult.Yes)
+            {
+                DeleteLoan(_selectedLoanID);
+            }
+        }
+
+        private void DeleteLoan(int selectedLoanID)
+        {
+            var result = Mediator.Send(new DeleteLoanCommand
+            {
+                LoanID = selectedLoanID
+            }).Result;
+
+            HandleResult(result);
+
+            if (result.ResourceCreated)
+            {
+                Program.InitialMenu.OpenChildForm(new FrmLoansList());
+            }
+            else
+                MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
