@@ -68,7 +68,7 @@ namespace Service.Features.SavingAccounts
                 var depositData = depositsForPreview.FirstOrDefault(data => data.SavingAccountID == saD.SavingAccountID);
 
                 if (depositData != null)
-                    saD.AddDeposit(depositData.Amount, depositData.Date, SubPeriodID, 0);
+                    saD.AddDeposit(depositData.Amount, depositData.Date, SubPeriodID);
             });
         }
 

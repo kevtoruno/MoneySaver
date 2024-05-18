@@ -28,6 +28,9 @@ namespace Service.Features.SavingAccounts
         {
             try
             {
+                if (sADepositToCreateDto.Amount <= 0 && sADepositToCreateDto.InterestsAmount <= 0)
+                    return Result<bool>.Failure("Las cantidades ingresadas no pueden ser 0.");
+
                 var subPeriod = _moneySaverRepo.GetSubPeriodIDFromDate(sADepositToCreateDto.CreatedDate);
 
                 SubPeriodID = subPeriod != null ? subPeriod.SubPeriodID : 0;
@@ -35,7 +38,10 @@ namespace Service.Features.SavingAccounts
                 if (SubPeriodID <= 0)
                     return Result<bool>.Failure("No existe un subperiodo para la fecha seleccionada.");
 
-                bool checkIfDepositExists = _moneySaverRepo.CheckIfDepositExistsForSubPeriod(SubPeriodID, sADepositToCreateDto.SavingAccountID);
+                bool checkIfDepositExists = false;
+
+                if (sADepositToCreateDto.Amount > 0)
+                    checkIfDepositExists = _moneySaverRepo.CheckIfDepositExistsForSubPeriod(SubPeriodID, sADepositToCreateDto.SavingAccountID);
 
                 if (checkIfDepositExists)
                     return Result<bool>.Failure("Ya se ha hecho un deposito para este subperiodo.");

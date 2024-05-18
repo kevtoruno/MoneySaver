@@ -165,30 +165,34 @@ namespace Domain.Entities
         }
 
         public void AddDeposit(decimal depositAmount, DateTime depositDate, 
-            int subPeriodID, decimal interestsAmount) 
+            int subPeriodID, decimal interestsAmount = 0) 
         {
             if (IsActive == false)
                 throw new InactiveSavingAccountException();
 
-            Amount += depositAmount;
-
-            Deposits.Add(new SavingAccountDepositDomain
+            if (depositAmount > 0)
             {
-                Amount = depositAmount,
-                SavingAccountID = this.SavingAccountID,
-                CreatedDate = depositDate,
-                SubPeriodID = subPeriodID,
-                SavingAccountDepositID = 0,
-                DepositType = DomainDepositType.Saving
-            });
+                Amount += depositAmount;
 
-            Company.AddCurrentAmount(depositAmount);
+                Deposits.Add(new SavingAccountDepositDomain
+                {
+                    Amount = depositAmount,
+                    SavingAccountID = this.SavingAccountID,
+                    CreatedDate = depositDate,
+                    SubPeriodID = subPeriodID,
+                    SavingAccountDepositID = 0,
+                    DepositType = DomainDepositType.Saving
+                });
+
+                Company.AddCurrentAmount(depositAmount);
+            }
+  
             AddInterestsAmount(subPeriodID, depositDate, interestsAmount);
         }
 
         private void AddInterestsAmount(int subPeriodID, DateTime depositDate, decimal interestsAmount) 
         {
-            if (depositDate.Month == 6 || depositDate.Month == 12)
+            if ((depositDate.Month == 6 || depositDate.Month == 12) && interestsAmount > 0)
             {
                 Amount += interestsAmount;
                 AmountForInterests += interestsAmount;

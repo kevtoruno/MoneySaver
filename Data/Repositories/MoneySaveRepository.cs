@@ -80,11 +80,11 @@ namespace Data.Repositories
                 _context.Periods.Add(periodToCreate);
                 _context.SaveChanges();
 
-                periodToCreateDto.SubPeriods.ForEach(sp => sp.PeriodID = periodToCreate.PeriodID);
+                /*periodToCreateDto.SubPeriods.ForEach(sp => sp.PeriodID = periodToCreate.PeriodID);
                 var subPeriodToCreate = _mapper.Map<List<SubPeriodsDataModel>>(periodToCreateDto.SubPeriods);
 
                 _context.SubPeriods.AddRange(subPeriodToCreate);
-                _context.SaveChanges();
+                _context.SaveChanges();*/
 
                 tran.Commit();
             }

@@ -55,6 +55,9 @@ public class LoanDomain
 
     public void MakeExtraPayment(decimal amount, DateTime payDate, int subPeriodID)
     {
+        if (FinishLoanIfCentsRemaining(amount))
+            return;
+        
         ValidateAmount(amount);
 
         CheckIfDateItsLatest(payDate);
@@ -64,6 +67,20 @@ public class LoanDomain
 
         Company.DecreaseFloatingAmount(amount);
         Company.AddCurrentAmount(amount);
+    }
+
+    private bool FinishLoanIfCentsRemaining(decimal amount)
+    {
+        bool loanFinished = false;
+
+        if (this.DueAmount > 0 && this.DueAmount < 1 && amount < 1)
+        {
+            LoanInstallments.ForEach(loanInstallment => loanInstallment.DueAmount = 0);
+            FinishLoanIfApplies();
+            loanFinished = true;
+        }
+
+        return loanFinished;
     }
 
     private void ValidateAmount(decimal amount)
