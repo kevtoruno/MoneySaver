@@ -68,6 +68,7 @@
             btnPayInstallment = new Button();
             btnExtraPayment = new Button();
             btnDelete = new Button();
+            btnRestructure = new Button();
             ((System.ComponentModel.ISupportInitialize)gridInstallments).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -587,12 +588,32 @@
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
+            // btnRestructure
+            // 
+            btnRestructure.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRestructure.BackColor = Color.FromArgb(51, 178, 73);
+            btnRestructure.Cursor = Cursors.Hand;
+            btnRestructure.FlatAppearance.BorderColor = Color.ForestGreen;
+            btnRestructure.FlatAppearance.BorderSize = 0;
+            btnRestructure.FlatStyle = FlatStyle.Flat;
+            btnRestructure.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            btnRestructure.ForeColor = Color.White;
+            btnRestructure.Location = new Point(589, 267);
+            btnRestructure.Margin = new Padding(0);
+            btnRestructure.Name = "btnRestructure";
+            btnRestructure.Size = new Size(165, 50);
+            btnRestructure.TabIndex = 39;
+            btnRestructure.Text = "Restructurar";
+            btnRestructure.UseVisualStyleBackColor = false;
+            btnRestructure.Click += btnRestructure_Click;
+            // 
             // FrmLoanDetail
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(49, 66, 82);
             ClientSize = new Size(1080, 615);
+            Controls.Add(btnRestructure);
             Controls.Add(btnDelete);
             Controls.Add(btnExtraPayment);
             Controls.Add(btnPayInstallment);
@@ -651,5 +672,6 @@
         private DataGridViewTextBoxColumn DueDateDisplay;
         private DataGridViewTextBoxColumn DatePaidDisplay;
         private Button btnDelete;
+        private Button btnRestructure;
     }
 }

@@ -72,6 +72,7 @@ namespace UI.Forms.LoanForms
                 this.lblStatusData.Text = "Pagado";
                 this.lblStatusData.ForeColor = Color.LawnGreen;
                 this.btnExtraPayment.Visible = false;
+                this.btnRestructure.Visible = false;
             }
         }
 
@@ -161,7 +162,7 @@ namespace UI.Forms.LoanForms
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var mbOption = MessageBox.Show($"¿Está seguro que desea eliminar el préstamo?.", 
+            var mbOption = MessageBox.Show($"¿Está seguro que desea eliminar el préstamo?.",
                 "Confirmación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
             if (mbOption == DialogResult.Yes)
@@ -185,6 +186,12 @@ namespace UI.Forms.LoanForms
             }
             else
                 MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnRestructure_Click(object sender, EventArgs e)
+        {
+            var frmInstallment = new FrmLoanRestructure(_selectedLoanID, this);
+            frmInstallment.ShowDialog();
         }
     }
 }

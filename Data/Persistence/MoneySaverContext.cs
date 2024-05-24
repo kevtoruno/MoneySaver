@@ -7,6 +7,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Core.DataModel;
+using Service.Core.DataModel.Loan;
 
 namespace Data.Persistence
 {
@@ -29,6 +30,8 @@ namespace Data.Persistence
         public DbSet<LoanInterestsDataModel> LoanInterests { get; set; }
         public DbSet<LoanInstallmentsDataModel> LoanInstallments { get; set; }
         public DbSet<LoanPaymentHistoryDataModel> LoanPaymentHistory { get; set; }
+        public DbSet<LoanRestructureHistoryDataModel> LoanRestructureHistory { get; set; }
+        public DbSet<LoanRestructureInstallmentsHistoryDataModel> LoanRestructureInstallmentsHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

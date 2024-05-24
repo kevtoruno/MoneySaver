@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Core.DataModel.Loan;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -63,5 +64,6 @@ namespace Service.Core.DataModel
 
         public ICollection<LoanInstallmentsDataModel> LoanInstallments { get; set; }
         public ICollection<LoanPaymentHistoryDataModel> LoanPaymentHistories { get; set; }
+        public ICollection<LoanRestructureHistoryDataModel> Restructures { get; set; }
     }
 }

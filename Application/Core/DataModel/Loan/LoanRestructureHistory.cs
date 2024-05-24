@@ -25,5 +25,7 @@ namespace Service.Core.DataModel.Loan
         public int DisabledTerms { get; set; }
         public DateTime Date { get; set; }
         public int CreatedBy { get; set; }
+
+        public ICollection<LoanRestructureInstallmentsHistoryDataModel> PreviousInstallments { get; set; }
     }
 }

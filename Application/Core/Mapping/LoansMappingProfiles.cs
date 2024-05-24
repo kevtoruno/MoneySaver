@@ -21,7 +21,9 @@ namespace Service.Core.Mapping
             CreateMap<LoanPaymentHistoryDomain, LoanPaymentHistoryDataModel>();
 
             CreateMap<LoanInstallmentsDomain, LoanInstallmentsDataModel>();
-            CreateMap<LoanInstallmentsDataModel, LoanInstallmentsDomain>();
+            CreateMap<LoanInstallmentsDataModel, LoanInstallmentsDomain>()
+                .ForMember(dest => dest.PeriodName,
+                opt => opt.MapFrom(src => $"{src.SubPeriod.StartDate.ToString("MMMM")} {src.SubPeriod.StartDate.Year}" ));
 
             CreateMap<LoanInterestsDataModel, LoanInterestsDomain>();
 

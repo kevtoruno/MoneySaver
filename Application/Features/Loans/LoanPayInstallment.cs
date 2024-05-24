@@ -38,7 +38,7 @@ namespace Service.Features.Loans
 
                 loandDomain.PayInstallment(loanPayInstallmentDto.LoanInstallmentID, subPeriodID, loanPayInstallmentDto.PayDate);
 
-                var result = _loansRepo.UpdateLoan(loandDomain);
+                var result = _loansRepo.UpdateLoanWithCompany(loandDomain);
 
                 if (result)
                     return Result<bool>.Created(true, "Se ha pagado la cuota exitosamente.");

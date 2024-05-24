@@ -1,6 +1,7 @@
 ﻿using Domain.DomainExceptions.LoanExceptions;
 using System;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Domain.Entities.Loans;
 
@@ -69,6 +70,65 @@ public class LoanDomain
         Company.AddCurrentAmount(amount);
     }
 
+    public void PayInstallment(int installmentID, int subPeriodID, DateTime payDate, decimal payAmount = 0)
+    {
+        var loanInstallmentToPay = LoanInstallments.FirstOrDefault(l => l.LoanInstallmentID == installmentID) 
+            ?? throw new Exception("No existe cuota");
+
+        decimal installmentDueAmount = loanInstallmentToPay.DueAmount;
+
+        CheckIfDateItsLatest(payDate);
+
+        int nonDecimalPayAmount = (int) payAmount;
+        int nonDecimalInstallmentDueAmount = (int)installmentDueAmount;
+
+        if (payAmount == 0 || nonDecimalPayAmount == nonDecimalInstallmentDueAmount)
+        {
+            loanInstallmentToPay.FullPay(payDate);   
+
+            AddPaymentHistory(subPeriodID, payDate, installmentDueAmount);
+
+            FinishLoanIfApplies();
+
+            Company.DecreaseFloatingAmount(installmentDueAmount);
+            Company.AddCurrentAmount(installmentDueAmount);
+        }
+    }
+
+    public void RestructureLoan()
+    {
+        var pendingInstallments = LoanInstallments
+            .Where(li => li.IsPaid == false)
+            .OrderBy(li => li.DueDate)
+            .ToList();
+
+        if (pendingInstallments.Count <= 1)
+            throw new CannotRestructureLoanWithOneSingleInstallment();
+
+        var installmentToRemove = pendingInstallments.FirstOrDefault();
+
+        DistributePendingAmountToOtherInstallments(installmentToRemove, pendingInstallments);
+
+        LoanInstallments.Remove(installmentToRemove);
+    }
+
+    private void DistributePendingAmountToOtherInstallments(LoanInstallmentsDomain installmentToRemove,
+        List<LoanInstallmentsDomain> pendingInstallments)
+    {
+        int installmentsRemainingCount = pendingInstallments.Count() - 1;
+
+        var amountToDistribute = installmentToRemove.DueAmount / installmentsRemainingCount;
+
+        foreach (var installment in pendingInstallments)
+        {
+            if (installment.LoanInstallmentID == installmentToRemove.LoanInstallmentID)
+                continue;
+
+            installment.DueAmount += amountToDistribute;
+            installment.Amount += amountToDistribute;
+        }
+    }
+
     private bool FinishLoanIfCentsRemaining(decimal amount)
     {
         bool loanFinished = false;
@@ -109,31 +169,6 @@ public class LoanDomain
             decimal remainingAmount = pendingInstallment.PayAmount(amount, payDate);
 
             amount = remainingAmount;
-        }
-    }
-
-    public void PayInstallment(int installmentID, int subPeriodID, DateTime payDate, decimal payAmount = 0)
-    {
-        var loanInstallmentToPay = LoanInstallments.FirstOrDefault(l => l.LoanInstallmentID == installmentID) 
-            ?? throw new Exception("No existe cuota");
-
-        decimal installmentDueAmount = loanInstallmentToPay.DueAmount;
-
-        CheckIfDateItsLatest(payDate);
-
-        int nonDecimalPayAmount = (int) payAmount;
-        int nonDecimalInstallmentDueAmount = (int)installmentDueAmount;
-
-        if (payAmount == 0 || nonDecimalPayAmount == nonDecimalInstallmentDueAmount)
-        {
-            loanInstallmentToPay.FullPay(payDate);   
-
-            AddPaymentHistory(subPeriodID, payDate, installmentDueAmount);
-
-            FinishLoanIfApplies();
-
-            Company.DecreaseFloatingAmount(installmentDueAmount);
-            Company.AddCurrentAmount(installmentDueAmount);
         }
     }
 

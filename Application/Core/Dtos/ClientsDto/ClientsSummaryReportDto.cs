@@ -22,8 +22,10 @@ namespace Service.Core.Dtos.ClientsDto
         public string INSSNo { get; set; }
         public string ClientFullName { get; set; }
         public string SavingsAmount { get; set; }
+        public decimal SavingsAmountNumber { get; set; }
         public string InterestsAmount { get; set; }
         public string TotalSavings { get; set; }
+        public decimal CurrentLoanAmountNumber { get; set; }
         public string CurrentLoanAmount { get; set; }
     }
 }

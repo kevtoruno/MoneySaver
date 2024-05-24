@@ -39,7 +39,7 @@ internal class LoansExtraPayment
             loandDomain.Company = defaultCompany;
             loandDomain.MakeExtraPayment(extraPaymentDto.Amount, extraPaymentDto.PayDate, subPeriodID);
 
-            var result = _loansRepo.UpdateLoan(loandDomain);
+            var result = _loansRepo.UpdateLoanWithCompany(loandDomain);
 
             if (result)
                 return Result<bool>.Created(true, "Pago extraordinario realizado exitosamente.");

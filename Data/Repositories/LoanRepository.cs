@@ -2,9 +2,11 @@
 using Data.Persistence;
 using Domain;
 using Domain.Entities.Loans;
+using iText.Commons.Actions.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Service.Core;
 using Service.Core.DataModel;
+using Service.Core.DataModel.Loan;
 using Service.Core.Dtos.LoansDto;
 using Service.Core.Interfaces;
 using Service.DatabaseDtos;
@@ -140,11 +142,24 @@ namespace Data.Repositories
                 .ToList();
         }
 
+        public LoansDataModel GetLoansData(int loanID)
+        {
+            var loansData = _context.Loans
+                .Include(a => a.LoanInstallments)
+                .ThenInclude(a => a.SubPeriod)
+                .Include(a => a.LoanPaymentHistories)
+                .Include(l => l.Restructures)
+                .FirstOrDefault(l => l.LoanID == loanID) ?? throw new Exception("No se encontró un préstamo asociado.");
+
+            return loansData;
+        }
+
         public LoanDomain GetLoanDomain(int loanID)
         {
             var loansData = _context.Loans
                 .AsNoTracking()
                 .Include(a => a.LoanInstallments)
+                .ThenInclude(a => a.SubPeriod)
                 .Include(a => a.LoanPaymentHistories)
                 .FirstOrDefault(l => l.LoanID == loanID) ?? throw new Exception("No se encontró un préstamo asociado.");
 
@@ -153,7 +168,7 @@ namespace Data.Repositories
             return loanDomain;
         }
 
-        public bool UpdateLoan(LoanDomain loanDomain)
+        public bool UpdateLoanWithCompany(LoanDomain loanDomain)
         {
             _context.ChangeTracker.Clear();
             using var tran = _context.Database.BeginTransaction();
@@ -164,6 +179,27 @@ namespace Data.Repositories
 
                 _context.Companies.Update(companyToUpdate);
                 _context.Loans.Update(loanToUpdate);
+                _context.SaveChanges();
+
+                tran.Commit();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                tran.Rollback();
+                throw new Exception("Error al actualizar préstamo");
+            }
+        }
+
+        public bool UpdateLoanRestructure(LoansDataModel loanToUpdate, LoanRestructureHistoryDataModel LoanRestructureHistory)
+        {
+            //_context.ChangeTracker.Clear();
+            using var tran = _context.Database.BeginTransaction();
+            try
+            {
+                _context.Loans.Update(loanToUpdate);
+                _context.LoanRestructureHistory.Update(LoanRestructureHistory);
                 _context.SaveChanges();
 
                 tran.Commit();
@@ -221,15 +257,15 @@ namespace Data.Repositories
             var startDate = subPeriod.StartDate.AddMonths(-5).Date;
             DateTime endDate = utilityMonths == 6 ? subPeriod.EndDate : subPeriod.EndDate.AddMonths(-1);
 
-            var loanAmountValues = _context.Loans
+            var loans = _context.Loans
                 .Where(l => l.CreatedDate.Date >= startDate && l.CreatedDate.Date <= endDate)
-                .GroupBy(l => 1)
-                .Select(l => new LoanAmountValuesForPeriodOfTime
-                {
-                    TotalLoansAmount = l.Sum(a => a.LoanAmount),
-                    TotalLoansExpensesAmount = l.Sum(a => a.BaseAmount)
-                })
-                .First();
+                .ToList();
+
+            var loanAmountValues = new LoanAmountValuesForPeriodOfTime
+            {
+                TotalLoansAmount = loans.Sum(a => a.LoanAmount),
+                TotalLoansExpensesAmount = loans.Sum(a => a.BaseAmount)
+            };
 
             return loanAmountValues;
         }

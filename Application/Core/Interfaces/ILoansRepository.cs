@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Domain.Entities.Loans;
 using Service.Core.DataModel;
+using Service.Core.DataModel.Loan;
 using Service.Core.Dtos.LoansDto;
 using Service.DatabaseDtos;
 using System;
@@ -21,7 +22,9 @@ namespace Service.Core.Interfaces
         LoansDataModel GetLoanDetail(int loanID);
         List<LoanInstallmentsDataModel> GetLoanInstallments(int loanID);
         LoanDomain GetLoanDomain(int loanID);
-        bool UpdateLoan(LoanDomain loanDomain);
+        LoansDataModel GetLoansData(int loanID);
+        bool UpdateLoanWithCompany(LoanDomain loanDomain);
+        bool UpdateLoanRestructure(LoansDataModel loanToUpdate, LoanRestructureHistoryDataModel LoanRestructureHistory);
         bool CheckIfLoanCKAlreadyExists(string CK);
         List<LoansDataModel> GetLoansWithInstallments();
         bool PayLoanInstallments(List<LoanDomain> loansDomain, CompanyDomain defaultCompanyDomain);

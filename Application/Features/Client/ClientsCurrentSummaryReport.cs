@@ -1,5 +1,6 @@
 ﻿using Service.Core;
 using Service.Core.DataModel;
+using Service.Core.Dtos;
 using Service.Core.Dtos.ClientsDto;
 using Service.Core.Interfaces;
 using System;
@@ -14,8 +15,9 @@ namespace Service.Features.Client
     {
         private readonly IMoneySaverRepository _moneySaverRepo;
         private readonly ILoansRepository _loansRepo;
-        private List<SavingAccountsDataModel> SavingAccountsData;
-        private List<LoansDataModel> LoansCurrentData;
+        private List<ClientToListDto> ClientsData = new List<ClientToListDto>();
+        private List<SavingAccountsDataModel> SavingAccountsData = new List<SavingAccountsDataModel>();
+        private List<LoansDataModel> LoansCurrentData = new List<LoansDataModel>();
         private ClientsSummaryReportDto ClientsSummaryReports;
         public ClientsCurrentSummaryReport(IMoneySaverRepository moneySaverRepo, ILoansRepository loansRepo)
         {
@@ -30,6 +32,8 @@ namespace Service.Features.Client
                 .Where(sa => sa.IsActive == true)
                 .ToList();
 
+            ClientsData = _moneySaverRepo.GetClientsList("");
+
             LoansCurrentData = _loansRepo.GetActiveLoansList();
 
             CreateClientsSummaryReports();
@@ -40,25 +44,46 @@ namespace Service.Features.Client
         private void CreateClientsSummaryReports()
         {
             int count = 1;
-            foreach (var sa in SavingAccountsData.OrderBy(sa => sa.Client.INSS))
-            {
-                decimal savingsAmount = sa.Amount - sa.AmountForInterests;
 
+            foreach (var clientData in ClientsData)
+            {
                 var clientSummary = new ClientsSummaryData
                 {
                     No = count,
-                    INSSNo = sa.Client.INSS,
-                    ClientFullName = sa.Client.GetClientFullName(),
-                    SavingsAmount = savingsAmount.MoneyFormat(),
-                    InterestsAmount = sa.AmountForInterests.MoneyFormat(),
-                    TotalSavings = sa.Amount.MoneyFormat()
+                    INSSNo = clientData.INSS,
+                    ClientFullName = clientData.FullName
                 };
 
-                SetLoanAmount(clientSummary, sa.ClientID);
+                SetSavingAccountData(clientSummary, clientData.ClientID);
+                SetLoanAmount(clientSummary, clientData.ClientID);
 
-                ClientsSummaryReports.ClientsSummaries.Add(clientSummary);
+                if (clientSummary.SavingsAmountNumber > 0 || clientSummary.CurrentLoanAmountNumber > 0)
+                    ClientsSummaryReports.ClientsSummaries.Add(clientSummary);
+
                 count++;
             }
+        }
+
+        private void SetSavingAccountData(ClientsSummaryData clientSummary, int clientID)
+        {
+            var savingAccountData = SavingAccountsData
+                    .FirstOrDefault(sa => sa.ClientID == clientID);
+
+            decimal saAmount = 0;
+            decimal amountForInterests = 0;
+            decimal savingsAmount = 0;
+
+            if (savingAccountData != null)
+            {
+                saAmount = savingAccountData.Amount;
+                amountForInterests = savingAccountData.AmountForInterests;
+                savingsAmount = saAmount - amountForInterests;
+            }
+
+            clientSummary.SavingsAmount = savingsAmount.MoneyFormat();
+            clientSummary.InterestsAmount = amountForInterests.MoneyFormat();
+            clientSummary.TotalSavings = saAmount.MoneyFormat();
+            clientSummary.SavingsAmountNumber = savingsAmount;
         }
 
         private void SetLoanAmount(ClientsSummaryData clientSummary, int clientID)
@@ -66,10 +91,16 @@ namespace Service.Features.Client
             var clientsLoanData = LoansCurrentData
                 .FirstOrDefault(l => l.ClientID == clientID);
 
-            if (clientsLoanData != null) 
+            if (clientsLoanData != null)
+            {
                 clientSummary.CurrentLoanAmount = clientsLoanData.DueAmount.MoneyFormat();
+                clientSummary.CurrentLoanAmountNumber = clientsLoanData.DueAmount;
+            }
             else
-                clientSummary.CurrentLoanAmount = Convert.ToDecimal(0).MoneyFormat(); 
+            {
+                clientSummary.CurrentLoanAmount = Convert.ToDecimal(0).MoneyFormat();
+                clientSummary.CurrentLoanAmountNumber = Convert.ToDecimal(0);
+            }
         }
     }
 }
